@@ -7,19 +7,25 @@ namespace Wumpus
 {
     public enum CaseOdeur
     {
+        [Description("om")]
         Mauvaise,
+        [Description("on")]
         Neutre
     }
 
     public enum CaseVitesseVent
     {
+        [Description("vf")]
         Faible,
+        [Description("vt")]
         Fort
     }
 
     public enum CaseLuminosite
     {
+        [Description("lf")]
         Faible,
+        [Description("lt")]
         Fort
     }
 
