@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace tests
 {
-    public class ForetTest
+    public class ForetCreateTest
     {
         [SetUp]
         public void Setup()

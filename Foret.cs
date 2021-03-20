@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Wumpus
 {
     public class Foret 
     {
-        private int dim;
-        private Case[,] grille;
+        public int Size { get; private set; }
+        public Case[,] Grille { get; private set; }
+        public int PlayerSpawnL { get { return spawn[0]; } }
+        public int PlayerSpawnC { get { return spawn[1]; } }
         private int[] spawn;
         private Random random = new Random();
 
-        //genere un foret donc toutes les cases sans crevasses sont accessibles a n'importe quelle autre casse sasn crevasse
-        public Foret(int dim)
+        public Foret(int size)
         {
-            dim++;
-            dim++;
-            this.dim = dim;
-            grille = new Case[dim, dim];
-            int nb_monstre = (int)Math.Truncate(0.2 * dim * dim); //probabilite d'apparition de montre
-            int nb_crevasse = (int)Math.Truncate(0.15 * dim * dim); //probabilite d'apparition de crevasse
+            size++;
+            size++;
+            this.Size = size;
+            this.Grille = new Case[size, size];
+            int nb_monstre = (int)Math.Truncate(0.2 * size * size); //probabilite d'apparition de montre
+            int nb_crevasse = (int)Math.Truncate(0.15 * size * size); //probabilite d'apparition de crevasse
 
             InitializeGrid();
 
@@ -26,47 +28,33 @@ namespace Wumpus
             PlaceElement(CaseType.Monstre, nb_monstre);
             PlaceElement(CaseType.Portail, 1);
 
-            //update cases
-            for (int l = 0; l < grille.GetLength(0); l++)
+            InitNeighborhoodStatusCase();
+
+            spawn = SelectVoidCaseForPlayerInit();
+        }
+
+        private int[] SelectVoidCaseForPlayerInit()
+        {
+            int l = 0;
+            int c = 0;
+
+            while(Grille[l, c].Type != CaseType.Vide)
             {
-                for (int c = 0; c < grille.GetLength(1); c++)
+                l = random.Next(0, Size);
+                c = random.Next(0, Size);
+            }
+
+            return new int[2] {l, c};
+        }
+
+        private void InitNeighborhoodStatusCase()
+        {
+            for (int l = 0; l < Grille.GetLength(0); l++)
+            {
+                for (int c = 0; c < Grille.GetLength(1); c++)
                 {
                     int[] coo = { l, c };
-                    Update(coo);
-                }
-            }
-
-            //placer le point d'apparition du joueur
-            bool[] case_vide = new bool[dim * dim];
-            int nb_case_vide = 0;
-            for (int l = 0; l < grille.GetLength(0); l++)
-            {
-                for (int c = 0; c < grille.GetLength(1); c++)
-                {
-                    if (grille[l, c].Type == CaseType.Vide)
-                    {
-                        case_vide[l * dim + c] = true;
-                        nb_case_vide++;
-                    }
-                    else
-                    {
-                        case_vide[l * dim + c] = false;
-                    }
-                }
-            }
-
-            int case_vide_choisie = random.Next(0, nb_case_vide - 1);
-
-            nb_case_vide = 0;
-            for (int i = 0; i < case_vide.GetLength(0); i++)
-            {
-                if (case_vide[i] == true)
-                {
-                    if (nb_case_vide == case_vide_choisie)
-                    {
-                        spawn = new int[] { (int)i / dim, i % dim };
-                    }
-                    nb_case_vide++;
+                    UpdateNeighborhoodStatusCase(coo);
                 }
             }
         }
@@ -76,24 +64,24 @@ namespace Wumpus
             int i = 0;
             while(i < quantityOfElement)
             {
-                int l = random.Next(0, grille.GetLength(0));
-                int c = random.Next(0, grille.GetLength(1));
+                int l = random.Next(0, Grille.GetLength(0));
+                int c = random.Next(0, Grille.GetLength(1));
 
-                if (grille[l, c].Type != CaseType.Vide)
+                if (Grille[l, c].Type != CaseType.Vide)
                     continue;
 
-                grille[l, c].Type = typeElement;
+                Grille[l, c].Type = typeElement;
                 i++;
             }
         }
 
         private void InitializeGrid()
         {
-            for (int l = 0; l < grille.GetLength(0); l++)
+            for (int l = 0; l < Grille.GetLength(0); l++)
             {
-                for (int c = 0; c < grille.GetLength(1); c++)
+                for (int c = 0; c < Grille.GetLength(1); c++)
                 {
-                    grille[l, c] = new Case(CaseType.Vide);
+                    Grille[l, c] = new Case(CaseType.Vide);
                 }
             }
         }
@@ -102,74 +90,85 @@ namespace Wumpus
         public void Utilisation_de_roches(int l, int c) 
         {
             int[] coo = {l, c};
-            if(0 <= coo[0] && coo[0] < dim && 0 <= coo[1] && coo[1] < dim){
-                if(grille[coo[0],coo[1]].Type == CaseType.Monstre){
-                    grille[coo[0],coo[1]].Type = CaseType.Vide;
+            if(0 <= coo[0] && coo[0] < Size && 0 <= coo[1] && coo[1] < Size){
+                if(Grille[coo[0],coo[1]].Type == CaseType.Monstre){
+                    Grille[coo[0],coo[1]].Type = CaseType.Vide;
                 }
                 int[] cooN = {coo[0]+1, coo[1]};
-                Update(cooN);
+                UpdateNeighborhoodStatusCase(cooN);
                 int[] cooS = {coo[0]-1, coo[1]};
-                Update(cooS);
+                UpdateNeighborhoodStatusCase(cooS);
                 int[] cooW = {coo[0], coo[1]-1};
-                Update(cooW);
+                UpdateNeighborhoodStatusCase(cooW);
                 int[] cooE = {coo[0], coo[1]+1};
-                Update(cooE);
+                UpdateNeighborhoodStatusCase(cooE);
             }
         }
 
-        //met a jour le vent, les odeurs et les zones lumineuses sur la case
-        private void Update(int[] coo) 
+        private void UpdateNeighborhoodStatusCase(int[] coo) 
         {
             int l = coo[0];
             int c = coo[1];
 
-            if(0 <= l && l < dim && 0 <= c && c < dim){
-                if(grille[l,c].Type == CaseType.Portail){
-                    grille[l,c].Luminosite = CaseLuminosite.Fort;
-                }
-
-                int[,] delta = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-                for(int i = 0; i < delta.GetLength(0); i++){
-
-                    if(0 <= l + delta[i,0] && l + delta[i,0] < dim && 0 <= c + delta[i,1] && c + delta[i,1] < dim){
-                        
-                        if(grille[l + delta[i,0], c + delta[i,1]].Type == CaseType.Monstre){
-                            grille[l,c].Odeur = CaseOdeur.Mauvaise;
-                        }
-                        if(grille[l + delta[i,0], c + delta[i,1]].Type == CaseType.Crevasse){
-                            grille[l,c].VitesseVent = CaseVitesseVent.Fort;
-                        }
-                    }
-                }
+            switch (Grille[l,c].Type)
+            {
+                case CaseType.Portail:
+                    Grille[l,c].Luminosite = CaseLuminosite.Fort;
+                    break;
+                case CaseType.Monstre:
+                    SetCaseStatusByEnumType(l, c, typeof(Case).GetProperty("Odeur"), CaseOdeur.Mauvaise);
+                    break;
+                case CaseType.Crevasse:
+                    SetCaseStatusByEnumType(l, c, typeof(Case).GetProperty("VitesseVent"), CaseVitesseVent.Fort);
+                    break;
             }
         }
 
+        private void SetCaseStatusByEnumType(int l, int c, PropertyInfo enumProperty, Enum enumValue)
+        {
+            int limitRight = Size - 1;
+            int limitLeft = 0;
+            int limitTop = 0;
+            int limitDown = Size - 1;
+
+            if(c + 1 <= limitRight)
+                enumProperty.SetValue(Grille[l, c + 1], enumValue);
+
+            if(c - 1 >= limitLeft)
+                enumProperty.SetValue(Grille[l, c - 1], enumValue);
+
+            if(l - 1 >= limitTop)
+                enumProperty.SetValue(Grille[l - 1, c], enumValue);
+
+            if(l + 1 <= limitDown)
+                enumProperty.SetValue(Grille[l + 1, c], enumValue);
+
+            return;
+        }
 
         public override string ToString()
         {
             string r = "\n\nforet magique : vide\nv : crevasse\nM : monstre\nO : portail\n\n";
-            for(int l = 0; l < grille.GetLength(0); l++){
-                for(int c = 0; c < grille.GetLength(1); c++){
-                    r += grille[l,c].Type.GetDescription();
+            for(int l = 0; l < Grille.GetLength(0); l++){
+                for(int c = 0; c < Grille.GetLength(1); c++){
+                    r += Grille[l,c].Type.GetDescription();
                 }
                 r += "\n";
             }
+            r += "\n";
+
+            for(int l = 0; l < Grille.GetLength(0); l++){
+                for(int c = 0; c < Grille.GetLength(1); c++){
+                    string luminosite = Grille[l,c].Luminosite == CaseLuminosite.Fort ? Grille[l,c].Luminosite.GetDescription() : "";
+                    string odeur = Grille[l,c].Odeur == CaseOdeur.Mauvaise ?  Grille[l,c].Odeur.GetDescription() : "";
+                    string vent = Grille[l,c].VitesseVent == CaseVitesseVent.Fort ? Grille[l,c].VitesseVent.GetDescription() : "";
+                    
+                    r += " " + luminosite + odeur + vent + " |";
+                }
+                r += "\n";
+            }
+
             return r;
-        }
-        
-
-        public int Spawn_l{
-            get{return spawn[0];}
-        }
-
-
-        public int Spawn_c{
-            get{return spawn[1];}
-        }
-
-
-        public Case[,] Grille{
-            get{return grille;}
         }
     }
 }
