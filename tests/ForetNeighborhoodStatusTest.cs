@@ -14,6 +14,7 @@ namespace tests
         {
             int niveau = 1;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             for (int l = 0; l < foret.Grille.GetLength(0); l++)
             {
@@ -32,6 +33,7 @@ namespace tests
         {
             int niveau = 1;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
 
             int limitRight = foret.Size - 1;
             int limitLeft = 0;
@@ -65,6 +67,7 @@ namespace tests
         {
             int niveau = 1;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
 
             int limitRight = foret.Size - 1;
             int limitLeft = 0;
@@ -101,6 +104,7 @@ namespace tests
             Enum value = CaseVitesseVent.Fort;
 
             Foret foret = new Foret(1);
+            foret.InitForest();
             
             Assert.AreEqual(CaseVitesseVent.Faible,  foret.Grille[0,0].VitesseVent);
 
@@ -113,6 +117,7 @@ namespace tests
         public void TestPlayerSpawnPosition()
         {
             Foret foret = new Foret(1);
+            foret.InitForest();
 
             Assert.AreEqual(CaseType.Vide, foret.Grille[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);
         }

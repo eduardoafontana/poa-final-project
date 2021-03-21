@@ -18,6 +18,7 @@ namespace tests
         {
             int niveau = 1;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(1, monstersFounded.Count());
@@ -34,6 +35,7 @@ namespace tests
         {
             int niveau = 2;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(3, monstersFounded.Count());
@@ -50,6 +52,7 @@ namespace tests
         {
             int niveau = 3;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(5, monstersFounded.Count());
@@ -66,6 +69,7 @@ namespace tests
         {
             int niveau = 4;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(7, monstersFounded.Count());
@@ -82,6 +86,7 @@ namespace tests
         {
             int niveau = 5;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(9, monstersFounded.Count());
@@ -98,6 +103,7 @@ namespace tests
         {
             int niveau = 6;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(12, monstersFounded.Count());
@@ -114,6 +120,7 @@ namespace tests
         {
             int niveau = 7;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(16, monstersFounded.Count());
@@ -130,6 +137,7 @@ namespace tests
         {
             int niveau = 8;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(20, monstersFounded.Count());
@@ -146,6 +154,7 @@ namespace tests
         {
             int niveau = 9;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(24, monstersFounded.Count());
@@ -162,6 +171,7 @@ namespace tests
         {
             int niveau = 10;
             Foret foret = new Foret(niveau);
+            foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
             Assert.AreEqual(28, monstersFounded.Count());
@@ -174,11 +184,31 @@ namespace tests
         }
 
         [Test]
+        public void CreateForest_PreConfigured()
+        {
+            ForestConfiguration configuration = new ForestConfiguration();
+            configuration.PlayerPosition = new int[2] {0, 0};
+            configuration.PortalPosition = new int[2] {2, 2};
+            configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
+            configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
+
+            Foret foret = new Foret(1);
+            foret.InitForestForTests(configuration);
+
+            Assert.AreEqual(foret.PlayerSpawnL, 0);
+            Assert.AreEqual(foret.PlayerSpawnC, 0);
+            Assert.AreEqual(CaseType.Portail, foret.Grille[2,2].Type);
+            Assert.AreEqual(CaseType.Monstre, foret.Grille[2,0].Type);
+            Assert.AreEqual(CaseType.Crevasse, foret.Grille[0,2].Type);
+        }
+
+        [Test]
         public void TestForet()
         {
             int niveau = 3;
 
             Foret foret = new Foret(niveau);
+            foret.InitForest();
 
             Console.WriteLine(foret.ToString());
         }

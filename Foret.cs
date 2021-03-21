@@ -15,14 +15,18 @@ namespace Wumpus
 
         public Foret(int size)
         {
-            size++;
-            size++;
             this.Size = size;
-            this.Grille = new Case[size, size];
-            int nb_monstre = (int)Math.Truncate(0.2 * size * size); //probabilite d'apparition de montre
-            int nb_crevasse = (int)Math.Truncate(0.15 * size * size); //probabilite d'apparition de crevasse
+            this.Size++;
+            this.Size++;
+            this.Grille = new Case[this.Size, this.Size];
 
             InitializeGrid();
+        }
+
+        public void InitForest()
+        {
+            int nb_monstre = (int)Math.Truncate(0.2 * this.Size * this.Size); //probabilite d'apparition de montre
+            int nb_crevasse = (int)Math.Truncate(0.15 * this.Size * this.Size); //probabilite d'apparition de crevasse
 
             PlaceElement(CaseType.Crevasse, nb_crevasse);
             PlaceElement(CaseType.Monstre, nb_monstre);
@@ -31,6 +35,25 @@ namespace Wumpus
             InitNeighborhoodStatusCase();
 
             spawn = SelectVoidCaseForPlayerInit();
+        }
+
+        public void InitForestForTests(ForestConfiguration configuration)
+        {
+            foreach (var position in configuration.MonstersPosition)
+            {
+                this.Grille[position[0], position[1]].Type = CaseType.Monstre;
+            }
+
+            foreach (var position in configuration.CavesPosition)
+            {
+                this.Grille[position[0], position[1]].Type = CaseType.Crevasse;
+            }
+
+            this.Grille[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CaseType.Portail;
+
+            InitNeighborhoodStatusCase();
+
+            spawn = configuration.PlayerPosition;
         }
 
         private int[] SelectVoidCaseForPlayerInit()
