@@ -13,10 +13,22 @@ namespace Wumpus
         public float ExistVent = -1;
         public float ExistLuminosite = -1;
 
+        public int DistanceRelative = 0;
+        public int Passage = Int32.MaxValue;
+
         private bool existMonsterNeighborhood = true;
         private bool existCaveNeighborhood = true;
         private float countMonsterNeighborhood = 4;// 4/8 <=> 50%
         private float countCaveNeighborhood = 4;// 4/8 <=> 50%
+
+        public int Line { get; private set; }
+        public int Column { get; private set; }
+
+        public Memory(int line, int column)
+        {
+            this.Line = line;
+            this.Column = column;
+        }
 
         internal static bool PositionExist(int l, int c, int size)
         {

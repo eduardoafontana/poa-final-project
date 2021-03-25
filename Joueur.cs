@@ -9,6 +9,7 @@ namespace Wumpus
         private int pos_l;
         private int pos_c;
         private Memory[,] memoire;
+        private Memory playerPosition;
         private int dim_foret;
         int score = 0;
         
@@ -23,7 +24,7 @@ namespace Wumpus
 
             for(int l = 0; l < dim_foret; l++){
                 for(int c = 0; c < dim_foret; c++){
-                    memoire[l,c] = new Wumpus.Memory();
+                    memoire[l,c] = new Wumpus.Memory(l, c);
                 }
             }
         }
@@ -95,61 +96,30 @@ namespace Wumpus
         //determiner la case la plus probable de contenir le portail
         public char Reflexion(){
             //parcours memoire pour trouver max proba portail
-            float proba_portail_max = 0;
-            for(int l = 0; l < memoire.GetLength(0); l++){
-                for(int c = 0; c < memoire.GetLength(1); c++){
-                    proba_portail_max = Math.Max(proba_portail_max, memoire[l,c].ProbabilityPortal);
-                }
-            }
+            float proba_portail_max = memoire.Cast<Memory>().Max(x => x.ProbabilityPortal);
 
             //parcours memoire pour trouver min proba crevasse pour max proba portail
             float proba_crevasse_min = 100;
-            for(int l = 0; l < memoire.GetLength(0); l++){
-                for(int c = 0; c < memoire.GetLength(1); c++){
-                    if(memoire[l,c].ProbabilityPortal == proba_portail_max){
-                        proba_crevasse_min = Math.Min(proba_crevasse_min, memoire[l,c].ProbabilityCave);
-                    }
-                }
-            }
+            proba_crevasse_min = memoire.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max).Min(x => x.ProbabilityCave);
 
             //calculer eloignement de chaque case portail avec proba la plus forte
-            int[,] eloignement = new int[dim_foret, dim_foret];
-            for(int l = 0; l < eloignement.GetLength(0); l++){
-                for(int c = 0; c < eloignement.GetLength(1); c++){
-                    eloignement[l,c] = Nb_cases_vers(l, c);
-                }
-            }
-            eloignement[pos_l, pos_c] = 0;
+            memoire.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = Nb_cases_vers(item.Line, item.Column));
+
+            playerPosition.DistanceRelative = 0;
             
             //trouver la distance la plus faible avec proba portail la plus forte et min proba crevasse
             int case_la_plus_proche = Int32.MaxValue;
-            for(int l = 0; l < memoire.GetLength(0); l++){
-                for(int c = 0; c < memoire.GetLength(1); c++){
-                    if(memoire[l,c].ProbabilityPortal == proba_portail_max && memoire[l,c].ProbabilityCave == proba_crevasse_min){
-                        case_la_plus_proche = Math.Min(case_la_plus_proche, eloignement[l,c]);
-                    }
-                }
-            }
+            case_la_plus_proche = memoire.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min).Min(x => x.DistanceRelative);
 
             //trouver une case
-            int lf = -1;
-            int cf = -1;
-            for(int l = 0; l < memoire.GetLength(0); l++){
-                for(int c = 0; c < memoire.GetLength(1); c++){
-                    if(memoire[l,c].ProbabilityPortal == proba_portail_max && memoire[l,c].ProbabilityCave == proba_crevasse_min && eloignement[l,c] == case_la_plus_proche){
-                        lf = l;
-                        cf = c;
-                    }
-                }
-            }
+            Memory caseToGo = memoire.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
 
             //si c'est notre case, prendre le portail
-            if(pos_l == lf && pos_c == cf){
+            if(caseToGo == playerPosition)
                 return 'P';
-            }
 
             //sinon se diriger vers la case
-            return Direction_vers(lf, cf);
+            return Direction_vers(caseToGo.Line, caseToGo.Column);
         }
 
 
@@ -214,6 +184,7 @@ namespace Wumpus
                     pos_l = l;
                     pos_c = c;
                     memoire[pos_l,pos_c].AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
+                    playerPosition = memoire[pos_l,pos_c];
                     test = true;
                 }
             }
@@ -223,40 +194,20 @@ namespace Wumpus
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
         public int Nb_cases_vers(int lf, int cf){
+            memoire.Cast<Memory>().ToList().ForEach(item => item.Passage = Int32.MaxValue);
+
+            playerPosition.Passage = 0;
+
             int n_N = Int32.MaxValue;
             int n_S = Int32.MaxValue;
             int n_W = Int32.MaxValue;
             int n_E = Int32.MaxValue;
-            int l0 = pos_l;
-            int c0 = pos_c;
-            int[,] passage = new int[dim_foret, dim_foret];
-            for(int i = 0; i < dim_foret; i++){
-                for(int j = 0; j < dim_foret; j++){
-                    passage[i,j] = Int32.MaxValue;
-                }
-            }
-            passage[l0,c0] = 0;
-            try{
-                n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, passage, 1);
-            }
-            catch{
-            }
-            try{
-                n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, passage, 1);
-            }
-            catch{
-            }
-            try{
-                n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, passage, 1);
-            }
-            catch{
-            }
-            try{
-                n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, passage, 1);
-            }
-            catch{
-            }
-            //Console.WriteLine(n_N + " " + n_S + " " + n_W + " " + n_E);
+            
+            n_N = Direction_vers_recursif(lf, cf, playerPosition.Line - 1, playerPosition.Column, 1);
+            n_S = Direction_vers_recursif(lf, cf, playerPosition.Line + 1, playerPosition.Column, 1);
+            n_W = Direction_vers_recursif(lf, cf, playerPosition.Line, playerPosition.Column - 1, 1);
+            n_E = Direction_vers_recursif(lf, cf, playerPosition.Line, playerPosition.Column + 1, 1);
+
             int[] list_n = {n_N, n_S, n_W, n_E};
             return list_n.Min();
         }
@@ -269,40 +220,33 @@ namespace Wumpus
             int n_E = Int32.MaxValue;
             int l0 = pos_l;
             int c0 = pos_c;
-            int[,] passage = new int[dim_foret, dim_foret];
+
             for(int i = 0; i < dim_foret; i++){
                 for(int j = 0; j < dim_foret; j++){
-                    passage[i,j] = Int32.MaxValue;
+                    memoire[i,j].Passage = Int32.MaxValue;
                 }
             }
-            passage[l0,c0] = 0;
-            try{
+
+            memoire[l0,c0].Passage = 0;
+            if(Memory.PositionExist(l0 - 1, c0, memoire.GetLength(0))){
                 if(memoire[l0 - 1, c0].ProbabilityCave < 100){
-                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, passage, 1);
+                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, 1);
                 }
             }
-            catch{
-            }
-            try{
+            if(Memory.PositionExist(l0 + 1, c0, memoire.GetLength(0))){
                 if(memoire[l0 + 1, c0].ProbabilityCave < 100){
-                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, passage, 1);
+                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, 1);
                 }
             }
-            catch{
-            }
-            try{
+            if(Memory.PositionExist(l0, c0 - 1, memoire.GetLength(0))){
                 if(memoire[l0, c0 - 1].ProbabilityCave < 100){
-                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, passage, 1);
+                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, 1);
                 }
             }
-            catch{
-            }
-            try{
+            if(Memory.PositionExist(l0, c0 + 1, memoire.GetLength(0))){
                 if(memoire[l0, c0 + 1].ProbabilityCave < 100){
-                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, passage, 1);
+                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, 1);
                 }
-            }
-            catch{
             }
             //Console.WriteLine(n_N + " " + n_S + " " + n_W + " " + n_E);
             int[] list_n = {n_N, n_S, n_W, n_E};
@@ -325,46 +269,42 @@ namespace Wumpus
         }
 
         //permet de trouver un chemin evitant les crevasses (les montres ne sont pas pris en compte)
-        public int Direction_vers_recursif(int lf, int cf, int l0, int c0, int[,] passage, int n){
-            passage[l0,c0] = n;
+        public int Direction_vers_recursif(int lf, int cf, int l0, int c0, int n){
+            if(!Memory.PositionExist(l0, c0, memoire.GetLength(0)))
+                return Int32.MaxValue;
+                
+            memoire[l0,c0].Passage = n;
+
             if(l0 == lf && c0 == cf){
                 return n;
             }
-            if((cf == c0 && lf == l0 - 1) || (cf == c0 && lf == l0 + 1) || (cf == c0 + 1 && lf == l0) || (cf == c0 - 1 && lf == l0)){
-                return n + 1;
-            }
+
             int n_N = Int32.MaxValue;
             int n_S = Int32.MaxValue;
             int n_W = Int32.MaxValue;
             int n_E = Int32.MaxValue;
-            try{
-                if(memoire[l0 - 1, c0].ProbabilityCave < 100 && passage[l0 - 1,c0] > n + 1){
-                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, passage, n + 1);
+
+            if(Memory.PositionExist(l0 - 1, c0, memoire.GetLength(0))){
+                if(memoire[l0 - 1, c0].ProbabilityCave < 100 && memoire[l0 - 1,c0].Passage > n + 1){
+                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, n + 1);
                 }
             }
-            catch{
-            }
-            try{
-                if(memoire[l0 + 1, c0].ProbabilityCave < 100 && passage[l0 + 1,c0] > n + 1){
-                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, passage, n + 1);
+            if(Memory.PositionExist(l0 + 1, c0, memoire.GetLength(0))){
+                if(memoire[l0 + 1, c0].ProbabilityCave < 100 && memoire[l0 + 1,c0].Passage > n + 1){
+                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, n + 1);
                 }
             }
-            catch{
-            }
-            try{
-                if(memoire[l0, c0 - 1].ProbabilityCave < 100 && passage[l0,c0 - 1] > n + 1){
-                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, passage, n + 1);
+            if(Memory.PositionExist(l0, c0 - 1, memoire.GetLength(0))){
+                if(memoire[l0, c0 - 1].ProbabilityCave < 100 && memoire[l0,c0 - 1].Passage > n + 1){
+                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, n + 1);
                 }
             }
-            catch{
-            }
-            try{
-                if(memoire[l0, c0 + 1].ProbabilityCave < 100 && passage[l0,c0 + 1] > n + 1){
-                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, passage, n + 1);
+            if(Memory.PositionExist(l0, c0 + 1, memoire.GetLength(0))){
+                if(memoire[l0, c0 + 1].ProbabilityCave < 100 && memoire[l0,c0 + 1].Passage > n + 1){
+                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, n + 1);
                 }
             }
-            catch{
-            }
+
             int[] list_n = {n_N, n_S, n_W, n_E};
             return list_n.Min();
         }

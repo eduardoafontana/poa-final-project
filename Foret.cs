@@ -117,14 +117,22 @@ namespace Wumpus
                 if(Grille[coo[0],coo[1]].Type == CaseType.Monstre){
                     Grille[coo[0],coo[1]].Type = CaseType.Vide;
                 }
+
                 int[] cooN = {coo[0]+1, coo[1]};
-                UpdateNeighborhoodStatusCase(cooN);
+                //if(Memory.PositionExist(coo[0]+1, coo[1], Grille.GetLength(0))) //TODO
+                    UpdateNeighborhoodStatusCase(cooN);
+
                 int[] cooS = {coo[0]-1, coo[1]};
-                UpdateNeighborhoodStatusCase(cooS);
+                //if(Memory.PositionExist(coo[0]-1, coo[1], Grille.GetLength(0))) //TODO
+                    UpdateNeighborhoodStatusCase(cooS);
+
                 int[] cooW = {coo[0], coo[1]-1};
-                UpdateNeighborhoodStatusCase(cooW);
+                //if(Memory.PositionExist(coo[0], coo[1]-1, Grille.GetLength(0))) //TODO
+                    UpdateNeighborhoodStatusCase(cooW);
+
                 int[] cooE = {coo[0], coo[1]+1};
-                UpdateNeighborhoodStatusCase(cooE);
+                //if(Memory.PositionExist(coo[0], coo[1]+1, Grille.GetLength(0))) //TODO
+                    UpdateNeighborhoodStatusCase(cooE);
             }
         }
 
