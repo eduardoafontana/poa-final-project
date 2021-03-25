@@ -119,19 +119,19 @@ namespace Wumpus
                 }
 
                 int[] cooN = {coo[0]+1, coo[1]};
-                //if(Memory.PositionExist(coo[0]+1, coo[1], Grille.GetLength(0))) //TODO
+                if(Memory.PositionExist(coo[0]+1, coo[1], Grille.GetLength(0))) //TODO
                     UpdateNeighborhoodStatusCase(cooN);
 
                 int[] cooS = {coo[0]-1, coo[1]};
-                //if(Memory.PositionExist(coo[0]-1, coo[1], Grille.GetLength(0))) //TODO
+                if(Memory.PositionExist(coo[0]-1, coo[1], Grille.GetLength(0))) //TODO
                     UpdateNeighborhoodStatusCase(cooS);
 
                 int[] cooW = {coo[0], coo[1]-1};
-                //if(Memory.PositionExist(coo[0], coo[1]-1, Grille.GetLength(0))) //TODO
+                if(Memory.PositionExist(coo[0], coo[1]-1, Grille.GetLength(0))) //TODO
                     UpdateNeighborhoodStatusCase(cooW);
 
                 int[] cooE = {coo[0], coo[1]+1};
-                //if(Memory.PositionExist(coo[0], coo[1]+1, Grille.GetLength(0))) //TODO
+                if(Memory.PositionExist(coo[0], coo[1]+1, Grille.GetLength(0))) //TODO
                     UpdateNeighborhoodStatusCase(cooE);
             }
         }

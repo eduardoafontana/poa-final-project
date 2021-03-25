@@ -7,19 +7,36 @@ namespace Wumpus
     public class Joueur
     {
         private string name;
-        private int pos_l;
-        private int pos_c;
         private Memory[,] memoire;
         private Memory playerPosition;
-        private int dim_foret;
         int score = 0;
         
         public String messages = String.Empty;
 
+        public int Pos_l
+        {
+            get { return playerPosition.Line; }
+        }
+
+        public int Pos_c
+        {
+            get { return playerPosition.Column; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
+
         public Joueur(string name, int dim_foret)
         {
             this.name = name;
-            this.dim_foret = dim_foret;
 
             memoire = new Memory[dim_foret, dim_foret];
 
@@ -35,28 +52,28 @@ namespace Wumpus
             ObserveAndMemorizeCurrentPosition(foret.Grille);
             ObserveAndMemorizeAllForest();
             
-            char d = Reflexion();
+            MemoryManager.Node node = Reflexion();
             
-            if(d == 'P'){
+            if(node.Direction == 'P'){
                 Console.WriteLine(name + " prend le portail et passe au niveau suivant.");
                 messages += name + " prend le portail et passe au niveau suivant." + Environment.NewLine;
             }
             else{
-                Console.WriteLine(name + " va vers " + d);
-                messages += name + " va vers " + d + Environment.NewLine;
+                Console.WriteLine(name + " va vers " + node.Direction);
+                messages += name + " va vers " + node.Direction + Environment.NewLine;
             }
            
-            return Bouger_vers(d, foret);
+            return Bouger_vers(node, foret);
         }
 
         public void ObserveAndMemorizeCurrentPosition(Case[,] foret)
         { 
-            memoire[pos_l, pos_c].CalculateLocalProbabilityMonster(foret[pos_l,pos_c].Type);
-            memoire[pos_l, pos_c].CalculateLocalProbabilityCave(foret[pos_l,pos_c].Type);
+            playerPosition.CalculateLocalProbabilityMonster(foret[playerPosition.Line, playerPosition.Column].Type);
+            playerPosition.CalculateLocalProbabilityCave(foret[playerPosition.Line, playerPosition.Column].Type);
             
-            memoire[pos_l, pos_c].CheckExistOdor(foret[pos_l,pos_c].Odeur);
-            memoire[pos_l, pos_c].CheckExistVent(foret[pos_l,pos_c].VitesseVent);
-            memoire[pos_l, pos_c].CheckExistLuminosite(foret[pos_l,pos_c].Luminosite);
+            playerPosition.CheckExistOdor(foret[playerPosition.Line, playerPosition.Column].Odeur);
+            playerPosition.CheckExistVent(foret[playerPosition.Line, playerPosition.Column].VitesseVent);
+            playerPosition.CheckExistLuminosite(foret[playerPosition.Line, playerPosition.Column].Luminosite);
         }
 
 
@@ -75,7 +92,7 @@ namespace Wumpus
                 itemMemory.ResetProbabilityVariables();
 
                 MemoryManager.GetInstance().OnNeighborhoods()
-                .Where(neighborhood => Wumpus.Memory.PositionExist(neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column), dim_foret))
+                .Where(neighborhood => Wumpus.Memory.PositionExist(neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column), memoire.GetLength(0)))
                 .ToList()
                 .ForEach(neighborhood => {
                     itemMemory.AnalyzeOdorNeighborhood(memoire[neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column)].ExistOdeur);
@@ -88,7 +105,7 @@ namespace Wumpus
         }
 
         //determiner la case la plus probable de contenir le portail
-        public char Reflexion(){
+        public MemoryManager.Node Reflexion(){
             //parcours memoire pour trouver max proba portail
             float proba_portail_max = memoire.Cast<Memory>().Max(x => x.ProbabilityPortal);
 
@@ -110,7 +127,7 @@ namespace Wumpus
 
             //si c'est notre case, prendre le portail
             if(caseToGo == playerPosition)
-                return 'P';
+                return new MemoryManager.Node('P', 0);
 
             //sinon se diriger vers la case
             return Direction_vers(caseToGo.Line, caseToGo.Column);
@@ -118,70 +135,37 @@ namespace Wumpus
 
 
         //bouge le joueur vers l'une des 4 directions, si la proba d'un monstre sur la case d'arrivee est non nul, le joueur jete une pierre
-        public bool Bouger_vers(char d, Foret foret){
+        public bool Bouger_vers(MemoryManager.Node d, Foret foret){
             score -= 1;
-            if(d == 'N'){
-                try{
-                    if(memoire[pos_l - 1, pos_c].ProbabilityMonster > 0){
-                        Jeter_pierre('N', foret);
-                    }
-                }
-                catch{}
-                Placer(pos_l - 1, pos_c);
+
+            if(d.Direction == 'X')
+            {
                 return false;
             }
-            if(d == 'S'){
-                try{
-                    if(memoire[pos_l + 1, pos_c].ProbabilityMonster > 0){
-                        Jeter_pierre('S', foret);
-                    }
+            else if(d.Direction == 'P')
+            {
+                return true;
+            }
+            else
+            {
+                if(memoire[d.GetLine(playerPosition.Line), d.GetColumn(playerPosition.Column)].ProbabilityMonster > 0){
+                    Jeter_pierre(d, foret);
                 }
-                catch{}
-                Placer(pos_l + 1, pos_c);
+
+                Placer(d.GetLine(playerPosition.Line), d.GetColumn(playerPosition.Column));
+
                 return false;
             }
-            if(d == 'W'){
-                try{
-                    if(memoire[pos_l, pos_c - 1].ProbabilityMonster > 0){
-                        Jeter_pierre('W', foret);
-                    }
-                }
-                catch{}
-                Placer(pos_l, pos_c - 1);
-                return false;
-            }
-            if(d == 'E'){
-                try{
-                    if(memoire[pos_l, pos_c + 1].ProbabilityMonster > 0){
-                        Jeter_pierre('E', foret);
-                    }
-                }
-                catch{}
-                Placer(pos_l, pos_c + 1);
-                return false;
-            }
-            if(d == 'P'){
-                return Prendre_portail(foret.Grille);
-            }
-            Console.WriteLine("/!\\ " + d);
-            //Console.ReadLine();
-            return false;
         }
-
-
 
         //place le joueur sur la grille
         public bool Placer(int l, int c){
             bool test = false;
-            if(0 <= l && l < dim_foret){
-                if(0 <= c && c < dim_foret){
-                    pos_l = l;
-                    pos_c = c;
-                    memoire[pos_l,pos_c].AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
-                    playerPosition = memoire[pos_l,pos_c];
-                    test = true;
-                }
-            }
+
+            playerPosition = memoire[l, c];
+            playerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
+            test = true;
+
             return test;
         }
 
@@ -200,63 +184,34 @@ namespace Wumpus
         }
 
         //renvoie la direction pour se rendre à l'objectif situé en [lf, cf]
-        public char Direction_vers(int lf, int cf){
-            int n_N = Int32.MaxValue;
-            int n_S = Int32.MaxValue;
-            int n_W = Int32.MaxValue;
-            int n_E = Int32.MaxValue;
-            int l0 = pos_l;
-            int c0 = pos_c;
+        public MemoryManager.Node Direction_vers(int lf, int cf)
+        {
+            int l0 = playerPosition.Line;
+            int c0 = playerPosition.Column;
 
-            for(int i = 0; i < dim_foret; i++){
-                for(int j = 0; j < dim_foret; j++){
-                    memoire[i,j].Passage = Int32.MaxValue;
-                }
-            }
+            memoire.Cast<Memory>().ToList().ForEach(x => x.Passage = Int32.MaxValue);
 
-            memoire[l0,c0].Passage = 0;
-            if(Memory.PositionExist(l0 - 1, c0, memoire.GetLength(0))){
-                if(memoire[l0 - 1, c0].ProbabilityCave < 100){
-                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, 1);
-                }
-            }
-            if(Memory.PositionExist(l0 + 1, c0, memoire.GetLength(0))){
-                if(memoire[l0 + 1, c0].ProbabilityCave < 100){
-                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, 1);
-                }
-            }
-            if(Memory.PositionExist(l0, c0 - 1, memoire.GetLength(0))){
-                if(memoire[l0, c0 - 1].ProbabilityCave < 100){
-                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, 1);
-                }
-            }
-            if(Memory.PositionExist(l0, c0 + 1, memoire.GetLength(0))){
-                if(memoire[l0, c0 + 1].ProbabilityCave < 100){
-                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, 1);
-                }
-            }
-            //Console.WriteLine(n_N + " " + n_S + " " + n_W + " " + n_E);
-            int[] list_n = {n_N, n_S, n_W, n_E};
-            if(list_n.Min() == Int32.MaxValue){
-                return 'X';
-            }
-            if(list_n.Min() == n_N){
-                return 'N';
-            }
-            if(list_n.Min() == n_S){
-                return 'S';
-            }
-            if(list_n.Min() == n_W){
-                return 'W';
-            }
-            if(list_n.Min() == n_E){
-                return 'E';
-            }
-            return 'X';
+            playerPosition.Passage = 0;
+
+            List<MemoryManager.Node> listMemories = MemoryManager.GetInstance().OnNeighborhoods()
+            .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), memoire.GetLength(0)))
+            .Where(x => memoire[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100)
+            .Select(item => 
+                new MemoryManager.Node(item.GetLine(), item.GetColumn(), item.Direction, Direction_vers_recursif(lf, cf, item.GetLine(l0), item.GetColumn(c0), 1))
+            ).ToList();
+
+            if(listMemories.Count() == 0)
+                return new MemoryManager.Node('X', 0);
+
+            if(listMemories.Min().Distance == Int32.MaxValue)
+                return new MemoryManager.Node('X', 0);
+            else
+                return listMemories.Min();
         }
 
         //permet de trouver un chemin evitant les crevasses (les montres ne sont pas pris en compte)
-        public int Direction_vers_recursif(int lf, int cf, int l0, int c0, int n){
+        public int Direction_vers_recursif(int lf, int cf, int l0, int c0, int n)
+        {
             if(!Memory.PositionExist(l0, c0, memoire.GetLength(0)))
                 return Int32.MaxValue;
                 
@@ -276,43 +231,13 @@ namespace Wumpus
             return list_n.Count() > 0 ? list_n.Min() : Int32.MaxValue;
         }
 
-        public void Jeter_pierre(char d, Foret foret){
+        public void Jeter_pierre(MemoryManager.Node d, Foret foret){
             score -= 10;
-            Console.WriteLine(name + " lance une pierre vers le " + d);
-            messages += name + " lance une pierre vers le " + d + Environment.NewLine;
-            if(d == 'N'){
-                foret.Utilisation_de_roches(pos_l - 1, pos_c);
-            }
-            if(d == 'S'){
-                foret.Utilisation_de_roches(pos_l + 1, pos_c);
-            }
-            if(d == 'W'){
-                foret.Utilisation_de_roches(pos_l, pos_c - 1);
-            }
-            if(d == 'E'){
-                foret.Utilisation_de_roches(pos_l, pos_c + 1);
-            }
-        }
 
-        public bool Prendre_portail(Case[,] foret)
-        {
-            return (foret[pos_l, pos_c].Type == CaseType.Portail);
-        }
+            Console.WriteLine(name + " lance une pierre vers le " + d.Direction);
+            messages += name + " lance une pierre vers le " + d.Direction + Environment.NewLine;
 
-        public int Pos_l{
-            get{return pos_l;}
-        }
-        public int Pos_c{
-            get{return pos_c;}
-        }
-
-        public string Name{
-            get{return name;}
-        }
-
-        public int Score{
-            get{return score;}
-            set{score = value;}
+            foret.Utilisation_de_roches(d.GetLine(playerPosition.Line), d.GetColumn(playerPosition.Column));
         }
     }
 }

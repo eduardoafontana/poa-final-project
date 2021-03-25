@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -8,15 +9,32 @@ namespace Wumpus
 {
     public class MemoryManager
     {
-        public class Node
+        public class Node : IComparable<Node>
         {
             private int line;
             private int column;
+            public char Direction { get; private set; }
+            public int Distance { get; private set; }
 
-            public Node(int line, int column)
+            public Node(int line, int column, char direction)
             {
                 this.line = line;
                 this.column = column;
+                this.Direction = direction;
+            }
+
+            public Node(char direction, int distance)
+            {
+                this.Direction = direction;
+                this.Distance = distance;
+            }
+
+            public Node(int line, int column, char direction, int distance)
+            {
+                this.line = line;
+                this.column = column;
+                this.Direction = direction;
+                this.Distance = distance;
             }
 
             public int GetLine(int delta)
@@ -24,9 +42,24 @@ namespace Wumpus
                 return this.line + delta;
             }
 
+            public int GetLine()
+            {
+                return this.line;
+            }
+
             public int GetColumn(int delta)
             {
                 return this.column + delta;
+            }
+
+            public int GetColumn()
+            {
+                return this.column;
+            }
+
+            public int CompareTo([AllowNull] Node other)
+            {
+                return this.Distance.CompareTo(other.Distance);
             }
         }
 
@@ -34,10 +67,10 @@ namespace Wumpus
 
         private void InitNodes()
         {
-            listNodes.Add(new Node(-1, 0));
-            listNodes.Add(new Node(1, 0));
-            listNodes.Add(new Node(0, -1));
-            listNodes.Add(new Node(0, 1));
+            listNodes.Add(new Node(-1, 0, 'N'));
+            listNodes.Add(new Node(1, 0, 'S'));
+            listNodes.Add(new Node(0, -1, 'W'));
+            listNodes.Add(new Node(0, 1, 'E'));
         }
 
         public List<Node> OnNeighborhoods()
