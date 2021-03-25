@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Wumpus
@@ -66,31 +67,24 @@ namespace Wumpus
         //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, vent)
         public void ObserveAndMemorizeAllForest()
         {
-            for(int l = 0; l < memoire.GetLength(0); l++){
-                for(int c = 0; c < memoire.GetLength(1); c++){
+            memoire.Cast<Memory>().ToList().ForEach(itemMemory => itemMemory.CalculateProbabilityPortal());
 
-                    memoire[l,c].CalculateProbabilityPortal();
+            memoire.Cast<Memory>()
+            .Where(itemMemory => itemMemory.IsCaseIsNotExplored())
+            .ToList().ForEach(itemMemory => {
+                itemMemory.ResetProbabilityVariables();
 
-                    if(memoire[l,c].IsCaseAlreadyExplored())
-                        continue;
-
-                    memoire[l,c].ResetProbabilityVariables();
-
-                    // verification des cases N S W E
-                    int[,] delta = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-                    for(int i = 0; i < delta.GetLength(0); i++)
-                    {
-                        if(!Wumpus.Memory.PositionExist(l + delta[i,0], c + delta[i,1], dim_foret))
-                            continue;
-
-                        memoire[l,c].AnalyzeOdorNeighborhood(memoire[l + delta[i,0], c + delta[i,1]].ExistOdeur);
-                        memoire[l,c].AnalyzeVentNeighborhood(memoire[l + delta[i,0], c + delta[i,1]].ExistVent);
-                    }
-                    
-                    memoire[l,c].CalculateProbabilityMonster();
-                    memoire[l,c].CalculateProbabilityCave();
-                }
-            }
+                MemoryManager.GetInstance().OnNeighborhoods()
+                .Where(neighborhood => Wumpus.Memory.PositionExist(neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column), dim_foret))
+                .ToList()
+                .ForEach(neighborhood => {
+                    itemMemory.AnalyzeOdorNeighborhood(memoire[neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column)].ExistOdeur);
+                    itemMemory.AnalyzeVentNeighborhood(memoire[neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column)].ExistVent);
+                });
+                
+                itemMemory.CalculateProbabilityMonster();
+                itemMemory.CalculateProbabilityCave();
+            });
         }
 
         //determiner la case la plus probable de contenir le portail
@@ -197,18 +191,11 @@ namespace Wumpus
             memoire.Cast<Memory>().ToList().ForEach(item => item.Passage = Int32.MaxValue);
 
             playerPosition.Passage = 0;
-
-            int n_N = Int32.MaxValue;
-            int n_S = Int32.MaxValue;
-            int n_W = Int32.MaxValue;
-            int n_E = Int32.MaxValue;
             
-            n_N = Direction_vers_recursif(lf, cf, playerPosition.Line - 1, playerPosition.Column, 1);
-            n_S = Direction_vers_recursif(lf, cf, playerPosition.Line + 1, playerPosition.Column, 1);
-            n_W = Direction_vers_recursif(lf, cf, playerPosition.Line, playerPosition.Column - 1, 1);
-            n_E = Direction_vers_recursif(lf, cf, playerPosition.Line, playerPosition.Column + 1, 1);
+            List<int> list_n = MemoryManager.GetInstance().OnNeighborhoods().Select(item => 
+                Direction_vers_recursif(lf, cf, item.GetLine(playerPosition.Line), item.GetColumn(playerPosition.Column), 1)
+            ).ToList();
 
-            int[] list_n = {n_N, n_S, n_W, n_E};
             return list_n.Min();
         }
 
@@ -279,34 +266,14 @@ namespace Wumpus
                 return n;
             }
 
-            int n_N = Int32.MaxValue;
-            int n_S = Int32.MaxValue;
-            int n_W = Int32.MaxValue;
-            int n_E = Int32.MaxValue;
+            List<int> list_n = MemoryManager.GetInstance().OnNeighborhoods()
+            .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), memoire.GetLength(0)))
+            .Where(x => memoire[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100 && memoire[x.GetLine(l0), x.GetColumn(c0)].Passage > n + 1)
+            .Select(item => 
+                Direction_vers_recursif(lf, cf, item.GetLine(l0), item.GetColumn(c0), n + 1)
+            ).ToList();
 
-            if(Memory.PositionExist(l0 - 1, c0, memoire.GetLength(0))){
-                if(memoire[l0 - 1, c0].ProbabilityCave < 100 && memoire[l0 - 1,c0].Passage > n + 1){
-                    n_N = Direction_vers_recursif(lf, cf, l0 - 1, c0, n + 1);
-                }
-            }
-            if(Memory.PositionExist(l0 + 1, c0, memoire.GetLength(0))){
-                if(memoire[l0 + 1, c0].ProbabilityCave < 100 && memoire[l0 + 1,c0].Passage > n + 1){
-                    n_S = Direction_vers_recursif(lf, cf, l0 + 1, c0, n + 1);
-                }
-            }
-            if(Memory.PositionExist(l0, c0 - 1, memoire.GetLength(0))){
-                if(memoire[l0, c0 - 1].ProbabilityCave < 100 && memoire[l0,c0 - 1].Passage > n + 1){
-                    n_W = Direction_vers_recursif(lf, cf, l0, c0 - 1, n + 1);
-                }
-            }
-            if(Memory.PositionExist(l0, c0 + 1, memoire.GetLength(0))){
-                if(memoire[l0, c0 + 1].ProbabilityCave < 100 && memoire[l0,c0 + 1].Passage > n + 1){
-                    n_E = Direction_vers_recursif(lf, cf, l0, c0 + 1, n + 1);
-                }
-            }
-
-            int[] list_n = {n_N, n_S, n_W, n_E};
-            return list_n.Min();
+            return list_n.Count() > 0 ? list_n.Min() : Int32.MaxValue;
         }
 
         public void Jeter_pierre(char d, Foret foret){

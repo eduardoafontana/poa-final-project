@@ -93,9 +93,9 @@ namespace Wumpus
             }
         }
 
-        internal bool IsCaseAlreadyExplored()
+        internal bool IsCaseIsNotExplored()
         {
-            return this.AmountOfPassage != 0;
+            return this.AmountOfPassage == 0;
         }
 
         internal void AnalyzeOdorNeighborhood(float neighborhoodExistOdeur)
