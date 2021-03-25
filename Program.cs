@@ -6,7 +6,7 @@ namespace Wumpus
     {
         static void Main(string[] args)
         {
-            Engine engine = new Engine();
+            Game engine = new Game();
             engine.Start();
         }
     }

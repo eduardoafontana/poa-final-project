@@ -133,7 +133,6 @@ namespace Wumpus
             return Direction_vers(caseToGo.Line, caseToGo.Column);
         }
 
-
         //bouge le joueur vers l'une des 4 directions, si la proba d'un monstre sur la case d'arrivee est non nul, le joueur jete une pierre
         public bool Bouger_vers(MemoryManager.Node d, Foret foret){
             score -= 1;
@@ -168,7 +167,6 @@ namespace Wumpus
 
             return test;
         }
-
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
         public int Nb_cases_vers(int lf, int cf){
