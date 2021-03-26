@@ -15,9 +15,8 @@ namespace Wumpus
 
         public Foret(int size)
         {
-            this.Size = size;
-            this.Size++;
-            this.Size++;
+            this.Size = size + GameConfiguration.ForestMinimumDimension;
+
             this.Grille = new Case[this.Size, this.Size];
 
             InitializeGrid();

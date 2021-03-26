@@ -22,17 +22,6 @@ namespace tests
             configuration.CavesPosition = new List<int[]>() { new int[] {0, 0}, new int[] {2, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2}, new int[] {2, 3}, new int[] {3, 1} };
 
-            string playerMenssage = "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob lance une pierre vers le W" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
-
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
                                     "M : monstre" + "\n" +
@@ -46,7 +35,17 @@ namespace tests
                                     "  | omvt | om | vt |" + "\n" +
                                     " om |  | omvt | om |" + "\n" +
                                     Environment.NewLine +
-                                    "Bob est apparu en case [0,1]" + Environment.NewLine;
+                                    "Bob est apparu en case [0,1]" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + Environment.NewLine +
+                                    "Bob va vers N" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + Environment.NewLine +
+                                    "Bob va vers W" + Environment.NewLine +
+                                    "Bob va vers W" + Environment.NewLine +
+                                    "Bob lance une pierre vers le W" + Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
 
             int level = 2;
 
@@ -54,7 +53,6 @@ namespace tests
             int score_global = partie.Jouer();
 
             Assert.AreEqual(matchMessage, partie.messages);
-            Assert.AreEqual(playerMenssage, partie.joueur.messages);
             Assert.AreEqual(123, score_global);
         }
 
@@ -66,36 +64,6 @@ namespace tests
             configuration.PortalPosition = new int[2] {3, 3};
             configuration.CavesPosition = new List<int[]>() { new int[] {2, 3}, new int[] {2, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2}, new int[] {1, 1}, new int[] {3, 2} };
-
-            string playerMenssage = "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob lance une pierre vers le N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
 
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
@@ -111,10 +79,39 @@ namespace tests
                                     "  | om | vt | ltomvt |" + "\n" +
                                     Environment.NewLine +
                                     "Bob est apparu en case [0,0]" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + Environment.NewLine +
+                                    "Bob va vers N" + Environment.NewLine +
                                     "Bob est mort" + Environment.NewLine +
                                     "Bob est apparu en case [0,0]" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers N" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + Environment.NewLine +
+                                    "Bob va vers N" + Environment.NewLine +
+                                    "Bob lance une pierre vers le N" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + Environment.NewLine +
                                     "Bob est mort" + Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + Environment.NewLine;;
+                                    "Bob est apparu en case [0,0]" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers S" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob va vers E" + Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
 
             int level = 2;
 
@@ -122,7 +119,6 @@ namespace tests
             int score_global = partie.Jouer();
 
             Assert.AreEqual(matchMessage, partie.messages);
-            Assert.AreEqual(playerMenssage, partie.joueur.messages);
             Assert.AreEqual(-252, score_global);
         }
     }

@@ -5,68 +5,131 @@ namespace Wumpus
     public class Partie
     {
         private int score;
-        private int niveau;
-        private Foret foret_magique;
-        public Joueur joueur;
+        private int level;
+        private Foret magicForest;
+        public Player player;
 
         public String messages = String.Empty;
 
-        public Partie(int niveau){
+        public Partie(int level)
+        {
             score = 0;
-            this.niveau = niveau;
+            this.level = level;
 
-            foret_magique = new Foret(niveau);
-            foret_magique.InitForest();
+            magicForest = new Foret(level);
+            magicForest.InitForest();
 
-            joueur = new Joueur("Bob", 2 + niveau);
+            player = new Player("Bob", magicForest.Size);
         }
 
-        public Partie(int niveau, ForestConfiguration forestConfiguration){
+        public Partie(int level, ForestConfiguration forestConfiguration)
+        {
             score = 0;
-            this.niveau = niveau;
+            this.level = level;
             
-            foret_magique = new Foret(niveau);
-            foret_magique.InitForestForTests(forestConfiguration);
+            magicForest = new Foret(level);
+            magicForest.InitForestForTests(forestConfiguration);
 
-            joueur = new Joueur("Bob", 2 + niveau);
+            player = new Player("Bob", magicForest.Size);
         }
 
-        public int Jouer(){
-            Console.WriteLine(foret_magique);
-            messages += foret_magique + Environment.NewLine;
+        public int Jouer()
+        {
+            Console.WriteLine(magicForest);
+            messages += magicForest + Environment.NewLine;
 
             bool partie_en_cours = true;
 
-            do{
-                joueur.Placer(foret_magique.PlayerSpawnL, foret_magique.PlayerSpawnC);
+            do
+            {
+                player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
                 bool joueur_en_vie = true;
 
-                Console.WriteLine(joueur.Name + " est apparu en case [" + joueur.Pos_l + "," + joueur.Pos_c + "]");
-                messages += joueur.Name + " est apparu en case [" + joueur.Pos_l + "," + joueur.Pos_c + "]" + Environment.NewLine;
-                do{
-                    partie_en_cours = !joueur.Jouer(foret_magique);
+                Console.WriteLine(player.Name + " est apparu en case [" + player.Pos_l + "," + player.Pos_c + "]");
+                messages += player.Name + " est apparu en case [" + player.Pos_l + "," + player.Pos_c + "]" + Environment.NewLine;
+
+                do
+                {
+                    MemoryManager.Node node = player.Play(magicForest);
+                    partie_en_cours = !Bouger_vers(node);
                     joueur_en_vie = Etat_Joueur();
-                }while(joueur_en_vie && partie_en_cours);
-                
-                if(joueur_en_vie == false){
-                    Console.WriteLine(joueur.Name + " est mort");
-                    messages += joueur.Name + " est mort" + Environment.NewLine;
-
-                    joueur.ObserveAndMemorizeCurrentPosition(foret_magique.Grille); // Review this call later
-                    joueur.Score -= (niveau + 2) * (niveau + 2) * 10; 
                 }
-            }while(partie_en_cours);
-            joueur.Score += (niveau + 2) * (niveau + 2) * 10; 
+                while(joueur_en_vie && partie_en_cours);
+                
+                if(joueur_en_vie == false)
+                {
+                    Console.WriteLine(player.Name + " est mort");
+                    messages += player.Name + " est mort" + Environment.NewLine;
 
-            return joueur.Score;
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grille); // Review this call later
+                    score -= this.CalculateScoreFromLevel(); 
+                }
+            }
+            while(partie_en_cours);
+
+            score += this.CalculateScoreFromLevel(); 
+
+            return score;
         }
 
-        public bool Etat_Joueur(){
-            CaseType type_case_j = foret_magique.Grille[joueur.Pos_l, joueur.Pos_c].Type;
-            if(type_case_j == CaseType.Monstre || type_case_j == CaseType.Crevasse){
+        private int CalculateScoreFromLevel()
+        {
+            return (level + 2) * (level + 2) * 10;
+        }
+
+        public bool Etat_Joueur()
+        {
+            CaseType type_case_j = magicForest.Grille[player.Pos_l, player.Pos_c].Type;
+
+            if(type_case_j == CaseType.Monstre || type_case_j == CaseType.Crevasse)
+            {
                 return false;
             }
+
             return true;
+        }
+
+        //bouge le joueur vers l'une des 4 directions, si la proba d'un monstre sur la case d'arrivee est non nul, le joueur jete une pierre
+        public bool Bouger_vers(MemoryManager.Node d)
+        {
+            if(d.Direction == 'P'){
+                Console.WriteLine(player.Name + " prend le portail et passe au niveau suivant.");
+                messages += player.Name + " prend le portail et passe au niveau suivant." + Environment.NewLine;
+            }
+            else{
+                Console.WriteLine(player.Name + " va vers " + d.Direction);
+                messages += player.Name + " va vers " + d.Direction + Environment.NewLine;
+            }
+
+            score -= 1;
+
+            if(d.Direction == 'X')
+            {
+                return false;
+            }
+            else if(d.Direction == 'P')
+            {
+                return true;
+            }
+            else
+            {
+                if(player.NeedThrowStone(d))
+                    Jeter_pierre(d);
+
+                player.UpdatePlayerPosition(d.GetLine(player.Pos_l), d.GetColumn(player.Pos_c));
+
+                return false;
+            }
+        }
+
+        public void Jeter_pierre(MemoryManager.Node d)
+        {
+            score -= 10;
+
+            Console.WriteLine(player.Name + " lance une pierre vers le " + d.Direction);
+            messages += player.Name + " lance une pierre vers le " + d.Direction + Environment.NewLine;
+
+            magicForest.Utilisation_de_roches(d.GetLine(player.Pos_l), d.GetColumn(player.Pos_c));
         }
     }
 }
