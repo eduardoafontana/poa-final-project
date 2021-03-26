@@ -7,13 +7,13 @@ using System.Reflection;
 
 namespace tests
 {
-    public class ForetNeighborhoodStatusTest
+    public class ForetNeighborStatusTest
     {
         [Test]
-        public void Neighborhood_Level1_Portal()
+        public void Neighbor_Level1_Portal()
         {
             int niveau = 1;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             for (int l = 0; l < foret.Grille.GetLength(0); l++)
@@ -29,10 +29,10 @@ namespace tests
         }
 
         [Test]
-        public void Neighborhood_Level1_Monster()
+        public void Neighbor_Level1_Monster()
         {
             int niveau = 1;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
 
             int limitRight = foret.Size - 1;
@@ -63,10 +63,10 @@ namespace tests
         }
 
         [Test]
-        public void Neighborhood_Level1_WindSpeed()
+        public void Neighbor_Level1_WindSpeed()
         {
             int niveau = 1;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
 
             int limitRight = foret.Size - 1;
@@ -109,7 +109,7 @@ namespace tests
 
             Enum value = CaseVitesseVent.Fort;
 
-            Foret foret = new Foret(1);
+            Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
             
             Assert.AreEqual(CaseVitesseVent.Faible,  foret.Grille[0,0].VitesseVent);
@@ -122,7 +122,7 @@ namespace tests
         [Test]
         public void TestPlayerSpawnPosition()
         {
-            Foret foret = new Foret(1);
+            Forest foret = new Forest(1);
             foret.InitForest();
 
             Assert.AreEqual(CaseType.Vide, foret.Grille[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);

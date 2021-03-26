@@ -73,7 +73,7 @@ namespace Wumpus
             listNodes.Add(new Node(0, 1, 'E'));
         }
 
-        public List<Node> OnNeighborhoods()
+        public List<Node> OnNeighbors()
         {
             return listNodes;
         }

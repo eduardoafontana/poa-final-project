@@ -16,10 +16,10 @@ namespace Wumpus
         public int DistanceRelative = 0;
         public int Passage = Int32.MaxValue;
 
-        private bool existMonsterNeighborhood = true;
-        private bool existCaveNeighborhood = true;
-        private float countMonsterNeighborhood = 4;// 4/8 <=> 50%
-        private float countCaveNeighborhood = 4;// 4/8 <=> 50%
+        private bool existMonsterNeighbor = true;
+        private bool existCaveNeighbor = true;
+        private float countMonsterNeighbor = 4;// 4/8 <=> 50%
+        private float countCaveNeighbor = 4;// 4/8 <=> 50%
 
         public int Line { get; private set; }
         public int Column { get; private set; }
@@ -98,48 +98,48 @@ namespace Wumpus
             return this.AmountOfPassage == 0;
         }
 
-        internal void AnalyzeOdorNeighborhood(float neighborhoodExistOdeur)
+        internal void AnalyzeOdorNeighbor(float neighborExistOdeur)
         {
-            switch (neighborhoodExistOdeur)
+            switch (neighborExistOdeur)
             {
                 case 0: 
-                    this.existMonsterNeighborhood = false;
+                    this.existMonsterNeighbor = false;
                     break;
                 case 1: 
-                    this.countMonsterNeighborhood++;
+                    this.countMonsterNeighbor++;
                     break;
             }
         }
 
-        internal void AnalyzeVentNeighborhood(float neighborhoodExistVent)
+        internal void AnalyzeVentNeighbor(float neighborExistVent)
         {
-            switch (neighborhoodExistVent)
+            switch (neighborExistVent)
             {
                 case 0: 
-                    this.existCaveNeighborhood = false;
+                    this.existCaveNeighbor = false;
                     break;
                 case 1: 
-                    this.countCaveNeighborhood++;
+                    this.countCaveNeighbor++;
                     break;
             }
         }
 
         internal void ResetProbabilityVariables()
         {
-            this.existMonsterNeighborhood = true;
-            this.existCaveNeighborhood = true;
-            this.countMonsterNeighborhood = 4;// 4/8 <=> 50%
-            this.countCaveNeighborhood = 4;// 4/8 <=> 50%
+            this.existMonsterNeighbor = true;
+            this.existCaveNeighbor = true;
+            this.countMonsterNeighbor = 4;// 4/8 <=> 50%
+            this.countCaveNeighbor = 4;// 4/8 <=> 50%
         }
 
         internal void CalculateProbabilityMonster()
         {
-            this.ProbabilityMonster = this.existMonsterNeighborhood ?  100 * this.countMonsterNeighborhood / 8 : 0;
+            this.ProbabilityMonster = this.existMonsterNeighbor ?  100 * this.countMonsterNeighbor / 8 : 0;
         }
 
         internal void CalculateProbabilityCave()
         {
-            this.ProbabilityCave = this.existCaveNeighborhood ?  100 * this.countCaveNeighborhood / 8 : 0;
+            this.ProbabilityCave = this.existCaveNeighbor ?  100 * this.countCaveNeighbor / 8 : 0;
         }
 
         //TODO remove later

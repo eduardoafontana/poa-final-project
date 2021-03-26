@@ -17,7 +17,7 @@ namespace tests
         public void CreateForet_Level1_Elements()
         {
             int niveau = 1;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -34,7 +34,7 @@ namespace tests
         public void CreateForet_Level2_Elements()
         {
             int niveau = 2;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -51,7 +51,7 @@ namespace tests
         public void CreateForet_Level3_Elements()
         {
             int niveau = 3;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -68,7 +68,7 @@ namespace tests
         public void CreateForet_Level4_Elements()
         {
             int niveau = 4;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -85,7 +85,7 @@ namespace tests
         public void CreateForet_Level5_Elements()
         {
             int niveau = 5;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -102,7 +102,7 @@ namespace tests
         public void CreateForet_Level6_Elements()
         {
             int niveau = 6;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -119,7 +119,7 @@ namespace tests
         public void CreateForet_Level7_Elements()
         {
             int niveau = 7;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -136,7 +136,7 @@ namespace tests
         public void CreateForet_Level8_Elements()
         {
             int niveau = 8;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -153,7 +153,7 @@ namespace tests
         public void CreateForet_Level9_Elements()
         {
             int niveau = 9;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -170,7 +170,7 @@ namespace tests
         public void CreateForet_Level10_Elements()
         {
             int niveau = 10;
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
             
             List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
@@ -192,7 +192,7 @@ namespace tests
             configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
 
-            Foret foret = new Foret(1);
+            Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
 
             Assert.AreEqual(foret.PlayerSpawnL, 0);
@@ -207,7 +207,7 @@ namespace tests
         {
             int niveau = 3;
 
-            Foret foret = new Foret(niveau);
+            Forest foret = new Forest(niveau);
             foret.InitForest();
 
             Console.WriteLine(foret.ToString());

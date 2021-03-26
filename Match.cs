@@ -6,7 +6,7 @@ namespace Wumpus
     {
         private int score;
         private int level;
-        private Foret magicForest;
+        private Forest magicForest;
         public Player player;
 
         public String messages = String.Empty;
@@ -16,7 +16,7 @@ namespace Wumpus
             score = 0;
             this.level = level;
 
-            magicForest = new Foret(level);
+            magicForest = new Forest(level);
             magicForest.InitForest();
 
             player = new Player("Bob", magicForest.Size);
@@ -27,7 +27,7 @@ namespace Wumpus
             score = 0;
             this.level = level;
             
-            magicForest = new Foret(level);
+            magicForest = new Forest(level);
             magicForest.InitForestForTests(forestConfiguration);
 
             player = new Player("Bob", magicForest.Size);
@@ -44,7 +44,7 @@ namespace Wumpus
                 player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
                 bool joueur_en_vie = true;
 
-                RegisterOutPut(player.Name + " est apparu en case [" + player.Pos_l + "," + player.Pos_c + "]");
+                RegisterOutPut(player.Name + " est apparu en case [" + player.PlayerPositionL + "," + player.PlayerPositionC + "]");
 
                 do
                 {
@@ -71,12 +71,12 @@ namespace Wumpus
 
         private int CalculateScoreFromLevel()
         {
-            return (level + 2) * (level + 2) * 10;
+            return (level + GameConfiguration.ForestMinimumDimension) * (level + GameConfiguration.ForestMinimumDimension) * GameConfiguration.ScoreConstantMultiplier;
         }
 
         public bool GetPlayerStatus()
         {
-            CaseType type_case_j = magicForest.Grille[player.Pos_l, player.Pos_c].Type;
+            CaseType type_case_j = magicForest.Grille[player.PlayerPositionL, player.PlayerPositionC].Type;
 
             if(type_case_j == CaseType.Monstre || type_case_j == CaseType.Crevasse)
             {
@@ -109,7 +109,7 @@ namespace Wumpus
                 if(player.NeedThrowStone(d))
                     Jeter_pierre(d);
 
-                player.UpdatePlayerPosition(d.GetLine(player.Pos_l), d.GetColumn(player.Pos_c));
+                player.UpdatePlayerPosition(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
 
                 return false;
             }
@@ -127,7 +127,7 @@ namespace Wumpus
 
             RegisterOutPut(player.Name + " lance une pierre vers le " + d.Direction);
 
-            magicForest.Utilisation_de_roches(d.GetLine(player.Pos_l), d.GetColumn(player.Pos_c));
+            magicForest.Utilisation_de_roches(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
         }
     }
 }

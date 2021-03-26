@@ -10,12 +10,12 @@ namespace Wumpus
         private Memory[,] forestMemory;
         private Memory memoryPlayerPosition;
 
-        public int Pos_l
+        public int PlayerPositionL
         {
             get { return memoryPlayerPosition.Line; }
         }
 
-        public int Pos_c
+        public int PlayerPositionC
         {
             get { return memoryPlayerPosition.Column; }
         }
@@ -25,20 +25,22 @@ namespace Wumpus
             get { return name; }
         }
 
-        public Player(string name, int dim_foret)
+        public Player(string name, int forestDimension)
         {
             this.name = name;
 
-            forestMemory = new Memory[dim_foret, dim_foret];
+            forestMemory = new Memory[forestDimension, forestDimension];
 
-            for(int l = 0; l < dim_foret; l++){
-                for(int c = 0; c < dim_foret; c++){
+            for(int l = 0; l < forestDimension; l++)
+            {
+                for(int c = 0; c < forestDimension; c++)
+                {
                     forestMemory[l,c] = new Wumpus.Memory(l, c);
                 }
             }
         }
 
-        public MemoryManager.Node Play(Foret foret)
+        internal MemoryManager.Node Play(Forest foret)
         {
             ObserveAndMemorizeCurrentPosition(foret.Grille);
             ObserveAndMemorizeAllForest();
@@ -48,7 +50,7 @@ namespace Wumpus
             return node;
         }
 
-        public void ObserveAndMemorizeCurrentPosition(Case[,] foret)
+        internal void ObserveAndMemorizeCurrentPosition(Case[,] foret)
         { 
             memoryPlayerPosition.CalculateLocalProbabilityMonster(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
             memoryPlayerPosition.CalculateLocalProbabilityCave(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
@@ -64,7 +66,7 @@ namespace Wumpus
         //  3 pour la probabilité d'avoir soit un monstre, soit une crevasse, soit le portail 
         //  1 valeur pour le nombre de passage du joueur sur la case
         //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, vent)
-        public void ObserveAndMemorizeAllForest()
+        private void ObserveAndMemorizeAllForest()
         {
             forestMemory.Cast<Memory>().ToList().ForEach(itemMemory => itemMemory.CalculateProbabilityPortal());
 
@@ -73,12 +75,12 @@ namespace Wumpus
             .ToList().ForEach(itemMemory => {
                 itemMemory.ResetProbabilityVariables();
 
-                MemoryManager.GetInstance().OnNeighborhoods()
-                .Where(neighborhood => Wumpus.Memory.PositionExist(neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column), forestMemory.GetLength(0)))
+                MemoryManager.GetInstance().OnNeighbors()
+                .Where(neighbor => Wumpus.Memory.PositionExist(neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column), forestMemory.GetLength(0)))
                 .ToList()
-                .ForEach(neighborhood => {
-                    itemMemory.AnalyzeOdorNeighborhood(forestMemory[neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column)].ExistOdeur);
-                    itemMemory.AnalyzeVentNeighborhood(forestMemory[neighborhood.GetLine(itemMemory.Line), neighborhood.GetColumn(itemMemory.Column)].ExistVent);
+                .ForEach(neighbor => {
+                    itemMemory.AnalyzeOdorNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistOdeur);
+                    itemMemory.AnalyzeVentNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistVent);
                 });
                 
                 itemMemory.CalculateProbabilityMonster();
@@ -92,7 +94,7 @@ namespace Wumpus
         }
 
         //determiner la case la plus probable de contenir le portail
-        public MemoryManager.Node Reflexion()
+        private MemoryManager.Node Reflexion()
         {
             //parcours memoire pour trouver max proba portail
             float proba_portail_max = forestMemory.Cast<Memory>().Max(x => x.ProbabilityPortal);
@@ -102,7 +104,7 @@ namespace Wumpus
             proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max).Min(x => x.ProbabilityCave);
 
             //calculer eloignement de chaque case portail avec proba la plus forte
-            forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = Nb_cases_vers(item.Line, item.Column));
+            forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCaseNearBy(item.Line, item.Column));
 
             memoryPlayerPosition.DistanceRelative = 0;
             
@@ -118,11 +120,11 @@ namespace Wumpus
                 return new MemoryManager.Node('P', 0);
 
             //sinon se diriger vers la case
-            return Direction_vers(caseToGo.Line, caseToGo.Column);
+            return GetDirectionToGoTo(caseToGo.Line, caseToGo.Column);
         }
 
         //place le joueur sur la grille
-        public bool UpdatePlayerPosition(int l, int c)
+        internal bool UpdatePlayerPosition(int l, int c)
         {
             bool test = false;
 
@@ -134,21 +136,21 @@ namespace Wumpus
         }
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
-        public int Nb_cases_vers(int lf, int cf)
+        private int GetCaseNearBy(int lf, int cf)
         {
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.Passage = Int32.MaxValue);
 
             memoryPlayerPosition.Passage = 0;
             
-            List<int> list_n = MemoryManager.GetInstance().OnNeighborhoods().Select(item => 
-                Direction_vers_recursif(lf, cf, item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column), 1)
+            List<int> list_n = MemoryManager.GetInstance().OnNeighbors().Select(item => 
+                DeepGetDirectionToGoTo(lf, cf, item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column), 1)
             ).ToList();
 
             return list_n.Min();
         }
 
         //renvoie la direction pour se rendre à l'objectif situé en [lf, cf]
-        public MemoryManager.Node Direction_vers(int lf, int cf)
+        private MemoryManager.Node GetDirectionToGoTo(int lf, int cf)
         {
             int l0 = memoryPlayerPosition.Line;
             int c0 = memoryPlayerPosition.Column;
@@ -157,11 +159,11 @@ namespace Wumpus
 
             memoryPlayerPosition.Passage = 0;
 
-            List<MemoryManager.Node> listMemories = MemoryManager.GetInstance().OnNeighborhoods()
+            List<MemoryManager.Node> listMemories = MemoryManager.GetInstance().OnNeighbors()
             .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
             .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100)
             .Select(item => 
-                new MemoryManager.Node(item.GetLine(), item.GetColumn(), item.Direction, Direction_vers_recursif(lf, cf, item.GetLine(l0), item.GetColumn(c0), 1))
+                new MemoryManager.Node(item.GetLine(), item.GetColumn(), item.Direction, DeepGetDirectionToGoTo(lf, cf, item.GetLine(l0), item.GetColumn(c0), 1))
             ).ToList();
 
             if(listMemories.Count() == 0)
@@ -174,22 +176,21 @@ namespace Wumpus
         }
 
         //permet de trouver un chemin evitant les crevasses (les montres ne sont pas pris en compte)
-        public int Direction_vers_recursif(int lf, int cf, int l0, int c0, int n)
+        private int DeepGetDirectionToGoTo(int lf, int cf, int l0, int c0, int n)
         {
             if(!Memory.PositionExist(l0, c0, forestMemory.GetLength(0)))
                 return Int32.MaxValue;
                 
             forestMemory[l0,c0].Passage = n;
 
-            if(l0 == lf && c0 == cf){
+            if(l0 == lf && c0 == cf)
                 return n;
-            }
 
-            List<int> list_n = MemoryManager.GetInstance().OnNeighborhoods()
+            List<int> list_n = MemoryManager.GetInstance().OnNeighbors()
             .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
             .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100 && forestMemory[x.GetLine(l0), x.GetColumn(c0)].Passage > n + 1)
             .Select(item => 
-                Direction_vers_recursif(lf, cf, item.GetLine(l0), item.GetColumn(c0), n + 1)
+                DeepGetDirectionToGoTo(lf, cf, item.GetLine(l0), item.GetColumn(c0), n + 1)
             ).ToList();
 
             return list_n.Count() > 0 ? list_n.Min() : Int32.MaxValue;
