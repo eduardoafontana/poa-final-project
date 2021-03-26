@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Wumpus.Environment;
 
-namespace Wumpus
+namespace Wumpus.Character
 {
     public class Player
     {
@@ -35,14 +36,13 @@ namespace Wumpus
             {
                 for(int c = 0; c < forestDimension; c++)
                 {
-                    forestMemory[l,c] = new Wumpus.Memory(l, c);
+                    forestMemory[l,c] = new Memory(l, c);
                 }
             }
         }
 
-        internal ExplorerNode Play(Forest foret)
+        internal ExplorerNode Play()
         {
-            ObserveAndMemorizeCurrentPosition(foret.Grid);
             ObserveAndMemorizeAllForest();
             
             ExplorerNode node = Reflexion();

@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
+using Wumpus.Environment;
 
-namespace Wumpus
+namespace Wumpus.Character
 {
     public class Memory
     {

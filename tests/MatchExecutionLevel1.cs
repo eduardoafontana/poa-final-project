@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
-using Wumpus;
 using System.Linq;
 using System.Collections.Generic;
+using Wumpus.Environment;
 
-namespace tests
+namespace Wumpus.Tests
 {
     public class MatchExecutionLevel1
     {
@@ -32,19 +32,19 @@ namespace tests
                                     "  | om |  |" + "\n" +
                                     " om | vt | ltom |" + "\n" +
                                     " vt | om | vt |" + "\n" +
-                                    Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
+                                    System.Environment.NewLine +
+                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob va vers E" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob va vers E" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -74,21 +74,21 @@ namespace tests
                                     " lt | om |  |" + "\n" +
                                     " om | vt | om |" + "\n" +
                                     " vt | om | vt |" + "\n" +
-                                    Environment.NewLine +
-                                    "Bob est apparu en case [2,2]" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob est mort" + Environment.NewLine +
-                                    "Bob est apparu en case [2,2]" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob lance une pierre vers le W" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob lance une pierre vers le N" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
+                                    System.Environment.NewLine +
+                                    "Bob est apparu en case [2,2]" + System.Environment.NewLine +
+                                    "Bob va vers W" + System.Environment.NewLine +
+                                    "Bob est mort" + System.Environment.NewLine +
+                                    "Bob est apparu en case [2,2]" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob va vers W" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le W" + System.Environment.NewLine +
+                                    "Bob va vers W" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le N" + System.Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
 
 
             int level = 1;
@@ -119,18 +119,18 @@ namespace tests
                                     " vt |  | om |" + "\n" +
                                     "  | omvt |  |" + "\n" +
                                     " ltvt |  | om |" + "\n" +
-                                    Environment.NewLine +
-                                    "Bob est apparu en case [0,1]" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers N" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob lance une pierre vers le W" + Environment.NewLine +
-                                    "Bob va vers W" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
+                                    System.Environment.NewLine +
+                                    "Bob est apparu en case [0,1]" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob va vers N" + System.Environment.NewLine +
+                                    "Bob va vers E" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob va vers W" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le W" + System.Environment.NewLine +
+                                    "Bob va vers W" + System.Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -160,19 +160,19 @@ namespace tests
                                     " omvt |  | om |" + "\n" +
                                     "  | omvt |  |" + "\n" +
                                     " vt |  | lt |" + "\n" +
-                                    Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob est mort" + Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob va vers S" + Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + Environment.NewLine +
-                                    "Bob va vers E" + Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + Environment.NewLine;
+                                    System.Environment.NewLine +
+                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
+                                    "Bob est mort" + System.Environment.NewLine +
+                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
+                                    "Bob va vers E" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob va vers S" + System.Environment.NewLine +
+                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
+                                    "Bob va vers E" + System.Environment.NewLine +
+                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 

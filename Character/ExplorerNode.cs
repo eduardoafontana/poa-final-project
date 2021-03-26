@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
-namespace Wumpus
+namespace Wumpus.Character
 {
     public class ExplorerNode : IComparable<ExplorerNode>
     {

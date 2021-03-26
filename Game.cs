@@ -12,8 +12,8 @@ namespace Wumpus
 
             while(nextLevel)
             {
-                Match partie = new Match(level);
-                globalScore += partie.PlayMatch();
+                Match match = new Match(level);
+                globalScore += match.PlayMatch();
 
                 Console.WriteLine("le score actuel à la fin du niveau " + level + " est de " + globalScore);
                 Console.Write("continuer ? (Y/N) : ");

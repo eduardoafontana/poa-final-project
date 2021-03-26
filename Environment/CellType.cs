@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace Wumpus
+namespace Wumpus.Environment
 {
     public enum CellType
     {

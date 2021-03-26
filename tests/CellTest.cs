@@ -1,8 +1,7 @@
-using System;
 using NUnit.Framework;
-using Wumpus;
+using Wumpus.Environment;
 
-namespace tests
+namespace Wumpus.Tests
 {
     public class CellTest
     {

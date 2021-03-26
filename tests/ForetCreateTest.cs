@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
-using Wumpus;
 using System.Linq;
 using System.Collections.Generic;
+using Wumpus.Environment;
 
-namespace tests
+namespace Wumpus.Tests
 {
     public class ForetCreateTest
     {

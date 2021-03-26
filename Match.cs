@@ -1,4 +1,6 @@
 using System;
+using Wumpus.Character;
+using Wumpus.Environment;
 
 namespace Wumpus
 {
@@ -37,24 +39,26 @@ namespace Wumpus
         {
             RegisterOutPut(magicForest.ToString());
 
-            bool partie_en_cours = true;
+            bool ongoingMatch = true;
 
             do
             {
                 player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
-                bool joueur_en_vie = true;
+                bool playerIsAlive = true;
 
                 RegisterOutPut(player.Name + " est apparu en case [" + player.PlayerPositionL + "," + player.PlayerPositionC + "]");
 
                 do
                 {
-                    ExplorerNode node = player.Play(magicForest);
-                    partie_en_cours = !MoveTowards(node);
-                    joueur_en_vie = GetPlayerStatus();
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid);
+                    ExplorerNode node = player.Play();
+
+                    ongoingMatch = !MoveTowards(node);
+                    playerIsAlive = GetPlayerStatus();
                 }
-                while(joueur_en_vie && partie_en_cours);
+                while(playerIsAlive && ongoingMatch);
                 
-                if(joueur_en_vie == false)
+                if(playerIsAlive == false)
                 {
                     RegisterOutPut(player.Name + " est mort");
 
@@ -62,7 +66,7 @@ namespace Wumpus
                     score -= this.CalculateScoreFromLevel(); 
                 }
             }
-            while(partie_en_cours);
+            while(ongoingMatch);
 
             score += this.CalculateScoreFromLevel(); 
 
@@ -76,9 +80,9 @@ namespace Wumpus
 
         public bool GetPlayerStatus()
         {
-            CellType type_case_j = magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC].Type;
+            CellType cellType = magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC].Type;
 
-            if(type_case_j == CellType.Monstre || type_case_j == CellType.Crevasse)
+            if(cellType == CellType.Monstre || cellType == CellType.Crevasse)
             {
                 return false;
             }
@@ -107,7 +111,7 @@ namespace Wumpus
             else
             {
                 if(player.NeedThrowStone(d))
-                    Jeter_pierre(d);
+                    ThrowStone(d);
 
                 player.UpdatePlayerPosition(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
 
@@ -117,11 +121,11 @@ namespace Wumpus
 
         private void RegisterOutPut(string message)
         {
-            Console.Write(message + Environment.NewLine);
-            messages += message + Environment.NewLine;
+            Console.Write(message + System.Environment.NewLine);
+            messages += message + System.Environment.NewLine;
         }
 
-        public void Jeter_pierre(ExplorerNode d)
+        public void ThrowStone(ExplorerNode d)
         {
             score -= 10;
 

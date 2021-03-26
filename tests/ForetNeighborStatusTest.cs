@@ -1,11 +1,11 @@
 using System;
 using NUnit.Framework;
-using Wumpus;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using Wumpus.Environment;
 
-namespace tests
+namespace Wumpus.Tests
 {
     public class ForetNeighborStatusTest
     {

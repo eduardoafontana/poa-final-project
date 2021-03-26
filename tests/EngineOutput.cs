@@ -3,7 +3,7 @@
 // using NUnit.Framework;
 // using Wumpus;
 
-// namespace tests
+// namespace Wumpus.Tests
 // {
 //     public class EngineOutput
 //     {
