@@ -16,14 +16,14 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            for (int l = 0; l < foret.Grille.GetLength(0); l++)
+            for (int l = 0; l < foret.Grid.GetLength(0); l++)
             {
-                for (int c = 0; c < foret.Grille.GetLength(1); c++)
+                for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grille[l,c].Type == CaseType.Portail)
-                        Assert.AreEqual(CaseLuminosite.Fort, foret.Grille[l, c].Luminosite);
+                    if(foret.Grid[l,c].Type == CellType.Portail)
+                        Assert.AreEqual(CellLuminosite.Fort, foret.Grid[l, c].Luminosite);
                     else
-                        Assert.AreEqual(CaseLuminosite.Faible, foret.Grille[l, c].Luminosite);
+                        Assert.AreEqual(CellLuminosite.Faible, foret.Grid[l, c].Luminosite);
                 }
             }
         }
@@ -40,24 +40,24 @@ namespace tests
             int limitTop = 0;
             int limitDown = foret.Size - 1;
             
-            for (int l = 0; l < foret.Grille.GetLength(0); l++)
+            for (int l = 0; l < foret.Grid.GetLength(0); l++)
             {
-                for (int c = 0; c < foret.Grille.GetLength(1); c++)
+                for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grille[l,c].Type != CaseType.Monstre)
+                    if(foret.Grid[l,c].Type != CellType.Monstre)
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CaseOdeur.Mauvaise, foret.Grille[l, c + 1].Odeur);
+                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l, c + 1].Odeur);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CaseOdeur.Mauvaise, foret.Grille[l, c - 1].Odeur);
+                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l, c - 1].Odeur);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CaseOdeur.Mauvaise, foret.Grille[l - 1, c].Odeur);
+                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l - 1, c].Odeur);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CaseOdeur.Mauvaise, foret.Grille[l + 1, c].Odeur);
+                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l + 1, c].Odeur);
                 }
             }
         }
@@ -74,24 +74,24 @@ namespace tests
             int limitTop = 0;
             int limitDown = foret.Size - 1;
             
-            for (int l = 0; l < foret.Grille.GetLength(0); l++)
+            for (int l = 0; l < foret.Grid.GetLength(0); l++)
             {
-                for (int c = 0; c < foret.Grille.GetLength(1); c++)
+                for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grille[l,c].Type != CaseType.Crevasse)
+                    if(foret.Grid[l,c].Type != CellType.Crevasse)
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CaseVitesseVent.Fort, foret.Grille[l, c + 1].VitesseVent);
+                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l, c + 1].VitesseVent);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CaseVitesseVent.Fort, foret.Grille[l, c - 1].VitesseVent);
+                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l, c - 1].VitesseVent);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CaseVitesseVent.Fort, foret.Grille[l - 1, c].VitesseVent);
+                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l - 1, c].VitesseVent);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CaseVitesseVent.Fort, foret.Grille[l + 1, c].VitesseVent);
+                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l + 1, c].VitesseVent);
                 }
             }
         }
@@ -105,18 +105,18 @@ namespace tests
             configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
 
-            PropertyInfo property = typeof(Case).GetProperty("VitesseVent");
+            PropertyInfo property = typeof(Cell).GetProperty("VitesseVent");
 
-            Enum value = CaseVitesseVent.Fort;
+            Enum value = CellVitesseVent.Fort;
 
             Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
             
-            Assert.AreEqual(CaseVitesseVent.Faible,  foret.Grille[0,0].VitesseVent);
+            Assert.AreEqual(CellVitesseVent.Faible,  foret.Grid[0,0].VitesseVent);
 
-            property.SetValue(foret.Grille[0,0], value);
+            property.SetValue(foret.Grid[0,0], value);
 
-            Assert.AreEqual(CaseVitesseVent.Fort, foret.Grille[0,0].VitesseVent);
+            Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[0,0].VitesseVent);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace tests
             Forest foret = new Forest(1);
             foret.InitForest();
 
-            Assert.AreEqual(CaseType.Vide, foret.Grille[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);
+            Assert.AreEqual(CellType.Vide, foret.Grid[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);
         }
     }
 }

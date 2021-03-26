@@ -30,51 +30,29 @@ namespace Wumpus
             this.Column = column;
         }
 
-        internal static bool PositionExist(int l, int c, int size)
+        internal void CalculateLocalProbabilityMonster(CellType type)
         {
-            int limitRight = size;
-            int limitLeft = 0;
-            int limitTop = 0;
-            int limitDown = size;
-
-            if(c >= limitRight)
-                return false;
-
-            if(c < limitLeft)
-                return false;
-
-            if(l < limitTop)
-                return false;
-
-            if(l >= limitDown)
-                return false;
-
-            return true;
+            this.ProbabilityMonster = type == CellType.Monstre ? 100 : 0;
         }
 
-        internal void CalculateLocalProbabilityMonster(CaseType type)
+        internal void CalculateLocalProbabilityCave(CellType type)
         {
-            this.ProbabilityMonster = type == CaseType.Monstre ? 100 : 0;
+            this.ProbabilityCave = type == CellType.Crevasse ? 100 : 0;
         }
 
-        internal void CalculateLocalProbabilityCave(CaseType type)
+        internal void CheckExistOdor(CellOdeur odor)
         {
-            this.ProbabilityCave = type == CaseType.Crevasse ? 100 : 0;
+            this.ExistOdeur = odor == CellOdeur.Mauvaise ? 1 : 0;
         }
 
-        internal void CheckExistOdor(CaseOdeur odor)
+        internal void CheckExistVent(CellVitesseVent vitesseVent)
         {
-            this.ExistOdeur = odor == CaseOdeur.Mauvaise ? 1 : 0;
+            this.ExistVent = vitesseVent == CellVitesseVent.Fort ? 1 : 0;
         }
 
-        internal void CheckExistVent(CaseVitesseVent vitesseVent)
+        internal void CheckExistLuminosite(CellLuminosite luminosite)
         {
-            this.ExistVent = vitesseVent == CaseVitesseVent.Fort ? 1 : 0;
-        }
-
-        internal void CheckExistLuminosite(CaseLuminosite luminosite)
-        {
-            this.ExistLuminosite = luminosite == CaseLuminosite.Fort ? 1 : 0;
+            this.ExistLuminosite = luminosite == CellLuminosite.Fort ? 1 : 0;
         }
 
         internal void CalculateProbabilityPortal()
@@ -93,7 +71,7 @@ namespace Wumpus
             }
         }
 
-        internal bool IsCaseIsNotExplored()
+        internal bool IsCellIsNotExplored()
         {
             return this.AmountOfPassage == 0;
         }
@@ -141,14 +119,5 @@ namespace Wumpus
         {
             this.ProbabilityCave = this.existCaveNeighbor ?  100 * this.countCaveNeighbor / 8 : 0;
         }
-
-        //TODO remove later
-        // memoire[l,c,0] = -1; //proba montre
-        // memoire[l,c,1] = -1; //proba crevasse
-        // memoire[l,c,2] = -1; //proba portail
-        // memoire[l,c,3] = 0;  //nb passage
-        // memoire[l,c,4] = -1; //odeur
-        // memoire[l,c,5] = -1; //vent
-        // memoire[l,c,6] = -1; //luminosite
     }
 }

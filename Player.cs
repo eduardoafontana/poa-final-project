@@ -40,17 +40,17 @@ namespace Wumpus
             }
         }
 
-        internal MemoryManager.Node Play(Forest foret)
+        internal ExplorerNode Play(Forest foret)
         {
-            ObserveAndMemorizeCurrentPosition(foret.Grille);
+            ObserveAndMemorizeCurrentPosition(foret.Grid);
             ObserveAndMemorizeAllForest();
             
-            MemoryManager.Node node = Reflexion();
+            ExplorerNode node = Reflexion();
 
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(Case[,] foret)
+        internal void ObserveAndMemorizeCurrentPosition(Cell[,] foret)
         { 
             memoryPlayerPosition.CalculateLocalProbabilityMonster(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
             memoryPlayerPosition.CalculateLocalProbabilityCave(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
@@ -71,12 +71,12 @@ namespace Wumpus
             forestMemory.Cast<Memory>().ToList().ForEach(itemMemory => itemMemory.CalculateProbabilityPortal());
 
             forestMemory.Cast<Memory>()
-            .Where(itemMemory => itemMemory.IsCaseIsNotExplored())
+            .Where(itemMemory => itemMemory.IsCellIsNotExplored())
             .ToList().ForEach(itemMemory => {
                 itemMemory.ResetProbabilityVariables();
 
-                MemoryManager.GetInstance().OnNeighbors()
-                .Where(neighbor => Wumpus.Memory.PositionExist(neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column), forestMemory.GetLength(0)))
+                Explorer.GetInstance().OnNeighbors()
+                .Where(neighbor => neighbor.IsValidPosition(neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column), forestMemory.GetLength(0)))
                 .ToList()
                 .ForEach(neighbor => {
                     itemMemory.AnalyzeOdorNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistOdeur);
@@ -88,13 +88,13 @@ namespace Wumpus
             });
         }
 
-        internal bool NeedThrowStone(MemoryManager.Node d)
+        internal bool NeedThrowStone(ExplorerNode d)
         {
             return forestMemory[d.GetLine(memoryPlayerPosition.Line), d.GetColumn(memoryPlayerPosition.Column)].ProbabilityMonster > 0;
         }
 
         //determiner la case la plus probable de contenir le portail
-        private MemoryManager.Node Reflexion()
+        private ExplorerNode Reflexion()
         {
             //parcours memoire pour trouver max proba portail
             float proba_portail_max = forestMemory.Cast<Memory>().Max(x => x.ProbabilityPortal);
@@ -104,7 +104,7 @@ namespace Wumpus
             proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max).Min(x => x.ProbabilityCave);
 
             //calculer eloignement de chaque case portail avec proba la plus forte
-            forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCaseNearBy(item.Line, item.Column));
+            forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCellNearBy(item.Line, item.Column));
 
             memoryPlayerPosition.DistanceRelative = 0;
             
@@ -113,14 +113,14 @@ namespace Wumpus
             case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min).Min(x => x.DistanceRelative);
 
             //trouver une case
-            Memory caseToGo = forestMemory.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
+            Memory cellToGo = forestMemory.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
 
             //si c'est notre case, prendre le portail
-            if(caseToGo == memoryPlayerPosition)
-                return new MemoryManager.Node('P', 0);
+            if(cellToGo == memoryPlayerPosition)
+                return new ExplorerNode('P', 0);
 
             //sinon se diriger vers la case
-            return GetDirectionToGoTo(caseToGo.Line, caseToGo.Column);
+            return GetDirectionToGoTo(cellToGo.Line, cellToGo.Column);
         }
 
         //place le joueur sur la grille
@@ -136,21 +136,23 @@ namespace Wumpus
         }
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
-        private int GetCaseNearBy(int lf, int cf)
+        private int GetCellNearBy(int lf, int cf)
         {
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.Passage = Int32.MaxValue);
 
             memoryPlayerPosition.Passage = 0;
             
-            List<int> list_n = MemoryManager.GetInstance().OnNeighbors().Select(item => 
-                DeepGetDirectionToGoTo(lf, cf, item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column), 1)
+            List<int> list_n = Explorer.GetInstance().OnNeighbors()
+            .Where(item => item.IsValidPosition(item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column), forestMemory.GetLength(0)))
+            .Select(item => 
+                DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column) }, 1)
             ).ToList();
 
             return list_n.Min();
         }
 
         //renvoie la direction pour se rendre à l'objectif situé en [lf, cf]
-        private MemoryManager.Node GetDirectionToGoTo(int lf, int cf)
+        private ExplorerNode GetDirectionToGoTo(int lf, int cf)
         {
             int l0 = memoryPlayerPosition.Line;
             int c0 = memoryPlayerPosition.Column;
@@ -159,38 +161,40 @@ namespace Wumpus
 
             memoryPlayerPosition.Passage = 0;
 
-            List<MemoryManager.Node> listMemories = MemoryManager.GetInstance().OnNeighbors()
-            .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
+            List<ExplorerNode> listMemories = Explorer.GetInstance().OnNeighbors()
+            .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
             .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100)
             .Select(item => 
-                new MemoryManager.Node(item.GetLine(), item.GetColumn(), item.Direction, DeepGetDirectionToGoTo(lf, cf, item.GetLine(l0), item.GetColumn(c0), 1))
+                new ExplorerNode(item.GetLine(), item.GetColumn(), item.Direction, DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(l0), item.GetColumn(c0) }, 1))
             ).ToList();
 
             if(listMemories.Count() == 0)
-                return new MemoryManager.Node('X', 0);
+                return new ExplorerNode('X', 0);
 
             if(listMemories.Min().Distance == Int32.MaxValue)
-                return new MemoryManager.Node('X', 0);
+                return new ExplorerNode('X', 0);
             else
                 return listMemories.Min();
         }
 
         //permet de trouver un chemin evitant les crevasses (les montres ne sont pas pris en compte)
-        private int DeepGetDirectionToGoTo(int lf, int cf, int l0, int c0, int n)
+        private int DeepGetDirectionToGoTo(int[] origin, int[] destination, int countDistance)
         {
-            if(!Memory.PositionExist(l0, c0, forestMemory.GetLength(0)))
-                return Int32.MaxValue;
-                
-            forestMemory[l0,c0].Passage = n;
+            int lf = origin[0];
+            int cf = origin[1];
+            int l0 = destination[0];
+            int c0 = destination[1];
+
+            forestMemory[l0,c0].Passage = countDistance;
 
             if(l0 == lf && c0 == cf)
-                return n;
+                return countDistance;
 
-            List<int> list_n = MemoryManager.GetInstance().OnNeighbors()
-            .Where(x => Memory.PositionExist(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
-            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100 && forestMemory[x.GetLine(l0), x.GetColumn(c0)].Passage > n + 1)
+            List<int> list_n = Explorer.GetInstance().OnNeighbors()
+            .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
+            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100 && forestMemory[x.GetLine(l0), x.GetColumn(c0)].Passage > countDistance + 1)
             .Select(item => 
-                DeepGetDirectionToGoTo(lf, cf, item.GetLine(l0), item.GetColumn(c0), n + 1)
+                DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(l0), item.GetColumn(c0) }, countDistance + 1)
             ).ToList();
 
             return list_n.Count() > 0 ? list_n.Min() : Int32.MaxValue;

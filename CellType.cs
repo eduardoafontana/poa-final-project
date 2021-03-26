@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Wumpus
 {
-    public enum CaseType
+    public enum CellType
     {
         [Description("O")]
         Portail,
@@ -17,7 +17,7 @@ namespace Wumpus
         Vide
     }
 
-    public static class CaseTypeExtensions
+    public static class CellTypeExtensions
     {
         public static string GetDescription(this Enum value)
         {

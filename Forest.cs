@@ -7,7 +7,7 @@ namespace Wumpus
     public class Forest 
     {
         public int Size { get; private set; }
-        public Case[,] Grille { get; private set; }
+        public Cell[,] Grid { get; private set; }
         public int PlayerSpawnL { get { return playerSpawn[0]; } }
         public int PlayerSpawnC { get { return playerSpawn[1]; } }
         private int[] playerSpawn;
@@ -17,50 +17,53 @@ namespace Wumpus
         {
             this.Size = size + GameConfiguration.ForestMinimumDimension;
 
-            this.Grille = new Case[this.Size, this.Size];
+            this.Grid = new Cell[this.Size, this.Size];
 
             InitializeGrid();
         }
 
         public void InitForest()
         {
-            int nb_monstre = (int)Math.Truncate(0.2 * this.Size * this.Size); //probabilite d'apparition de montre
-            int nb_crevasse = (int)Math.Truncate(0.15 * this.Size * this.Size); //probabilite d'apparition de crevasse
+            //probabilite d'apparition de montre
+            int monsterProbability = (int)Math.Truncate(0.2 * this.Size * this.Size);
 
-            PlaceElement(CaseType.Crevasse, nb_crevasse);
-            PlaceElement(CaseType.Monstre, nb_monstre);
-            PlaceElement(CaseType.Portail, 1);
+            //probabilite d'apparition de crevasse
+            int caveProbability = (int)Math.Truncate(0.15 * this.Size * this.Size);
 
-            InitNeighborStatusCase();
+            PlaceElement(CellType.Crevasse, caveProbability);
+            PlaceElement(CellType.Monstre, monsterProbability);
+            PlaceElement(CellType.Portail, 1);
 
-            playerSpawn = SelectVoidCaseForPlayerInit();
+            InitNeighborStatusCell();
+
+            playerSpawn = SelectVoidCellForPlayerInit();
         }
 
         public void InitForestForTests(ForestConfiguration configuration)
         {
             foreach (var position in configuration.MonstersPosition)
             {
-                this.Grille[position[0], position[1]].Type = CaseType.Monstre;
+                this.Grid[position[0], position[1]].Type = CellType.Monstre;
             }
 
             foreach (var position in configuration.CavesPosition)
             {
-                this.Grille[position[0], position[1]].Type = CaseType.Crevasse;
+                this.Grid[position[0], position[1]].Type = CellType.Crevasse;
             }
 
-            this.Grille[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CaseType.Portail;
+            this.Grid[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CellType.Portail;
 
-            InitNeighborStatusCase();
+            InitNeighborStatusCell();
 
             playerSpawn = configuration.PlayerPosition;
         }
 
-        private int[] SelectVoidCaseForPlayerInit()
+        private int[] SelectVoidCellForPlayerInit()
         {
             int l = 0;
             int c = 0;
 
-            while(Grille[l, c].Type != CaseType.Vide)
+            while(Grid[l, c].Type != CellType.Vide)
             {
                 l = random.Next(0, Size);
                 c = random.Next(0, Size);
@@ -69,133 +72,139 @@ namespace Wumpus
             return new int[2] {l, c};
         }
 
-        private void InitNeighborStatusCase()
+        private void InitNeighborStatusCell()
         {
-            for (int l = 0; l < Grille.GetLength(0); l++)
+            for (int l = 0; l < Grid.GetLength(0); l++)
             {
-                for (int c = 0; c < Grille.GetLength(1); c++)
+                for (int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    int[] coo = { l, c };
-                    UpdateNeighborStatusCase(coo);
+                    UpdateNeighborStatusCell(l, c);
                 }
             }
         }
 
-        private void PlaceElement(CaseType typeElement, int quantityOfElement)
+        private void PlaceElement(CellType typeElement, int quantityOfElement)
         {
             int i = 0;
             while(i < quantityOfElement)
             {
-                int l = random.Next(0, Grille.GetLength(0));
-                int c = random.Next(0, Grille.GetLength(1));
+                int l = random.Next(0, Grid.GetLength(0));
+                int c = random.Next(0, Grid.GetLength(1));
 
-                if (Grille[l, c].Type != CaseType.Vide)
+                if (Grid[l, c].Type != CellType.Vide)
                     continue;
 
-                Grille[l, c].Type = typeElement;
+                Grid[l, c].Type = typeElement;
                 i++;
             }
         }
 
         private void InitializeGrid()
         {
-            for (int l = 0; l < Grille.GetLength(0); l++)
+            for (int l = 0; l < Grid.GetLength(0); l++)
             {
-                for (int c = 0; c < Grille.GetLength(1); c++)
+                for (int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    Grille[l, c] = new Case(CaseType.Vide);
+                    Grid[l, c] = new Cell(CellType.Vide);
                 }
             }
         }
 
         //update la case si un joueur lance une roche
-        public void Utilisation_de_roches(int l, int c) 
+        public void HitMonsterWithStone(int l, int c) 
         {
-            int[] coo = {l, c};
-            if(0 <= coo[0] && coo[0] < Size && 0 <= coo[1] && coo[1] < Size)
-            {
-                if(Grille[coo[0],coo[1]].Type == CaseType.Monstre)
-                    Grille[coo[0],coo[1]].Type = CaseType.Vide;
+            if(!IsCellValid(l, c))
+                return;
 
-                int[] cooN = {coo[0]+1, coo[1]};
-                if(Memory.PositionExist(coo[0]+1, coo[1], Grille.GetLength(0))) //TODO
-                    UpdateNeighborStatusCase(cooN);
+            if(Grid[l, c].Type == CellType.Monstre)
+                Grid[l, c].Type = CellType.Vide;
 
-                int[] cooS = {coo[0]-1, coo[1]};
-                if(Memory.PositionExist(coo[0]-1, coo[1], Grille.GetLength(0))) //TODO
-                    UpdateNeighborStatusCase(cooS);
+            if(IsCellValid(l + 1, c))
+                UpdateNeighborStatusCell(l + 1, c);
 
-                int[] cooW = {coo[0], coo[1]-1};
-                if(Memory.PositionExist(coo[0], coo[1]-1, Grille.GetLength(0))) //TODO
-                    UpdateNeighborStatusCase(cooW);
+            if(IsCellValid(l - 1, c))
+                UpdateNeighborStatusCell(l - 1, c);
 
-                int[] cooE = {coo[0], coo[1]+1};
-                if(Memory.PositionExist(coo[0], coo[1]+1, Grille.GetLength(0))) //TODO
-                    UpdateNeighborStatusCase(cooE);
-            }
+            if(IsCellValid(l, c - 1))
+                UpdateNeighborStatusCell(l, c - 1);
+
+            if(IsCellValid(l, c + 1))
+                UpdateNeighborStatusCell(l, c + 1);
         }
 
-        private void UpdateNeighborStatusCase(int[] coo) 
+        private void UpdateNeighborStatusCell(int l, int c) 
         {
-            int l = coo[0];
-            int c = coo[1];
-
-            switch (Grille[l,c].Type)
+            switch (Grid[l, c].Type)
             {
-                case CaseType.Portail:
-                    Grille[l,c].Luminosite = CaseLuminosite.Fort;
+                case CellType.Portail:
+                    Grid[l, c].Luminosite = CellLuminosite.Fort;
                     break;
-                case CaseType.Monstre:
-                    SetCaseStatusByEnumType(l, c, typeof(Case).GetProperty("Odeur"), CaseOdeur.Mauvaise);
+                case CellType.Monstre:
+                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odeur"), CellOdeur.Mauvaise);
                     break;
-                case CaseType.Crevasse:
-                    SetCaseStatusByEnumType(l, c, typeof(Case).GetProperty("VitesseVent"), CaseVitesseVent.Fort);
+                case CellType.Crevasse:
+                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("VitesseVent"), CellVitesseVent.Fort);
                     break;
             }
         }
 
-        private void SetCaseStatusByEnumType(int l, int c, PropertyInfo enumProperty, Enum enumValue)
+        private void SetCellStatusByEnumType(int [] positions, PropertyInfo enumProperty, Enum enumValue)
         {
-            int limitRight = Size - 1;
-            int limitLeft = 0;
-            int limitTop = 0;
-            int limitDown = Size - 1;
+            int l = positions[0];
+            int c = positions[1];
 
-            if(c + 1 <= limitRight)
-                enumProperty.SetValue(Grille[l, c + 1], enumValue);
+            if(IsCellValid(l, c + 1))
+                enumProperty.SetValue(Grid[l, c + 1], enumValue);
 
-            if(c - 1 >= limitLeft)
-                enumProperty.SetValue(Grille[l, c - 1], enumValue);
+            if(IsCellValid(l, c - 1))
+                enumProperty.SetValue(Grid[l, c - 1], enumValue);
 
-            if(l - 1 >= limitTop)
-                enumProperty.SetValue(Grille[l - 1, c], enumValue);
+            if(IsCellValid(l - 1, c))
+                enumProperty.SetValue(Grid[l - 1, c], enumValue);
 
-            if(l + 1 <= limitDown)
-                enumProperty.SetValue(Grille[l + 1, c], enumValue);
+            if(IsCellValid(l + 1, c))
+                enumProperty.SetValue(Grid[l + 1, c], enumValue);
 
             return;
+        }
+
+        private bool IsCellValid(int l, int c)
+        {
+            if(c >= this.Size)
+                return false;
+
+            if(c < 0)
+                return false;
+
+            if(l < 0)
+                return false;
+
+            if(l >= this.Size)
+                return false;
+
+            return true;
         }
 
         public override string ToString()
         {
             string r = "\n\nforet magique : vide\nv : crevasse\nM : monstre\nO : portail\n\n";
-            for(int l = 0; l < Grille.GetLength(0); l++)
+            for(int l = 0; l < Grid.GetLength(0); l++)
             {
-                for(int c = 0; c < Grille.GetLength(1); c++)
+                for(int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    r += Grille[l,c].Type.GetDescription();
+                    r += Grid[l,c].Type.GetDescription();
                 }
                 r += "\n";
             }
             r += "\n";
 
-            for(int l = 0; l < Grille.GetLength(0); l++)
+            for(int l = 0; l < Grid.GetLength(0); l++)
             {
-                for(int c = 0; c < Grille.GetLength(1); c++)
+                for(int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    string luminosite = Grille[l,c].Luminosite == CaseLuminosite.Fort ? Grille[l,c].Luminosite.GetDescription() : "";
-                    string odeur = Grille[l,c].Odeur == CaseOdeur.Mauvaise ?  Grille[l,c].Odeur.GetDescription() : "";
-                    string vent = Grille[l,c].VitesseVent == CaseVitesseVent.Fort ? Grille[l,c].VitesseVent.GetDescription() : "";
+                    string luminosite = Grid[l,c].Luminosite == CellLuminosite.Fort ? Grid[l,c].Luminosite.GetDescription() : "";
+                    string odeur = Grid[l,c].Odeur == CellOdeur.Mauvaise ?  Grid[l,c].Odeur.GetDescription() : "";
+                    string vent = Grid[l,c].VitesseVent == CellVitesseVent.Fort ? Grid[l,c].VitesseVent.GetDescription() : "";
                     
                     r += " " + luminosite + odeur + vent + " |";
                 }

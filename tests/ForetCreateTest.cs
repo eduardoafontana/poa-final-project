@@ -20,13 +20,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(1, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(1, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -37,13 +37,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(3, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(2, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -54,13 +54,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(5, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(3, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -71,13 +71,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(7, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(5, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -88,13 +88,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(9, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(7, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -105,13 +105,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(12, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(9, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -122,13 +122,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(16, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(12, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -139,13 +139,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(20, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(15, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -156,13 +156,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(24, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(18, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -173,13 +173,13 @@ namespace tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Case> monstersFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
             Assert.AreEqual(28, monstersFounded.Count());
 
-            List<Case> cavesFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Crevasse).ToList();
+            List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
             Assert.AreEqual(21, cavesFounded.Count());
 
-            List<Case> portalsFounded = foret.Grille.Cast<Case>().Where(i => i.Type == CaseType.Portail).ToList();
+            List<Cell> portalsFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Portail).ToList();
             Assert.AreEqual(1, portalsFounded.Count());
         }
 
@@ -197,9 +197,9 @@ namespace tests
 
             Assert.AreEqual(foret.PlayerSpawnL, 0);
             Assert.AreEqual(foret.PlayerSpawnC, 0);
-            Assert.AreEqual(CaseType.Portail, foret.Grille[2,2].Type);
-            Assert.AreEqual(CaseType.Monstre, foret.Grille[2,0].Type);
-            Assert.AreEqual(CaseType.Crevasse, foret.Grille[0,2].Type);
+            Assert.AreEqual(CellType.Portail, foret.Grid[2,2].Type);
+            Assert.AreEqual(CellType.Monstre, foret.Grid[2,0].Type);
+            Assert.AreEqual(CellType.Crevasse, foret.Grid[0,2].Type);
         }
 
         [Test]

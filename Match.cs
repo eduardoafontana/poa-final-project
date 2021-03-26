@@ -48,7 +48,7 @@ namespace Wumpus
 
                 do
                 {
-                    MemoryManager.Node node = player.Play(magicForest);
+                    ExplorerNode node = player.Play(magicForest);
                     partie_en_cours = !MoveTowards(node);
                     joueur_en_vie = GetPlayerStatus();
                 }
@@ -58,7 +58,7 @@ namespace Wumpus
                 {
                     RegisterOutPut(player.Name + " est mort");
 
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grille); // Review this call later
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid); // Review this call later
                     score -= this.CalculateScoreFromLevel(); 
                 }
             }
@@ -76,9 +76,9 @@ namespace Wumpus
 
         public bool GetPlayerStatus()
         {
-            CaseType type_case_j = magicForest.Grille[player.PlayerPositionL, player.PlayerPositionC].Type;
+            CellType type_case_j = magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC].Type;
 
-            if(type_case_j == CaseType.Monstre || type_case_j == CaseType.Crevasse)
+            if(type_case_j == CellType.Monstre || type_case_j == CellType.Crevasse)
             {
                 return false;
             }
@@ -87,7 +87,7 @@ namespace Wumpus
         }
 
         //bouge le joueur vers l'une des 4 directions, si la proba d'un monstre sur la case d'arrivee est non nul, le joueur jete une pierre
-        public bool MoveTowards(MemoryManager.Node d)
+        public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')
                 RegisterOutPut(player.Name + " prend le portail et passe au niveau suivant.");
@@ -121,13 +121,13 @@ namespace Wumpus
             messages += message + Environment.NewLine;
         }
 
-        public void Jeter_pierre(MemoryManager.Node d)
+        public void Jeter_pierre(ExplorerNode d)
         {
             score -= 10;
 
             RegisterOutPut(player.Name + " lance une pierre vers le " + d.Direction);
 
-            magicForest.Utilisation_de_roches(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
+            magicForest.HitMonsterWithStone(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
         }
     }
 }
