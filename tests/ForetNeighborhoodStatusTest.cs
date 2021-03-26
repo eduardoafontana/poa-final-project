@@ -99,12 +99,18 @@ namespace tests
         [Test]
         public void TestEnumReflectionProperty()
         {
+            ForestConfiguration configuration = new ForestConfiguration();
+            configuration.PlayerPosition = new int[2] {0, 0};
+            configuration.PortalPosition = new int[2] {2, 2};
+            configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
+            configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
+
             PropertyInfo property = typeof(Case).GetProperty("VitesseVent");
 
             Enum value = CaseVitesseVent.Fort;
 
             Foret foret = new Foret(1);
-            foret.InitForest();
+            foret.InitForestForTests(configuration);
             
             Assert.AreEqual(CaseVitesseVent.Faible,  foret.Grille[0,0].VitesseVent);
 

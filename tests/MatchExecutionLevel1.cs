@@ -48,8 +48,8 @@ namespace tests
 
             int level = 1;
 
-            Partie partie = new Partie(level, configuration);
-            int score_global = partie.Jouer();
+            Match partie = new Match(level, configuration);
+            int score_global = partie.PlayMatch();
             
             Assert.AreEqual(matchMessage, partie.messages);
             Assert.AreEqual(52, score_global);
@@ -93,8 +93,8 @@ namespace tests
 
             int level = 1;
 
-            Partie partie = new Partie(level, configuration);
-            int score_global = partie.Jouer();
+            Match partie = new Match(level, configuration);
+            int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);
             Assert.AreEqual(-38, score_global);
@@ -134,8 +134,8 @@ namespace tests
 
             int level = 1;
 
-            Partie partie = new Partie(level, configuration);
-            int score_global = partie.Jouer();
+            Match partie = new Match(level, configuration);
+            int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);
             Assert.AreEqual(62, score_global);
@@ -176,8 +176,8 @@ namespace tests
 
             int level = 1;
 
-            Partie partie = new Partie(level, configuration);
-            int score_global = partie.Jouer();
+            Match partie = new Match(level, configuration);
+            int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);
             Assert.AreEqual(-36, score_global);
