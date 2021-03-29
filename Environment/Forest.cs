@@ -7,7 +7,7 @@ namespace Wumpus.Environment
     public class Forest 
     {
         public int Size { get; private set; }
-        public Cell[,] Grid { get; private set; }
+        public CellInterface[,] Grid { get; private set; }
         public int PlayerSpawnL { get { return playerSpawn[0]; } }
         public int PlayerSpawnC { get { return playerSpawn[1]; } }
         private int[] playerSpawn;

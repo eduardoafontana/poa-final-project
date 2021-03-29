@@ -29,7 +29,7 @@ namespace Wumpus.Environment
         Fort
     }
 
-    public class Cell
+    public class Cell : CellInterface
     {
         public CellOdeur Odeur { get; set; }
         public CellVitesseVent VitesseVent { get; set; }

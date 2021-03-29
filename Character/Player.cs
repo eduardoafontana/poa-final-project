@@ -50,7 +50,7 @@ namespace Wumpus.Character
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(Cell foretCell)
+        internal void ObserveAndMemorizeCurrentPosition(CellInterface foretCell)
         { 
             memoryPlayerPosition.CalculateLocalProbabilityMonster(foretCell.Type);
             memoryPlayerPosition.CalculateLocalProbabilityCave(foretCell.Type);
