@@ -22,15 +22,8 @@ namespace Wumpus.Character
             get { return memoryPlayerPosition.Column; }
         }
 
-        public string Name
+        public Player(int forestDimension)
         {
-            get { return name; }
-        }
-
-        public Player(string name, int forestDimension)
-        {
-            this.name = name;
-
             forestMemory = new Memory[forestDimension, forestDimension];
 
             for(int l = 0; l < forestDimension; l++)
@@ -125,10 +118,12 @@ namespace Wumpus.Character
         }
 
         //place le joueur sur la grille
-        internal void UpdatePlayerPosition(int l, int c)
+        internal int[] UpdatePlayerPosition(int l, int c)
         {
             memoryPlayerPosition = forestMemory[l, c];
             memoryPlayerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
+
+            return new int[] {l, c};
         }
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]

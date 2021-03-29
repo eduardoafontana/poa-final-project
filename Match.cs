@@ -8,6 +8,7 @@ namespace Wumpus
     {
         private int score;
         private int level;
+        private int[] playerPosition;
         private Forest magicForest;
         public Player player;
 
@@ -21,7 +22,7 @@ namespace Wumpus
             magicForest = new Forest(level);
             magicForest.InitForest();
 
-            player = new Player("Bob", magicForest.Size);
+            player = new Player(magicForest.Size);
         }
 
         public Match(int level, ForestConfiguration forestConfiguration)
@@ -32,7 +33,7 @@ namespace Wumpus
             magicForest = new Forest(level);
             magicForest.InitForestForTests(forestConfiguration);
 
-            player = new Player("Bob", magicForest.Size);
+            player = new Player(magicForest.Size);
         }
 
         public int PlayMatch()
@@ -43,14 +44,14 @@ namespace Wumpus
 
             do
             {
-                player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
+                playerPosition = player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
                 bool playerIsAlive = true;
 
-                RegisterOutPut(player.Name + " est apparu en case [" + player.PlayerPositionL + "," + player.PlayerPositionC + "]");
+                RegisterOutPut("Bob est apparu en case [" + playerPosition[0] + "," + playerPosition[1] + "]");
 
                 do
                 {
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC]);
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[playerPosition[0], playerPosition[1]]);
                     ExplorerNode node = player.Play();
 
                     ongoingMatch = !MoveTowards(node);
@@ -60,9 +61,9 @@ namespace Wumpus
                 
                 if(playerIsAlive == false)
                 {
-                    RegisterOutPut(player.Name + " est mort");
+                    RegisterOutPut("Bob est mort");
 
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC]); // Review this call later
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[playerPosition[0], playerPosition[1]]); // Review this call later
                     score -= this.CalculateScoreFromLevel(); 
                 }
             }
@@ -80,7 +81,7 @@ namespace Wumpus
 
         public bool GetPlayerStatus()
         {
-            CellType cellType = magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC].Type;
+            CellType cellType = magicForest.Grid[playerPosition[0], playerPosition[1]].Type;
 
             if(cellType == CellType.Monstre || cellType == CellType.Crevasse)
             {
@@ -94,9 +95,9 @@ namespace Wumpus
         public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')
-                RegisterOutPut(player.Name + " prend le portail et passe au niveau suivant.");
+                RegisterOutPut("Bob prend le portail et passe au niveau suivant.");
             else
-                RegisterOutPut(player.Name + " va vers " + d.Direction);
+                RegisterOutPut("Bob va vers " + d.Direction);
 
             score -= 1;
 
@@ -113,7 +114,7 @@ namespace Wumpus
                 if(player.NeedThrowStone(d))
                     ThrowStone(d);
 
-                player.UpdatePlayerPosition(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
+                playerPosition = player.UpdatePlayerPosition(d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1]));
 
                 return false;
             }
@@ -129,9 +130,9 @@ namespace Wumpus
         {
             score -= 10;
 
-            RegisterOutPut(player.Name + " lance une pierre vers le " + d.Direction);
+            RegisterOutPut("Bob lance une pierre vers le " + d.Direction);
 
-            magicForest.HitMonsterWithStone(d.GetLine(player.PlayerPositionL), d.GetColumn(player.PlayerPositionC));
+            magicForest.HitMonsterWithStone(d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1]));
         }
     }
 }
