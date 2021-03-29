@@ -50,7 +50,7 @@ namespace Wumpus
 
                 do
                 {
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid);
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC]);
                     ExplorerNode node = player.Play();
 
                     ongoingMatch = !MoveTowards(node);
@@ -62,7 +62,7 @@ namespace Wumpus
                 {
                     RegisterOutPut(player.Name + " est mort");
 
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid); // Review this call later
+                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[player.PlayerPositionL, player.PlayerPositionC]); // Review this call later
                     score -= this.CalculateScoreFromLevel(); 
                 }
             }

@@ -50,14 +50,14 @@ namespace Wumpus.Character
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(Cell[,] foret)
+        internal void ObserveAndMemorizeCurrentPosition(Cell foretCell)
         { 
-            memoryPlayerPosition.CalculateLocalProbabilityMonster(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
-            memoryPlayerPosition.CalculateLocalProbabilityCave(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Type);
+            memoryPlayerPosition.CalculateLocalProbabilityMonster(foretCell.Type);
+            memoryPlayerPosition.CalculateLocalProbabilityCave(foretCell.Type);
             
-            memoryPlayerPosition.CheckExistOdor(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Odeur);
-            memoryPlayerPosition.CheckExistVent(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].VitesseVent);
-            memoryPlayerPosition.CheckExistLuminosite(foret[memoryPlayerPosition.Line, memoryPlayerPosition.Column].Luminosite);
+            memoryPlayerPosition.CheckExistOdor(foretCell.Odeur);
+            memoryPlayerPosition.CheckExistVent(foretCell.VitesseVent);
+            memoryPlayerPosition.CheckExistLuminosite(foretCell.Luminosite);
         }
 
 
