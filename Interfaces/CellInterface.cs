@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Wumpus.Environment;
 
-namespace Wumpus.Environment
+namespace Wumpus.Interfaces
 {
     public interface CellInterface
     {
