@@ -11,16 +11,7 @@ namespace Wumpus.Character
         private string name;
         private Memory[,] forestMemory;
         private Memory memoryPlayerPosition;
-
-        public int PlayerPositionL
-        {
-            get { return memoryPlayerPosition.Line; }
-        }
-
-        public int PlayerPositionC
-        {
-            get { return memoryPlayerPosition.Column; }
-        }
+        private int[] playerPosition;
 
         public Player(int forestDimension)
         {
@@ -84,7 +75,7 @@ namespace Wumpus.Character
 
         internal bool NeedThrowStone(ExplorerNode d)
         {
-            return forestMemory[d.GetLine(memoryPlayerPosition.Line), d.GetColumn(memoryPlayerPosition.Column)].ProbabilityMonster > 0;
+            return forestMemory[d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1])].ProbabilityMonster > 0;
         }
 
         //determiner la case la plus probable de contenir le portail
@@ -122,8 +113,9 @@ namespace Wumpus.Character
         {
             memoryPlayerPosition = forestMemory[l, c];
             memoryPlayerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
+            playerPosition = new int[] {l, c};
 
-            return new int[] {l, c};
+            return playerPosition;
         }
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
@@ -134,9 +126,9 @@ namespace Wumpus.Character
             memoryPlayerPosition.Passage = 0;
             
             List<int> list_n = Explorer.GetInstance().OnNeighbors()
-            .Where(item => item.IsValidPosition(item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column), forestMemory.GetLength(0)))
+            .Where(item => item.IsValidPosition(item.GetLine(playerPosition[0]), item.GetColumn(playerPosition[1]), forestMemory.GetLength(0)))
             .Select(item => 
-                DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(memoryPlayerPosition.Line), item.GetColumn(memoryPlayerPosition.Column) }, 1)
+                DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(playerPosition[0]), item.GetColumn(playerPosition[1]) }, 1)
             ).ToList();
 
             return list_n.Min();
@@ -145,8 +137,8 @@ namespace Wumpus.Character
         //renvoie la direction pour se rendre à l'objectif situé en [lf, cf]
         private ExplorerNode GetDirectionToGoTo(int lf, int cf)
         {
-            int l0 = memoryPlayerPosition.Line;
-            int c0 = memoryPlayerPosition.Column;
+            int l0 = playerPosition[0];
+            int c0 = playerPosition[1];
 
             forestMemory.Cast<Memory>().ToList().ForEach(x => x.Passage = Int32.MaxValue);
 
