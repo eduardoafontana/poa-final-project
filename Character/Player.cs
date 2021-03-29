@@ -124,15 +124,10 @@ namespace Wumpus.Character
         }
 
         //place le joueur sur la grille
-        internal bool UpdatePlayerPosition(int l, int c)
+        internal void UpdatePlayerPosition(int l, int c)
         {
-            bool test = false;
-
             memoryPlayerPosition = forestMemory[l, c];
             memoryPlayerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
-            test = true;
-
-            return test;
         }
 
         //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
