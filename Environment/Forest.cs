@@ -21,7 +21,7 @@ namespace Wumpus.Environment
             InitializeGrid();
         }
 
-        public void InitForest()
+        public int InitForest()
         {
             //probabilite d'apparition de montre
             int monsterProbability = (int)Math.Truncate(0.2 * this.Size * this.Size);
@@ -36,9 +36,11 @@ namespace Wumpus.Environment
             InitNeighborStatusCell();
 
             playerSpawn = SelectVoidCellForPlayerInit();
+
+            return this.Size;
         }
 
-        public void InitForestForTests(ForestConfiguration configuration)
+        public int InitForestForTests(ForestConfiguration configuration)
         {
             foreach (var position in configuration.MonstersPosition)
             {
@@ -55,6 +57,8 @@ namespace Wumpus.Environment
             InitNeighborStatusCell();
 
             playerSpawn = configuration.PlayerPosition;
+
+            return this.Size;
         }
 
         private int[] SelectVoidCellForPlayerInit()

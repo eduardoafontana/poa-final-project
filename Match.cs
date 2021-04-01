@@ -20,9 +20,9 @@ namespace Wumpus
             this.level = level;
 
             magicForest = new Forest(level);
-            magicForest.InitForest();
+            int forestSize = magicForest.InitForest();
 
-            player = new Player(magicForest.Size);
+            player = new Player(forestSize);
         }
 
         public Match(int level, ForestConfiguration forestConfiguration)
@@ -31,9 +31,9 @@ namespace Wumpus
             this.level = level;
             
             magicForest = new Forest(level);
-            magicForest.InitForestForTests(forestConfiguration);
+            int forestSize = magicForest.InitForestForTests(forestConfiguration);
 
-            player = new Player(magicForest.Size);
+            player = new Player(forestSize);
         }
 
         public int PlayMatch()
