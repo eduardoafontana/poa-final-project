@@ -77,7 +77,7 @@ namespace Wumpus
 
         private void UpdatePlayerForestMemory()
         {
-            CellMemory cellMemory = CellMemory.MemorizeForest(magicForest.Grid[playerPosition[0], playerPosition[1]]);
+            CellMemory cellMemory = magicForest.Grid[playerPosition[0], playerPosition[1]].GetPlayerForestState();
             player.ObserveAndMemorizeCurrentPosition(cellMemory);
         }
 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Wumpus.Character;
 
 namespace Wumpus.Environment
 {
@@ -43,6 +44,11 @@ namespace Wumpus.Environment
             this.Odeur = CellOdeur.Neutre;
             this.VitesseVent = CellVitesseVent.Faible;
             this.Luminosite = CellLuminosite.Faible;
+        }
+
+        internal CellMemory GetPlayerForestState()
+        {
+            return CellMemory.MemorizeForest(this);
         }
     }
 }
