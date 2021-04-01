@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Wumpus.Interfaces;
 
 namespace Wumpus.Environment
 {
@@ -30,7 +29,7 @@ namespace Wumpus.Environment
         Fort
     }
 
-    public class Cell : CellInterface
+    public class Cell
     {
         public CellOdeur Odeur { get; set; }
         public CellVitesseVent VitesseVent { get; set; }

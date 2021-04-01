@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wumpus.Environment;
-using Wumpus.Interfaces;
 
 namespace Wumpus.Character
 {
@@ -35,7 +34,7 @@ namespace Wumpus.Character
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(CellInterface foretCell)
+        internal void ObserveAndMemorizeCurrentPosition(Cell foretCell)
         { 
             memoryPlayerPosition.CalculateLocalProbabilityMonster(foretCell.Type);
             memoryPlayerPosition.CalculateLocalProbabilityCave(foretCell.Type);
