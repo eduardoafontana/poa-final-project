@@ -173,16 +173,10 @@ namespace Wumpus.Environment
 
         private bool IsCellValid(int l, int c)
         {
-            if(c >= this.Size)
+            if((c >= this.Size) || (c < 0))
                 return false;
 
-            if(c < 0)
-                return false;
-
-            if(l < 0)
-                return false;
-
-            if(l >= this.Size)
+            if((l < 0) || (l >= this.Size))
                 return false;
 
             return true;

@@ -49,30 +49,40 @@ namespace Wumpus
 
                 RegisterOutPut("Bob est apparu en case [" + playerPosition[0] + "," + playerPosition[1] + "]");
 
-                do
-                {
-                    UpdatePlayerForestMemory();
+                ProcessMatch(out ongoingMatch, out playerIsAlive);
 
-                    ExplorerNode node = player.Play();
-
-                    ongoingMatch = !MoveTowards(node);
-                    playerIsAlive = GetPlayerStatus();
-                }
-                while(playerIsAlive && ongoingMatch);
-                
-                if(playerIsAlive == false)
-                {
-                    RegisterOutPut("Bob est mort");
-
-                    UpdatePlayerForestMemory();
-                    score -= this.CalculateScoreFromLevel(); 
-                }
+                ProcessPlayer(playerIsAlive);
             }
-            while(ongoingMatch);
+            while (ongoingMatch);
 
             score += this.CalculateScoreFromLevel(); 
 
             return score;
+        }
+
+        private void ProcessPlayer(bool playerIsAlive)
+        {
+            if (playerIsAlive == false)
+            {
+                RegisterOutPut("Bob est mort");
+
+                UpdatePlayerForestMemory();
+                score -= this.CalculateScoreFromLevel();
+            }
+        }
+
+        private void ProcessMatch(out bool ongoingMatch, out bool playerIsAlive)
+        {
+            do
+            {
+                UpdatePlayerForestMemory();
+
+                ExplorerNode node = player.Play();
+
+                ongoingMatch = !MoveTowards(node);
+                playerIsAlive = GetPlayerStatus();
+            }
+            while (playerIsAlive && ongoingMatch);
         }
 
         private void UpdatePlayerForestMemory()

@@ -143,9 +143,7 @@ namespace Wumpus.Character
 
             memoryPlayerPosition.Passage = 0;
 
-            List<ExplorerNode> listMemories = Explorer.GetInstance().OnNeighbors()
-            .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
-            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100)
+            List<ExplorerNode> listMemories = Explorer.GetNeighborsFilted(forestMemory, new int[] {l0, c0})
             .Select(item => 
                 new ExplorerNode(item.GetLine(), item.GetColumn(), item.Direction, DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(l0), item.GetColumn(c0) }, 1))
             ).ToList();
@@ -172,9 +170,8 @@ namespace Wumpus.Character
             if(l0 == lf && c0 == cf)
                 return countDistance;
 
-            List<int> list_n = Explorer.GetInstance().OnNeighbors()
-            .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
-            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100 && forestMemory[x.GetLine(l0), x.GetColumn(c0)].Passage > countDistance + 1)
+            List<int> list_n = Explorer.GetNeighborsFilted(forestMemory, new int[] {l0, c0})
+            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].Passage > countDistance + 1)
             .Select(item => 
                 DeepGetDirectionToGoTo(new int[] { lf, cf }, new int[] { item.GetLine(l0), item.GetColumn(c0) }, countDistance + 1)
             ).ToList();

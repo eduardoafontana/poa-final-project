@@ -31,5 +31,15 @@ namespace Wumpus.Character
 
             return memoryManager;
         }
+
+        public static IEnumerable<ExplorerNode> GetNeighborsFilted(Memory[,] forestMemory, int[] l0c0)
+        {
+            int l0 = l0c0[0];
+            int c0 = l0c0[1];
+
+            return Explorer.GetInstance().OnNeighbors()
+            .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
+            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100);
+        }
     }
 }

@@ -67,16 +67,10 @@ namespace Wumpus.Character
             int limitTop = 0;
             int limitDown = size;
 
-            if(c >= limitRight)
+            if((c >= limitRight) || (c < limitLeft))
                 return false;
 
-            if(c < limitLeft)
-                return false;
-
-            if(l < limitTop)
-                return false;
-
-            if(l >= limitDown)
+            if((l < limitTop) || (l >= limitDown))
                 return false;
 
             return true;
