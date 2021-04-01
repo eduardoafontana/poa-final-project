@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Wumpus.Environment
 {
-    public class Forest 
+    public class Forest : ForestInterface
     {
         public int Size { get; private set; }
         public Cell[,] Grid { get; private set; }
