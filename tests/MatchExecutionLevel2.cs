@@ -49,7 +49,7 @@ namespace Wumpus.Tests
 
             int level = 2;
 
-            Match partie = new Match(level, configuration);
+            Match partie = new Match(level, configuration, new ForestFactory());
             int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);
@@ -115,7 +115,7 @@ namespace Wumpus.Tests
 
             int level = 2;
 
-            Match partie = new Match(level, configuration);
+            Match partie = new Match(level, configuration, new ForestFactory());
             int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);

@@ -14,23 +14,23 @@ namespace Wumpus
 
         public String messages = String.Empty;
 
-        public Match(int level)
+        public Match(int level, ForestFactory forestFactory)
         {
             score = 0;
             this.level = level;
 
-            magicForest = new Forest(level);
+            magicForest = forestFactory.CreateNewForest(level);
             int forestSize = magicForest.InitForest();
 
             player = new Player(forestSize);
         }
 
-        public Match(int level, ForestConfiguration forestConfiguration)
+        public Match(int level, ForestConfiguration forestConfiguration, ForestFactory forestFactory)
         {
             score = 0;
             this.level = level;
             
-            magicForest = new Forest(level);
+            magicForest = forestFactory.CreateNewForest(level);
             int forestSize = magicForest.InitForestForTests(forestConfiguration);
 
             player = new Player(forestSize);
