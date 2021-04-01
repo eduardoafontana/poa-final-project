@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Reflection;
+using Wumpus.Environment;
 
-namespace Wumpus.Environment
+namespace Wumpus
 {
     public interface ForestInterface
     {
