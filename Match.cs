@@ -10,7 +10,7 @@ namespace Wumpus
         private int level;
         private int[] playerPosition;
         private ForestInterface magicForest;
-        public Player player;
+        public PlayerInterface player;
 
         public String messages = String.Empty;
 

@@ -5,7 +5,7 @@ using Wumpus.Environment;
 
 namespace Wumpus.Character
 {
-    public class Player
+    public class Player : PlayerInterface
     {
         private string name;
         private Memory[,] forestMemory;
@@ -25,7 +25,7 @@ namespace Wumpus.Character
             }
         }
 
-        internal ExplorerNode Play()
+        public ExplorerNode Play()
         {
             ObserveAndMemorizeAllForest();
             
@@ -34,7 +34,7 @@ namespace Wumpus.Character
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(CellMemory cellMemory)
+        public void ObserveAndMemorizeCurrentPosition(CellMemory cellMemory)
         { 
             memoryPlayerPosition.CalculateLocalProbabilityMonster(cellMemory.ProbabilityMonster);
             memoryPlayerPosition.CalculateLocalProbabilityCave(cellMemory.ProbabilityCave);
@@ -72,7 +72,7 @@ namespace Wumpus.Character
             });
         }
 
-        internal bool NeedThrowStone(ExplorerNode d)
+        public bool NeedThrowStone(ExplorerNode d)
         {
             return forestMemory[d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1])].ProbabilityMonster > 0;
         }
@@ -108,7 +108,7 @@ namespace Wumpus.Character
         }
 
         //place le joueur sur la grille
-        internal int[] UpdatePlayerPosition(int l, int c)
+        public int[] UpdatePlayerPosition(int l, int c)
         {
             memoryPlayerPosition = forestMemory[l, c];
             memoryPlayerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
