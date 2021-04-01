@@ -31,29 +31,29 @@ namespace Wumpus.Character
             this.Column = column;
         }
 
-        internal void CalculateLocalProbabilityMonster(CellType type)
+        internal void CalculateLocalProbabilityMonster(float probabilityMonster)
         {
-            this.ProbabilityMonster = type == CellType.Monstre ? 100 : 0;
+            this.ProbabilityMonster = probabilityMonster;
         }
 
-        internal void CalculateLocalProbabilityCave(CellType type)
+        internal void CalculateLocalProbabilityCave(float probabilityCave)
         {
-            this.ProbabilityCave = type == CellType.Crevasse ? 100 : 0;
+            this.ProbabilityCave = probabilityCave;
         }
 
-        internal void CheckExistOdor(CellOdeur odor)
+        internal void CheckExistOdor(float odor)
         {
-            this.ExistOdeur = odor == CellOdeur.Mauvaise ? 1 : 0;
+            this.ExistOdeur = odor;
         }
 
-        internal void CheckExistVent(CellVitesseVent vitesseVent)
+        internal void CheckExistVent(float vitesseVent)
         {
-            this.ExistVent = vitesseVent == CellVitesseVent.Fort ? 1 : 0;
+            this.ExistVent = vitesseVent;
         }
 
-        internal void CheckExistLuminosite(CellLuminosite luminosite)
+        internal void CheckExistLuminosite(float luminosite)
         {
-            this.ExistLuminosite = luminosite == CellLuminosite.Fort ? 1 : 0;
+            this.ExistLuminosite = luminosite;
         }
 
         internal void CalculateProbabilityPortal()

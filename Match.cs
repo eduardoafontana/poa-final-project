@@ -51,7 +51,8 @@ namespace Wumpus
 
                 do
                 {
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[playerPosition[0], playerPosition[1]]);
+                    UpdatePlayerForestMemory();
+
                     ExplorerNode node = player.Play();
 
                     ongoingMatch = !MoveTowards(node);
@@ -63,7 +64,7 @@ namespace Wumpus
                 {
                     RegisterOutPut("Bob est mort");
 
-                    player.ObserveAndMemorizeCurrentPosition(magicForest.Grid[playerPosition[0], playerPosition[1]]); // Review this call later
+                    UpdatePlayerForestMemory();
                     score -= this.CalculateScoreFromLevel(); 
                 }
             }
@@ -72,6 +73,12 @@ namespace Wumpus
             score += this.CalculateScoreFromLevel(); 
 
             return score;
+        }
+
+        private void UpdatePlayerForestMemory()
+        {
+            CellMemory cellMemory = CellMemory.MemorizeForest(magicForest.Grid[playerPosition[0], playerPosition[1]]);
+            player.ObserveAndMemorizeCurrentPosition(cellMemory);
         }
 
         private int CalculateScoreFromLevel()

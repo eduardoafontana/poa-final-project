@@ -34,14 +34,14 @@ namespace Wumpus.Character
             return node;
         }
 
-        internal void ObserveAndMemorizeCurrentPosition(Cell foretCell)
+        internal void ObserveAndMemorizeCurrentPosition(CellMemory cellMemory)
         { 
-            memoryPlayerPosition.CalculateLocalProbabilityMonster(foretCell.Type);
-            memoryPlayerPosition.CalculateLocalProbabilityCave(foretCell.Type);
+            memoryPlayerPosition.CalculateLocalProbabilityMonster(cellMemory.ProbabilityMonster);
+            memoryPlayerPosition.CalculateLocalProbabilityCave(cellMemory.ProbabilityCave);
             
-            memoryPlayerPosition.CheckExistOdor(foretCell.Odeur);
-            memoryPlayerPosition.CheckExistVent(foretCell.VitesseVent);
-            memoryPlayerPosition.CheckExistLuminosite(foretCell.Luminosite);
+            memoryPlayerPosition.CheckExistOdor(cellMemory.ExistOdeur);
+            memoryPlayerPosition.CheckExistVent(cellMemory.ExistVent);
+            memoryPlayerPosition.CheckExistLuminosite(cellMemory.ExistLuminosite);
         }
 
 
