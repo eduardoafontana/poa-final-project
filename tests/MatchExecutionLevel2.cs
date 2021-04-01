@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Linq;
 using System.Collections.Generic;
 using Wumpus.Environment;
+using Wumpus.Character;
 
 namespace Wumpus.Tests
 {
@@ -49,7 +50,7 @@ namespace Wumpus.Tests
 
             int level = 2;
 
-            Match partie = new Match(level, configuration, new ForestFactory());
+            Match partie = new Match(level, configuration, new ForestFactory(), new PlayerFactory());
             int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);
@@ -115,7 +116,7 @@ namespace Wumpus.Tests
 
             int level = 2;
 
-            Match partie = new Match(level, configuration, new ForestFactory());
+            Match partie = new Match(level, configuration, new ForestFactory(), new PlayerFactory());
             int score_global = partie.PlayMatch();
 
             Assert.AreEqual(matchMessage, partie.messages);

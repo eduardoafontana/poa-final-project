@@ -2,7 +2,7 @@
 
 namespace Wumpus.Environment
 {
-    public class ForestFactory : EnvironmentAbstractFactory
+    public class ForestFactory : ForestAbstractFactory
     {
         public ForestInterface CreateNewForest(int size)
         {

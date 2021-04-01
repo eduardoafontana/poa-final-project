@@ -14,7 +14,7 @@ namespace Wumpus
 
         public String messages = String.Empty;
 
-        public Match(int level, EnvironmentAbstractFactory forestFactory)
+        public Match(int level, ForestAbstractFactory forestFactory, PlayerAbstractFactory playerFactory)
         {
             score = 0;
             this.level = level;
@@ -22,10 +22,10 @@ namespace Wumpus
             magicForest = forestFactory.CreateNewForest(level);
             int forestSize = magicForest.InitForest();
 
-            player = new Player(forestSize);
+            player = playerFactory.CreateNewPlayer(forestSize);
         }
 
-        public Match(int level, ForestConfiguration forestConfiguration, EnvironmentAbstractFactory forestFactory)
+        public Match(int level, ForestConfiguration forestConfiguration, ForestAbstractFactory forestFactory, PlayerAbstractFactory playerFactory)
         {
             score = 0;
             this.level = level;
@@ -33,7 +33,7 @@ namespace Wumpus
             magicForest = forestFactory.CreateNewForest(level);
             int forestSize = magicForest.InitForestForTests(forestConfiguration);
 
-            player = new Player(forestSize);
+            player = playerFactory.CreateNewPlayer(forestSize);
         }
 
         public int PlayMatch()

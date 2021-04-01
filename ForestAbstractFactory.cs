@@ -3,7 +3,7 @@ using Wumpus.Environment;
 
 namespace Wumpus
 {
-    public interface EnvironmentAbstractFactory
+    public interface ForestAbstractFactory
     {
         ForestInterface CreateNewForest(int size);
     }

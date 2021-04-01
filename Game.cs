@@ -1,4 +1,5 @@
 ﻿using System;
+using Wumpus.Character;
 using Wumpus.Environment;
 
 namespace Wumpus
@@ -13,7 +14,7 @@ namespace Wumpus
 
             while(nextLevel)
             {
-                Match match = new Match(level, new ForestFactory());
+                Match match = new Match(level, new ForestFactory(), new PlayerFactory());
                 globalScore += match.PlayMatch();
 
                 Console.WriteLine("le score actuel à la fin du niveau " + level + " est de " + globalScore);
