@@ -48,7 +48,16 @@ namespace Wumpus.Environment
 
         internal CellMemory GetPlayerForestState()
         {
-            return CellMemory.MemorizeForest(this);
+            CellMemory cellMemory = new CellMemory();
+
+            cellMemory.ProbabilityMonster = this.Type == CellType.Monstre ? 100 : 0;
+            cellMemory.ProbabilityCave = this.Type == CellType.Crevasse ? 100 : 0;
+
+            cellMemory.ExistOdeur = this.Odeur == CellOdeur.Mauvaise ? 1 : 0;
+            cellMemory.ExistVent = this.VitesseVent == CellVitesseVent.Fort ? 1 : 0;
+            cellMemory.ExistLuminosite = this.Luminosite == CellLuminosite.Fort ? 1 : 0;
+
+            return cellMemory;
         }
     }
 }
