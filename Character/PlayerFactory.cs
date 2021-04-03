@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Wumpus.Character
+﻿namespace Wumpus.Character
 {
     public class PlayerFactory : PlayerAbstractFactory
     {

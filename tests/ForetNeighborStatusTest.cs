@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using Wumpus.Environment;

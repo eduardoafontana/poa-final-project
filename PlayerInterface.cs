@@ -1,5 +1,4 @@
-﻿using System;
-using Wumpus.Character;
+﻿using Wumpus.Character;
 
 namespace Wumpus
 {

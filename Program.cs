@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Wumpus
+﻿namespace Wumpus
 {
     class Program
     {

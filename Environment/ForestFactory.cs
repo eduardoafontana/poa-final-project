@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Wumpus.Environment
+﻿namespace Wumpus.Environment
 {
     public class ForestFactory : ForestAbstractFactory
     {

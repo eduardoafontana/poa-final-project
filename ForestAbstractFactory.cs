@@ -1,7 +1,4 @@
-﻿using System;
-using Wumpus.Environment;
-
-namespace Wumpus
+﻿namespace Wumpus
 {
     public interface ForestAbstractFactory
     {

@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Wumpus.Environment;
 
 namespace Wumpus.Character
 {

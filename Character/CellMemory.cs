@@ -1,10 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using Wumpus.Environment;
-
-namespace Wumpus.Character
+﻿namespace Wumpus.Character
 {
     public class CellMemory
     {

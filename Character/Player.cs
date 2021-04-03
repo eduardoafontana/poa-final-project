@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wumpus.Environment;
 
 namespace Wumpus.Character
 {
