@@ -21,7 +21,7 @@ namespace Wumpus.Tests
             Assert.AreEqual(CellType.Portal, cell.Type);
             Assert.AreEqual(CellLuminosity.Low, cell.Luminosity);
             Assert.AreEqual(CellOdour.Neutral, cell.Odour);
-            Assert.AreEqual(CellVitesseVent.Low, cell.VitesseVent);
+            Assert.AreEqual(CellSpeedVent.Low, cell.SpeedVent);
         }
     }
 }

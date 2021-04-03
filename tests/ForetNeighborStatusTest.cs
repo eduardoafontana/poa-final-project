@@ -82,16 +82,16 @@ namespace Wumpus.Tests
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l, c + 1].VitesseVent);
+                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l, c + 1].SpeedVent);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l, c - 1].VitesseVent);
+                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l, c - 1].SpeedVent);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l - 1, c].VitesseVent);
+                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l - 1, c].SpeedVent);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[l + 1, c].VitesseVent);
+                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l + 1, c].SpeedVent);
                 }
             }
         }
@@ -105,18 +105,18 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
 
-            PropertyInfo property = typeof(Cell).GetProperty("VitesseVent");
+            PropertyInfo property = typeof(Cell).GetProperty("SpeedVent");
 
-            Enum value = CellVitesseVent.Fort;
+            Enum value = CellSpeedVent.Fort;
 
             Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
             
-            Assert.AreEqual(CellVitesseVent.Low,  foret.Grid[0,0].VitesseVent);
+            Assert.AreEqual(CellSpeedVent.Low,  foret.Grid[0,0].SpeedVent);
 
             property.SetValue(foret.Grid[0,0], value);
 
-            Assert.AreEqual(CellVitesseVent.Fort, foret.Grid[0,0].VitesseVent);
+            Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[0,0].SpeedVent);
         }
 
         [Test]

@@ -46,9 +46,9 @@ namespace Wumpus.Character
             this.ExistOdour = odor;
         }
 
-        internal void CheckExistVent(float vitesseVent)
+        internal void CheckExistVent(float speedVent)
         {
-            this.ExistVent = vitesseVent;
+            this.ExistVent = speedVent;
         }
 
         internal void CheckExistLuminosity(float luminosity)

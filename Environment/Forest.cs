@@ -146,7 +146,7 @@ namespace Wumpus.Environment
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odour"), CellOdour.Mauvaise);
                     break;
                 case CellType.Crevasse:
-                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("VitesseVent"), CellVitesseVent.Fort);
+                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedVent"), CellSpeedVent.Fort);
                     break;
             }
         }
@@ -201,7 +201,7 @@ namespace Wumpus.Environment
                 {
                     string luminosity = Grid[l,c].Luminosity == CellLuminosity.Fort ? Grid[l,c].Luminosity.GetDescription() : "";
                     string odour = Grid[l,c].Odour == CellOdour.Mauvaise ?  Grid[l,c].Odour.GetDescription() : "";
-                    string vent = Grid[l,c].VitesseVent == CellVitesseVent.Fort ? Grid[l,c].VitesseVent.GetDescription() : "";
+                    string vent = Grid[l,c].SpeedVent == CellSpeedVent.Fort ? Grid[l,c].SpeedVent.GetDescription() : "";
                     
                     r += " " + luminosity + odour + vent + " |";
                 }
