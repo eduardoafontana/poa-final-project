@@ -1,13 +1,15 @@
-services: mongodb
+env:
+  global:
+    - CC_TEST_REPORTER_ID=14674c41ef6ea023bd25bb5af6fe05263afe31d5dba8baaf0f2c0c01ad1c26ab
 language: csharp
 mono: none
 dotnet: 3.1
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
  - dotnet restore
  - dotnet build
-addons:
-  code_climate:
-    repo_token: 14674c41ef6ea023bd25bb5af6fe05263afe31d5dba8baaf0f2c0c01ad1c26ab
 after_script:
-- npm install -g codeclimate-test-reporter
-- codeclimate-test-reporter < coverage/lcov.info
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
