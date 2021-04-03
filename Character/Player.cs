@@ -4,6 +4,12 @@ using System.Linq;
 
 namespace Wumpus.Character
 {
+    /// <summary>
+    /// This class is responsible for the player's logic.
+    /// This class aims to process and store the player's memory in relation to the forest.
+    /// As well as calculating the next cell that the player must move to based on its memory.
+    /// Processing the memory means observing the forest, calculating the probability of the elements arrund and updating the player's internal memory represented by the grid Memory.
+    /// </summary>
     public class Player : PlayerInterface
     {
         private string name;

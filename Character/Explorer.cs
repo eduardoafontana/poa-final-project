@@ -3,6 +3,11 @@ using System.Linq;
 
 namespace Wumpus.Character
 {
+    /// <summary>
+    /// This class is responsible for managing the displacement nodes.
+    /// This class aims to deliver the group of nodes with the differences in the four possible directions of displacement.
+    /// In addition it has filters with application of rules such as finding neighboring nodes that do not contain crevasse.
+    /// </summary>
     public class Explorer
     {
         private List<ExplorerNode> listNodes = new List<ExplorerNode>();

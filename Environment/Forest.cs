@@ -5,6 +5,12 @@ namespace Wumpus.Environment
 {
     public class Forest : ForestInterface
     {
+        /// <summary>
+        /// This class is responsible for the logic of the forest.
+        /// It contains a matrix of cells that represents each position in the forest.
+        /// The objective of this class is to define the position of each element of the game: player, monster, crevasse and portal.
+        /// In addition, this class eliminates a monster from a cell when a stone is thrown in its position.
+        /// </summary>
         public int Size { get; private set; }
         public Cell[,] Grid { get; private set; }
         public int PlayerSpawnL { get { return playerSpawn[0]; } }

@@ -5,6 +5,10 @@ using System.Reflection;
 
 namespace Wumpus.Environment
 {
+    /// <summary>
+    /// This class is responsible for defining the possible types that a cell in the forest can be.
+    /// In addition, this class contains an extension method for the native Enum class, which allows you to capture the description attribute of each enumerator.
+    /// </summary>
     public enum CellType
     {
         [Description("O")]

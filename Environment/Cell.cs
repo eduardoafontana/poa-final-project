@@ -3,6 +3,10 @@ using Wumpus.Character;
 
 namespace Wumpus.Environment
 {
+    /// <summary>
+    /// This class is responsible for storing the information of a cell in the forest
+    /// In addition, it processes and returns a state of the memory cell based on its own state.
+    /// </summary>
     public enum CellOdour
     {
         [Description("om")]

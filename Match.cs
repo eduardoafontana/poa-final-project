@@ -4,6 +4,11 @@ using Wumpus.Environment;
 
 namespace Wumpus
 {
+    /// <summary>
+    /// This class is responsible for controlling the match at each level.
+    /// The purpose of this class is to initialize the forest and the player, process the player's reflection, execute the player's displacement and signal the screen exit.
+    /// The execution of these steps is done at each level, with each level being an independent match.
+    /// </summary>
     public class Match
     {
         private int score;

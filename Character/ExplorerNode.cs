@@ -3,6 +3,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Wumpus.Character
 {
+    /// <summary>
+    /// This class is responsible for calculating the direction relative to a given position.
+    /// In other words, it finds the neighbor node at an informed initial position.
+    /// This class aims to ensure that the neighboring node is always a valid node, that is, that it has a position in the matrix.
+    /// </summary>
     public class ExplorerNode : IComparable<ExplorerNode>
     {
         private int line;

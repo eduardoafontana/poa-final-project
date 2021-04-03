@@ -4,6 +4,11 @@ using Wumpus.Environment;
 
 namespace Wumpus
 {
+    /// <summary>
+    /// This class is responsible for handle the game.
+    /// The purpose of this class is to control and to initialize the classes that are the main entities of the game and to control the score.
+    /// As well as allowing the game to continue as the user progresses to the next level.
+    /// </summary>
     public class Game
     {
         public void Start()

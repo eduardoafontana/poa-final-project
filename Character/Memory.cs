@@ -2,6 +2,11 @@ using System;
 
 namespace Wumpus.Character
 {
+    /// <summary>
+    /// This class is responsible for maintaining the player's memory regarding a position in the forest.
+    /// A forest position means a cell in the forest matrix.
+    /// This class aims to calculate and store the probabilities of the monster, crevasse and portal elements referring to neighboring cells.
+    /// </summary>
     public class Memory
     {
         public float ProbabilityMonster = -1;
