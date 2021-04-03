@@ -26,10 +26,10 @@ namespace Wumpus.Environment
             //probabilite d'apparition de montre
             int monsterProbability = (int)Math.Truncate(0.2 * this.Size * this.Size);
 
-            //probabilite d'apparition de crevasse
+            //probabilite d'apparition de cave
             int caveProbability = (int)Math.Truncate(0.15 * this.Size * this.Size);
 
-            PlaceElement(CellType.Crevasse, caveProbability);
+            PlaceElement(CellType.Cave, caveProbability);
             PlaceElement(CellType.Monster, monsterProbability);
             PlaceElement(CellType.Portal, 1);
 
@@ -49,7 +49,7 @@ namespace Wumpus.Environment
 
             foreach (var position in configuration.CavesPosition)
             {
-                this.Grid[position[0], position[1]].Type = CellType.Crevasse;
+                this.Grid[position[0], position[1]].Type = CellType.Cave;
             }
 
             this.Grid[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CellType.Portal;
@@ -145,7 +145,7 @@ namespace Wumpus.Environment
                 case CellType.Monster:
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odour"), CellOdour.Mauvaise);
                     break;
-                case CellType.Crevasse:
+                case CellType.Cave:
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedWind"), CellSpeedWind.Fort);
                     break;
             }
@@ -184,7 +184,7 @@ namespace Wumpus.Environment
 
         public override string ToString()
         {
-            string r = "\n\nforet magique : empty\nv : crevasse\nM : monster\nO : portal\n\n";
+            string r = "\n\nforet magique : empty\nv : cave\nM : monster\nO : portal\n\n";
             for(int l = 0; l < Grid.GetLength(0); l++)
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)

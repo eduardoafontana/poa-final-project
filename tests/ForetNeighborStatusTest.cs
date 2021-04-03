@@ -78,7 +78,7 @@ namespace Wumpus.Tests
             {
                 for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grid[l,c].Type != CellType.Crevasse)
+                    if(foret.Grid[l,c].Type != CellType.Cave)
                         continue;
 
                     if(c + 1 <= limitRight)

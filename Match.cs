@@ -100,7 +100,7 @@ namespace Wumpus
         {
             CellType cellType = magicForest.Grid[playerPosition[0], playerPosition[1]].Type;
 
-            if(cellType == CellType.Monster || cellType == CellType.Crevasse)
+            if(cellType == CellType.Monster || cellType == CellType.Cave)
             {
                 return false;
             }

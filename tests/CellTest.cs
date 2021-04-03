@@ -9,7 +9,7 @@ namespace Wumpus.Tests
         public void CellTypeDescription()
         {
             Assert.AreEqual("O",  CellType.Portal.GetDescription());
-            Assert.AreEqual("V",  CellType.Crevasse.GetDescription());
+            Assert.AreEqual("V",  CellType.Cave.GetDescription());
             Assert.AreEqual("M",  CellType.Monster.GetDescription());
             Assert.AreEqual(".",  CellType.Empty.GetDescription());
         }
