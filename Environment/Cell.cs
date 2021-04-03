@@ -6,7 +6,7 @@ namespace Wumpus.Environment
     public enum CellOdour
     {
         [Description("om")]
-        Mauvaise,
+        Bad,
         [Description("on")]
         Neutral
     }
@@ -50,7 +50,7 @@ namespace Wumpus.Environment
             cellMemory.ProbabilityMonster = this.Type == CellType.Monster ? 100 : 0;
             cellMemory.ProbabilityCrevasse = this.Type == CellType.Crevasse ? 100 : 0;
 
-            cellMemory.ExistOdour = this.Odour == CellOdour.Mauvaise ? 1 : 0;
+            cellMemory.ExistOdour = this.Odour == CellOdour.Bad ? 1 : 0;
             cellMemory.ExistWind = this.SpeedWind == CellSpeedWind.Fort ? 1 : 0;
             cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Fort ? 1 : 0;
 
