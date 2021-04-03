@@ -78,7 +78,7 @@ namespace Wumpus.Tests
             {
                 for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grid[l,c].Type != CellType.Cave)
+                    if(foret.Grid[l,c].Type != CellType.Crevasse)
                         continue;
 
                     if(c + 1 <= limitRight)
@@ -102,7 +102,7 @@ namespace Wumpus.Tests
             ForestConfiguration configuration = new ForestConfiguration();
             configuration.PlayerPosition = new int[2] {0, 0};
             configuration.PortalPosition = new int[2] {2, 2};
-            configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
+            configuration.CrevassesPosition = new List<int[]>() { new int[] {0, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
 
             PropertyInfo property = typeof(Cell).GetProperty("SpeedWind");

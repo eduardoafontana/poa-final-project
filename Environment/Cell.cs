@@ -51,7 +51,7 @@ namespace Wumpus.Environment
             CellMemory cellMemory = new CellMemory();
 
             cellMemory.ProbabilityMonster = this.Type == CellType.Monster ? 100 : 0;
-            cellMemory.ProbabilityCave = this.Type == CellType.Cave ? 100 : 0;
+            cellMemory.ProbabilityCrevasse = this.Type == CellType.Crevasse ? 100 : 0;
 
             cellMemory.ExistOdour = this.Odour == CellOdour.Mauvaise ? 1 : 0;
             cellMemory.ExistWind = this.SpeedWind == CellSpeedWind.Fort ? 1 : 0;

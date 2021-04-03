@@ -7,7 +7,7 @@ namespace Wumpus.Character
     public class Memory
     {
         public float ProbabilityMonster = -1;
-        public float ProbabilityCave = -1;
+        public float ProbabilityCrevasse = -1;
         public float ProbabilityPortal = -1;
         public float AmountOfPassage = 0;
         public float ExistOdour = -1;
@@ -18,9 +18,9 @@ namespace Wumpus.Character
         public int Passage = Int32.MaxValue;
 
         private bool existMonsterNeighbor = true;
-        private bool existCaveNeighbor = true;
+        private bool existCrevasseNeighbor = true;
         private float countMonsterNeighbor = 4;// 4/8 <=> 50%
-        private float countCaveNeighbor = 4;// 4/8 <=> 50%
+        private float countCrevasseNeighbor = 4;// 4/8 <=> 50%
 
         public int Line { get; private set; }
         public int Column { get; private set; }
@@ -36,9 +36,9 @@ namespace Wumpus.Character
             this.ProbabilityMonster = probabilityMonster;
         }
 
-        internal void CalculateLocalProbabilityCave(float probabilityCave)
+        internal void CalculateLocalProbabilityCrevasse(float probabilityCrevasse)
         {
-            this.ProbabilityCave = probabilityCave;
+            this.ProbabilityCrevasse = probabilityCrevasse;
         }
 
         internal void CheckExistOdor(float odor)
@@ -95,10 +95,10 @@ namespace Wumpus.Character
             switch (neighborExistWind)
             {
                 case 0: 
-                    this.existCaveNeighbor = false;
+                    this.existCrevasseNeighbor = false;
                     break;
                 case 1: 
-                    this.countCaveNeighbor++;
+                    this.countCrevasseNeighbor++;
                     break;
             }
         }
@@ -106,9 +106,9 @@ namespace Wumpus.Character
         internal void ResetProbabilityVariables()
         {
             this.existMonsterNeighbor = true;
-            this.existCaveNeighbor = true;
+            this.existCrevasseNeighbor = true;
             this.countMonsterNeighbor = 4;// 4/8 <=> 50%
-            this.countCaveNeighbor = 4;// 4/8 <=> 50%
+            this.countCrevasseNeighbor = 4;// 4/8 <=> 50%
         }
 
         internal void CalculateProbabilityMonster()
@@ -116,9 +116,9 @@ namespace Wumpus.Character
             this.ProbabilityMonster = this.existMonsterNeighbor ?  100 * this.countMonsterNeighbor / 8 : 0;
         }
 
-        internal void CalculateProbabilityCave()
+        internal void CalculateProbabilityCrevasse()
         {
-            this.ProbabilityCave = this.existCaveNeighbor ?  100 * this.countCaveNeighbor / 8 : 0;
+            this.ProbabilityCrevasse = this.existCrevasseNeighbor ?  100 * this.countCrevasseNeighbor / 8 : 0;
         }
     }
 }

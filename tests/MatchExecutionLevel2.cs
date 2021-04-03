@@ -20,11 +20,11 @@ namespace Wumpus.Tests
             ForestConfiguration configuration = new ForestConfiguration();
             configuration.PlayerPosition = new int[2] {0, 1};
             configuration.PortalPosition = new int[2] {1, 0};
-            configuration.CavesPosition = new List<int[]>() { new int[] {0, 0}, new int[] {2, 2} };
+            configuration.CrevassesPosition = new List<int[]>() { new int[] {0, 0}, new int[] {2, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2}, new int[] {2, 3}, new int[] {3, 1} };
 
             string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : cave" + "\n" +
+                                    "v : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "V..." + "\n" +
@@ -63,11 +63,11 @@ namespace Wumpus.Tests
             ForestConfiguration configuration = new ForestConfiguration();
             configuration.PlayerPosition = new int[2] {0, 0};
             configuration.PortalPosition = new int[2] {3, 3};
-            configuration.CavesPosition = new List<int[]>() { new int[] {2, 3}, new int[] {2, 2} };
+            configuration.CrevassesPosition = new List<int[]>() { new int[] {2, 3}, new int[] {2, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2}, new int[] {1, 1}, new int[] {3, 2} };
 
             string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : cave" + "\n" +
+                                    "v : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "...." + "\n" +

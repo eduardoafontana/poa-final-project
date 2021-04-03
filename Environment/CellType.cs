@@ -12,7 +12,7 @@ namespace Wumpus.Environment
         [Description("M")]
         Monster,
         [Description("V")]
-        Cave,
+        Crevasse,
         [Description(".")]
         Empty
     }

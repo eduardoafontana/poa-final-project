@@ -39,7 +39,7 @@ namespace Wumpus.Character
 
             return Explorer.GetInstance().OnNeighbors()
             .Where(x => x.IsValidPosition(x.GetLine(l0), x.GetColumn(c0), forestMemory.GetLength(0)))
-            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCave < 100);
+            .Where(x => forestMemory[x.GetLine(l0), x.GetColumn(c0)].ProbabilityCrevasse < 100);
         }
     }
 }
