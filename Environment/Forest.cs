@@ -140,7 +140,7 @@ namespace Wumpus.Environment
             switch (Grid[l, c].Type)
             {
                 case CellType.Portal:
-                    Grid[l, c].Luminosite = CellLuminosite.Fort;
+                    Grid[l, c].Luminosity = CellLuminosity.Fort;
                     break;
                 case CellType.Monstre:
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odeur"), CellOdeur.Mauvaise);
@@ -199,11 +199,11 @@ namespace Wumpus.Environment
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    string luminosite = Grid[l,c].Luminosite == CellLuminosite.Fort ? Grid[l,c].Luminosite.GetDescription() : "";
+                    string luminosity = Grid[l,c].Luminosity == CellLuminosity.Fort ? Grid[l,c].Luminosity.GetDescription() : "";
                     string odeur = Grid[l,c].Odeur == CellOdeur.Mauvaise ?  Grid[l,c].Odeur.GetDescription() : "";
                     string vent = Grid[l,c].VitesseVent == CellVitesseVent.Fort ? Grid[l,c].VitesseVent.GetDescription() : "";
                     
-                    r += " " + luminosite + odeur + vent + " |";
+                    r += " " + luminosity + odeur + vent + " |";
                 }
                 r += "\n";
             }

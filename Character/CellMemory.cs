@@ -12,6 +12,6 @@ namespace Wumpus.Character
         public float ProbabilityCave { get; set; }
         public float ExistOdeur { get; set; }
         public float ExistVent { get; set; }
-        public float ExistLuminosite { get; set; }
+        public float ExistLuminosity { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Wumpus.Environment
         Fort
     }
 
-    public enum CellLuminosite
+    public enum CellLuminosity
     {
         [Description("lf")]
         Low,
@@ -34,7 +34,7 @@ namespace Wumpus.Environment
     {
         public CellOdeur Odeur { get; set; }
         public CellVitesseVent VitesseVent { get; set; }
-        public CellLuminosite Luminosite { get; set; }
+        public CellLuminosity Luminosity { get; set; }
         public CellType Type { get; set; }
 
         public Cell(CellType type)
@@ -43,7 +43,7 @@ namespace Wumpus.Environment
 
             this.Odeur = CellOdeur.Neutre;
             this.VitesseVent = CellVitesseVent.Low;
-            this.Luminosite = CellLuminosite.Low;
+            this.Luminosity = CellLuminosity.Low;
         }
 
         internal CellMemory GetPlayerForestState()
@@ -55,7 +55,7 @@ namespace Wumpus.Environment
 
             cellMemory.ExistOdeur = this.Odeur == CellOdeur.Mauvaise ? 1 : 0;
             cellMemory.ExistVent = this.VitesseVent == CellVitesseVent.Fort ? 1 : 0;
-            cellMemory.ExistLuminosite = this.Luminosite == CellLuminosite.Fort ? 1 : 0;
+            cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Fort ? 1 : 0;
 
             return cellMemory;
         }

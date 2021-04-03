@@ -12,7 +12,7 @@ namespace Wumpus.Character
         public float AmountOfPassage = 0;
         public float ExistOdeur = -1;
         public float ExistVent = -1;
-        public float ExistLuminosite = -1;
+        public float ExistLuminosity = -1;
 
         public int DistanceRelative = 0;
         public int Passage = Int32.MaxValue;
@@ -51,14 +51,14 @@ namespace Wumpus.Character
             this.ExistVent = vitesseVent;
         }
 
-        internal void CheckExistLuminosite(float luminosite)
+        internal void CheckExistLuminosity(float luminosity)
         {
-            this.ExistLuminosite = luminosite;
+            this.ExistLuminosity = luminosity;
         }
 
         internal void CalculateProbabilityPortal()
         {
-            switch (this.ExistLuminosite)
+            switch (this.ExistLuminosity)
             {
                 case -1: 
                     this.ProbabilityPortal = 50; 

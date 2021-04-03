@@ -41,7 +41,7 @@ namespace Wumpus.Character
             
             memoryPlayerPosition.CheckExistOdor(cellMemory.ExistOdeur);
             memoryPlayerPosition.CheckExistVent(cellMemory.ExistVent);
-            memoryPlayerPosition.CheckExistLuminosite(cellMemory.ExistLuminosite);
+            memoryPlayerPosition.CheckExistLuminosity(cellMemory.ExistLuminosity);
         }
 
 
