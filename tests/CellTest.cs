@@ -19,9 +19,9 @@ namespace Wumpus.Tests
         {
             Cell cell = new Cell(CellType.Portal);
             Assert.AreEqual(CellType.Portal, cell.Type);
-            Assert.AreEqual(CellLuminosite.Faible, cell.Luminosite);
+            Assert.AreEqual(CellLuminosite.Low, cell.Luminosite);
             Assert.AreEqual(CellOdeur.Neutre, cell.Odeur);
-            Assert.AreEqual(CellVitesseVent.Faible, cell.VitesseVent);
+            Assert.AreEqual(CellVitesseVent.Low, cell.VitesseVent);
         }
     }
 }

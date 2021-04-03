@@ -92,7 +92,7 @@ namespace Wumpus.Character
 
             memoryPlayerPosition.DistanceRelative = 0;
             
-            //trouver la distance la plus faible avec proba portal la plus forte et min proba crevasse
+            //trouver la distance la plus low avec proba portal la plus forte et min proba crevasse
             int case_la_plus_proche = Int32.MaxValue;
             case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCave == proba_crevasse_min).Min(x => x.DistanceRelative);
 

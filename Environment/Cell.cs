@@ -17,7 +17,7 @@ namespace Wumpus.Environment
     public enum CellVitesseVent
     {
         [Description("vf")]
-        Faible,
+        Low,
         [Description("vt")]
         Fort
     }
@@ -25,7 +25,7 @@ namespace Wumpus.Environment
     public enum CellLuminosite
     {
         [Description("lf")]
-        Faible,
+        Low,
         [Description("lt")]
         Fort
     }
@@ -42,8 +42,8 @@ namespace Wumpus.Environment
             this.Type = type;
 
             this.Odeur = CellOdeur.Neutre;
-            this.VitesseVent = CellVitesseVent.Faible;
-            this.Luminosite = CellLuminosite.Faible;
+            this.VitesseVent = CellVitesseVent.Low;
+            this.Luminosite = CellLuminosite.Low;
         }
 
         internal CellMemory GetPlayerForestState()

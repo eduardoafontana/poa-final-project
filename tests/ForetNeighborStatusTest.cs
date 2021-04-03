@@ -23,7 +23,7 @@ namespace Wumpus.Tests
                     if(foret.Grid[l,c].Type == CellType.Portal)
                         Assert.AreEqual(CellLuminosite.Fort, foret.Grid[l, c].Luminosite);
                     else
-                        Assert.AreEqual(CellLuminosite.Faible, foret.Grid[l, c].Luminosite);
+                        Assert.AreEqual(CellLuminosite.Low, foret.Grid[l, c].Luminosite);
                 }
             }
         }
@@ -112,7 +112,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
             
-            Assert.AreEqual(CellVitesseVent.Faible,  foret.Grid[0,0].VitesseVent);
+            Assert.AreEqual(CellVitesseVent.Low,  foret.Grid[0,0].VitesseVent);
 
             property.SetValue(foret.Grid[0,0], value);
 
