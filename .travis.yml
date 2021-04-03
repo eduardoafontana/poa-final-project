@@ -12,6 +12,6 @@ script:
   - dotnet restore
   - dotnet build
 after_script:
-  - ./cc-test-reporter format-coverage -t lcov --prefix ${CODEBUILD_SRC_DIR}
+  - ./cc-test-reporter format-coverage -t lcov
   - ./cc-test-reporter after-build -t lcov --exit-code $?
   - echo Build completed on `date`
