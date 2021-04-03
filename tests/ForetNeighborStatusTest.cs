@@ -20,7 +20,7 @@ namespace Wumpus.Tests
             {
                 for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grid[l,c].Type == CellType.Portail)
+                    if(foret.Grid[l,c].Type == CellType.Portal)
                         Assert.AreEqual(CellLuminosite.Fort, foret.Grid[l, c].Luminosite);
                     else
                         Assert.AreEqual(CellLuminosite.Faible, foret.Grid[l, c].Luminosite);

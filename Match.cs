@@ -112,7 +112,7 @@ namespace Wumpus
         public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')
-                RegisterOutPut("Bob prend le portail et passe au niveau suivant.");
+                RegisterOutPut("Bob prend le portal et passe au niveau suivant.");
             else
                 RegisterOutPut("Bob va vers " + d.Direction);
 

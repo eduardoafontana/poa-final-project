@@ -47,7 +47,7 @@ namespace Wumpus.Character
 
         //met a jour les connaissances du joueur de la foret
         //la memoire du joueur attribu a chaque case de la foret une liste de 7 valeurs : 
-        //  3 pour la probabilité d'avoir soit un monstre, soit une crevasse, soit le portail 
+        //  3 pour la probabilité d'avoir soit un monstre, soit une crevasse, soit le portal 
         //  1 valeur pour le nombre de passage du joueur sur la case
         //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, vent)
         private void ObserveAndMemorizeAllForest()
@@ -77,29 +77,29 @@ namespace Wumpus.Character
             return forestMemory[d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1])].ProbabilityMonster > 0;
         }
 
-        //determiner la case la plus probable de contenir le portail
+        //determiner la case la plus probable de contenir le portal
         private ExplorerNode Reflexion()
         {
-            //parcours memoire pour trouver max proba portail
-            float proba_portail_max = forestMemory.Cast<Memory>().Max(x => x.ProbabilityPortal);
+            //parcours memoire pour trouver max proba portal
+            float proba_portal_max = forestMemory.Cast<Memory>().Max(x => x.ProbabilityPortal);
 
-            //parcours memoire pour trouver min proba crevasse pour max proba portail
+            //parcours memoire pour trouver min proba crevasse pour max proba portal
             float proba_crevasse_min = 100;
-            proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max).Min(x => x.ProbabilityCave);
+            proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max).Min(x => x.ProbabilityCave);
 
-            //calculer eloignement de chaque case portail avec proba la plus forte
+            //calculer eloignement de chaque case portal avec proba la plus forte
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCellNearBy(item.Line, item.Column));
 
             memoryPlayerPosition.DistanceRelative = 0;
             
-            //trouver la distance la plus faible avec proba portail la plus forte et min proba crevasse
+            //trouver la distance la plus faible avec proba portal la plus forte et min proba crevasse
             int case_la_plus_proche = Int32.MaxValue;
-            case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min).Min(x => x.DistanceRelative);
+            case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCave == proba_crevasse_min).Min(x => x.DistanceRelative);
 
             //trouver une case
-            Memory cellToGo = forestMemory.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portail_max && x.ProbabilityCave == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
+            Memory cellToGo = forestMemory.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCave == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
 
-            //si c'est notre case, prendre le portail
+            //si c'est notre case, prendre le portal
             if(cellToGo == memoryPlayerPosition)
                 return new ExplorerNode('P', 0);
 

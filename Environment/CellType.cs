@@ -8,7 +8,7 @@ namespace Wumpus.Environment
     public enum CellType
     {
         [Description("O")]
-        Portail,
+        Portal,
         [Description("M")]
         Monstre,
         [Description("V")]

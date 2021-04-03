@@ -26,7 +26,7 @@ namespace Wumpus.Tests
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
                                     "M : monstre" + "\n" +
-                                    "O : portail" + "\n\n" +
+                                    "O : portal" + "\n\n" +
                                     "..." + "\n" +
                                     ".MO" + "\n" +
                                     ".V." + "\n\n" +
@@ -45,7 +45,7 @@ namespace Wumpus.Tests
                                     "Bob va vers E" + System.Environment.NewLine +
                                     "Bob lance une pierre vers le E" + System.Environment.NewLine +
                                     "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -68,7 +68,7 @@ namespace Wumpus.Tests
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
                                     "M : monstre" + "\n" +
-                                    "O : portail" + "\n\n" +
+                                    "O : portal" + "\n\n" +
                                     "O.." + "\n" +
                                     ".M." + "\n" +
                                     ".V." + "\n\n" +
@@ -89,7 +89,7 @@ namespace Wumpus.Tests
                                     "Bob va vers N" + System.Environment.NewLine +
                                     "Bob va vers N" + System.Environment.NewLine +
                                     "Bob lance une pierre vers le N" + System.Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
 
 
             int level = 1;
@@ -113,7 +113,7 @@ namespace Wumpus.Tests
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
                                     "M : monstre" + "\n" +
-                                    "O : portail" + "\n\n" +
+                                    "O : portal" + "\n\n" +
                                     "..." + "\n" +
                                     "V.M" + "\n" +
                                     "O.." + "\n\n" +
@@ -131,7 +131,7 @@ namespace Wumpus.Tests
                                     "Bob va vers W" + System.Environment.NewLine +
                                     "Bob lance une pierre vers le W" + System.Environment.NewLine +
                                     "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -154,7 +154,7 @@ namespace Wumpus.Tests
             string matchMessage = "\n\nforet magique : vide" + "\n" +
                                     "v : crevasse" + "\n" +
                                     "M : monstre" + "\n" +
-                                    "O : portail" + "\n\n" +
+                                    "O : portal" + "\n\n" +
                                     ".M." + "\n" +
                                     "V.." + "\n" +
                                     "..O" + "\n\n" +
@@ -173,7 +173,7 @@ namespace Wumpus.Tests
                                     "Bob va vers S" + System.Environment.NewLine +
                                     "Bob lance une pierre vers le S" + System.Environment.NewLine +
                                     "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob prend le portail et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
 
             int level = 1;
 

@@ -31,7 +31,7 @@ namespace Wumpus.Environment
 
             PlaceElement(CellType.Crevasse, caveProbability);
             PlaceElement(CellType.Monstre, monsterProbability);
-            PlaceElement(CellType.Portail, 1);
+            PlaceElement(CellType.Portal, 1);
 
             InitNeighborStatusCell();
 
@@ -52,7 +52,7 @@ namespace Wumpus.Environment
                 this.Grid[position[0], position[1]].Type = CellType.Crevasse;
             }
 
-            this.Grid[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CellType.Portail;
+            this.Grid[configuration.PortalPosition[0], configuration.PortalPosition[1]].Type = CellType.Portal;
 
             InitNeighborStatusCell();
 
@@ -139,7 +139,7 @@ namespace Wumpus.Environment
         {
             switch (Grid[l, c].Type)
             {
-                case CellType.Portail:
+                case CellType.Portal:
                     Grid[l, c].Luminosite = CellLuminosite.Fort;
                     break;
                 case CellType.Monstre:
@@ -184,7 +184,7 @@ namespace Wumpus.Environment
 
         public override string ToString()
         {
-            string r = "\n\nforet magique : vide\nv : crevasse\nM : monstre\nO : portail\n\n";
+            string r = "\n\nforet magique : vide\nv : crevasse\nM : monstre\nO : portal\n\n";
             for(int l = 0; l < Grid.GetLength(0); l++)
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)
