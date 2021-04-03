@@ -86,12 +86,12 @@ namespace Wumpus.Character
             float proba_crevasse_min = 100;
             proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max).Min(x => x.ProbabilityCrevasse);
 
-            //calculer eloignement de chaque case portal avec proba la plus forte
+            //calculer eloignement de chaque case portal avec proba la plus stronge
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCellNearBy(item.Line, item.Column));
 
             memoryPlayerPosition.DistanceRelative = 0;
             
-            //trouver la distance la plus low avec proba portal la plus forte et min proba crevasse
+            //trouver la distance la plus low avec proba portal la plus stronge et min proba crevasse
             int case_la_plus_proche = Int32.MaxValue;
             case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCrevasse == proba_crevasse_min).Min(x => x.DistanceRelative);
 

@@ -16,7 +16,7 @@ namespace Wumpus.Environment
         [Description("vf")]
         Low,
         [Description("vt")]
-        Fort
+        Strong
     }
 
     public enum CellLuminosity
@@ -24,7 +24,7 @@ namespace Wumpus.Environment
         [Description("lf")]
         Low,
         [Description("lt")]
-        Fort
+        Strong
     }
 
     public class Cell
@@ -51,8 +51,8 @@ namespace Wumpus.Environment
             cellMemory.ProbabilityCrevasse = this.Type == CellType.Crevasse ? 100 : 0;
 
             cellMemory.ExistOdour = this.Odour == CellOdour.Bad ? 1 : 0;
-            cellMemory.ExistWind = this.SpeedWind == CellSpeedWind.Fort ? 1 : 0;
-            cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Fort ? 1 : 0;
+            cellMemory.ExistWind = this.SpeedWind == CellSpeedWind.Strong ? 1 : 0;
+            cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Strong ? 1 : 0;
 
             return cellMemory;
         }

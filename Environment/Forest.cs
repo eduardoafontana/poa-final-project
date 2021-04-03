@@ -140,13 +140,13 @@ namespace Wumpus.Environment
             switch (Grid[l, c].Type)
             {
                 case CellType.Portal:
-                    Grid[l, c].Luminosity = CellLuminosity.Fort;
+                    Grid[l, c].Luminosity = CellLuminosity.Strong;
                     break;
                 case CellType.Monster:
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odour"), CellOdour.Bad);
                     break;
                 case CellType.Crevasse:
-                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedWind"), CellSpeedWind.Fort);
+                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedWind"), CellSpeedWind.Strong);
                     break;
             }
         }
@@ -199,9 +199,9 @@ namespace Wumpus.Environment
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    string luminosity = Grid[l,c].Luminosity == CellLuminosity.Fort ? Grid[l,c].Luminosity.GetDescription() : "";
+                    string luminosity = Grid[l,c].Luminosity == CellLuminosity.Strong ? Grid[l,c].Luminosity.GetDescription() : "";
                     string odour = Grid[l,c].Odour == CellOdour.Bad ?  Grid[l,c].Odour.GetDescription() : "";
-                    string wind = Grid[l,c].SpeedWind == CellSpeedWind.Fort ? Grid[l,c].SpeedWind.GetDescription() : "";
+                    string wind = Grid[l,c].SpeedWind == CellSpeedWind.Strong ? Grid[l,c].SpeedWind.GetDescription() : "";
                     
                     r += " " + luminosity + odour + wind + " |";
                 }

@@ -20,7 +20,7 @@ namespace Wumpus.Tests
                 for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
                     if(foret.Grid[l,c].Type == CellType.Portal)
-                        Assert.AreEqual(CellLuminosity.Fort, foret.Grid[l, c].Luminosity);
+                        Assert.AreEqual(CellLuminosity.Strong, foret.Grid[l, c].Luminosity);
                     else
                         Assert.AreEqual(CellLuminosity.Low, foret.Grid[l, c].Luminosity);
                 }
@@ -81,16 +81,16 @@ namespace Wumpus.Tests
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l, c + 1].SpeedWind);
+                        Assert.AreEqual(CellSpeedWind.Strong, foret.Grid[l, c + 1].SpeedWind);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l, c - 1].SpeedWind);
+                        Assert.AreEqual(CellSpeedWind.Strong, foret.Grid[l, c - 1].SpeedWind);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l - 1, c].SpeedWind);
+                        Assert.AreEqual(CellSpeedWind.Strong, foret.Grid[l - 1, c].SpeedWind);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l + 1, c].SpeedWind);
+                        Assert.AreEqual(CellSpeedWind.Strong, foret.Grid[l + 1, c].SpeedWind);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace Wumpus.Tests
 
             PropertyInfo property = typeof(Cell).GetProperty("SpeedWind");
 
-            Enum value = CellSpeedWind.Fort;
+            Enum value = CellSpeedWind.Strong;
 
             Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
@@ -115,7 +115,7 @@ namespace Wumpus.Tests
 
             property.SetValue(foret.Grid[0,0], value);
 
-            Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[0,0].SpeedWind);
+            Assert.AreEqual(CellSpeedWind.Strong, foret.Grid[0,0].SpeedWind);
         }
 
         [Test]
