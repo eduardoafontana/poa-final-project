@@ -23,10 +23,8 @@ namespace Wumpus.Environment
 
         public int InitForest()
         {
-            //probabilite d'apparition de montre
             int monsterProbability = (int)Math.Truncate(0.2 * this.Size * this.Size);
 
-            //probabilite d'apparition de crevasse
             int crevasseProbability = (int)Math.Truncate(0.15 * this.Size * this.Size);
 
             PlaceElement(CellType.Crevasse, crevasseProbability);
@@ -113,7 +111,9 @@ namespace Wumpus.Environment
             }
         }
 
-        //update la case si un joueur lance une roche
+        /// <summary>
+        /// Update the cell if a player throws a stone.
+        /// </summary>
         public void HitMonsterWithStone(int l, int c) 
         {
             if(!IsCellValid(l, c))

@@ -43,12 +43,13 @@ namespace Wumpus.Character
             memoryPlayerPosition.CheckExistLuminosity(cellMemory.ExistLuminosity);
         }
 
-
-        //met a jour les connaissances du joueur de la foret
-        //la memoire du joueur attribu a chaque case de la foret une liste de 7 valeurs : 
-        //  3 pour la probabilité d'avoir soit un monster, soit une crevasse, soit le portal 
-        //  1 valeur pour le nombre de passage du joueur sur la case
-        //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, wind)
+        /// <summary>
+        /// Update the knowledge of the player related to forest.
+        /// The memory of the player is attributed to each cell of the forest a list of values:
+        /// 3 for the probability of having either a monster, a crevasse, or the portal;
+        /// 1 value for the number of times the player passes the cell;
+        /// 3 to know the state of the sensors on the box (light, odour, wind).
+        /// </summary>
         private void ObserveAndMemorizeAllForest()
         {
             forestMemory.Cast<Memory>().ToList().ForEach(itemMemory => itemMemory.CalculateProbabilityPortal());
@@ -76,47 +77,54 @@ namespace Wumpus.Character
             return forestMemory[d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1])].ProbabilityMonster > 0;
         }
 
-        //determiner la case la plus probable de contenir le portal
+        /// <summary>
+        /// Determine the most likely cell to contain the portal.
+        /// </summary>
         private ExplorerNode Reflexion()
         {
-            //parcours memoire pour trouver max proba portal
+            //Memory scan to find max probable portal.
             float proba_portal_max = forestMemory.Cast<Memory>().Max(x => x.ProbabilityPortal);
 
-            //parcours memoire pour trouver min proba crevasse pour max proba portal
+            //Memory scan to find min probable crevasse for max probable portal.
             float proba_crevasse_min = 100;
             proba_crevasse_min = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max).Min(x => x.ProbabilityCrevasse);
 
-            //calculer eloignement de chaque case portal avec proba la plus stronge
+            //Calculate the distance of each portal cell with the most strong probable.
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.DistanceRelative = GetCellNearBy(item.Line, item.Column));
 
             memoryPlayerPosition.DistanceRelative = 0;
             
-            //trouver la distance la plus low avec proba portal la plus stronge et min proba crevasse
+            //Find the lowest distance with the longest probable portal and min probable crevasse.
             int case_la_plus_proche = Int32.MaxValue;
             case_la_plus_proche = forestMemory.Cast<Memory>().Where(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCrevasse == proba_crevasse_min).Min(x => x.DistanceRelative);
 
-            //trouver une case
+            //Find a box to go.
             Memory cellToGo = forestMemory.Cast<Memory>().OrderBy(x => x.Line).ThenBy(x => x.Column).LastOrDefault(x => x.ProbabilityPortal == proba_portal_max && x.ProbabilityCrevasse == proba_crevasse_min && x.DistanceRelative == case_la_plus_proche);
 
-            //si c'est notre case, prendre le portal
+            //if it is our case, take the portal.
             if(cellToGo == memoryPlayerPosition)
                 return new ExplorerNode('P', 0);
 
-            //sinon se diriger vers la case
+            //Otherwise go to the cell.
             return GetDirectionToGoTo(cellToGo.Line, cellToGo.Column);
         }
 
-        //place le joueur sur la grille
+        /// <summary>
+        /// Update player position on the grid.
+        /// Adds 1 to the number of passages on this cell in the player's memory.
+        /// </summary>
         public int[] UpdatePlayerPosition(int l, int c)
         {
             memoryPlayerPosition = forestMemory[l, c];
-            memoryPlayerPosition.AmountOfPassage++; //ajoute 1 au nombre de passage sur cette case dans la memoire du joueur
+            memoryPlayerPosition.AmountOfPassage++; 
             playerPosition = new int[] {l, c};
 
             return playerPosition;
         }
 
-        //renvoie le nombre de case le plus proche de l'objectif situé en [lf, cf]
+        /// <summary>
+        /// Returns the number of cells closest to the objective located in [lf, cf].
+        /// </summary>
         private int GetCellNearBy(int lf, int cf)
         {
             forestMemory.Cast<Memory>().ToList().ForEach(item => item.Passage = Int32.MaxValue);
@@ -132,7 +140,9 @@ namespace Wumpus.Character
             return list_n.Min();
         }
 
-        //renvoie la direction pour se rendre à l'objectif situé en [lf, cf]
+        /// <summary>
+        /// Returns the direction to go to the objective located in [lf, cf].
+        /// </summary>
         private ExplorerNode GetDirectionToGoTo(int lf, int cf)
         {
             int l0 = playerPosition[0];
@@ -156,7 +166,9 @@ namespace Wumpus.Character
                 return listMemories.Min();
         }
 
-        //permet de trouver un chemin evitant les crevasses (les montres ne sont pas pris en compte)
+        /// <summary>
+        /// Allows you to find a path avoiding crevasses (monsters are not taken into account).
+        /// </summary>
         private int DeepGetDirectionToGoTo(int[] origin, int[] destination, int countDistance)
         {
             int lf = origin[0];

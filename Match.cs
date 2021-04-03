@@ -108,7 +108,9 @@ namespace Wumpus
             return true;
         }
 
-        //bouge le joueur vers l'une des 4 directions, si la proba d'un monster sur la case d'arrivee est non nul, le joueur jete une pierre
+        /// <summary>
+        /// Move the player towards one of the 4 directions, if the probability of a monster on the arrival cell is non-zero, the player throws a stone
+        /// </summary>
         public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')
