@@ -6,7 +6,7 @@ using Wumpus.Character;
 
 namespace Wumpus.Environment
 {
-    public enum CellOdeur
+    public enum CellOdour
     {
         [Description("om")]
         Mauvaise,
@@ -32,7 +32,7 @@ namespace Wumpus.Environment
 
     public class Cell
     {
-        public CellOdeur Odeur { get; set; }
+        public CellOdour Odour { get; set; }
         public CellVitesseVent VitesseVent { get; set; }
         public CellLuminosity Luminosity { get; set; }
         public CellType Type { get; set; }
@@ -41,7 +41,7 @@ namespace Wumpus.Environment
         {
             this.Type = type;
 
-            this.Odeur = CellOdeur.Neutral;
+            this.Odour = CellOdour.Neutral;
             this.VitesseVent = CellVitesseVent.Low;
             this.Luminosity = CellLuminosity.Low;
         }
@@ -53,7 +53,7 @@ namespace Wumpus.Environment
             cellMemory.ProbabilityMonster = this.Type == CellType.Monstre ? 100 : 0;
             cellMemory.ProbabilityCave = this.Type == CellType.Crevasse ? 100 : 0;
 
-            cellMemory.ExistOdeur = this.Odeur == CellOdeur.Mauvaise ? 1 : 0;
+            cellMemory.ExistOdour = this.Odour == CellOdour.Mauvaise ? 1 : 0;
             cellMemory.ExistVent = this.VitesseVent == CellVitesseVent.Fort ? 1 : 0;
             cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Fort ? 1 : 0;
 

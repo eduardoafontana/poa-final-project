@@ -39,7 +39,7 @@ namespace Wumpus.Character
             memoryPlayerPosition.CalculateLocalProbabilityMonster(cellMemory.ProbabilityMonster);
             memoryPlayerPosition.CalculateLocalProbabilityCave(cellMemory.ProbabilityCave);
             
-            memoryPlayerPosition.CheckExistOdor(cellMemory.ExistOdeur);
+            memoryPlayerPosition.CheckExistOdor(cellMemory.ExistOdour);
             memoryPlayerPosition.CheckExistVent(cellMemory.ExistVent);
             memoryPlayerPosition.CheckExistLuminosity(cellMemory.ExistLuminosity);
         }
@@ -63,7 +63,7 @@ namespace Wumpus.Character
                 .Where(neighbor => neighbor.IsValidPosition(neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column), forestMemory.GetLength(0)))
                 .ToList()
                 .ForEach(neighbor => {
-                    itemMemory.AnalyzeOdorNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistOdeur);
+                    itemMemory.AnalyzeOdorNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistOdour);
                     itemMemory.AnalyzeVentNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistVent);
                 });
                 

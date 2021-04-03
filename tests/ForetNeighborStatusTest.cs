@@ -48,16 +48,16 @@ namespace Wumpus.Tests
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l, c + 1].Odeur);
+                        Assert.AreEqual(CellOdour.Mauvaise, foret.Grid[l, c + 1].Odour);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l, c - 1].Odeur);
+                        Assert.AreEqual(CellOdour.Mauvaise, foret.Grid[l, c - 1].Odour);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l - 1, c].Odeur);
+                        Assert.AreEqual(CellOdour.Mauvaise, foret.Grid[l - 1, c].Odour);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CellOdeur.Mauvaise, foret.Grid[l + 1, c].Odeur);
+                        Assert.AreEqual(CellOdour.Mauvaise, foret.Grid[l + 1, c].Odour);
                 }
             }
         }
