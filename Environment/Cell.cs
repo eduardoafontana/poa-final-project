@@ -11,7 +11,7 @@ namespace Wumpus.Environment
         [Description("om")]
         Mauvaise,
         [Description("on")]
-        Neutre
+        Neutral
     }
 
     public enum CellVitesseVent
@@ -41,7 +41,7 @@ namespace Wumpus.Environment
         {
             this.Type = type;
 
-            this.Odeur = CellOdeur.Neutre;
+            this.Odeur = CellOdeur.Neutral;
             this.VitesseVent = CellVitesseVent.Low;
             this.Luminosity = CellLuminosity.Low;
         }
