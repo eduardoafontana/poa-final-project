@@ -23,9 +23,9 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {2, 1} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 1} };
 
-            string matchMessage = "\n\nforet magique : vide" + "\n" +
+            string matchMessage = "\n\nforet magique : empty" + "\n" +
                                     "v : crevasse" + "\n" +
-                                    "M : monstre" + "\n" +
+                                    "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "..." + "\n" +
                                     ".MO" + "\n" +
@@ -65,9 +65,9 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {2, 1} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 1} };
 
-            string matchMessage = "\n\nforet magique : vide" + "\n" +
+            string matchMessage = "\n\nforet magique : empty" + "\n" +
                                     "v : crevasse" + "\n" +
-                                    "M : monstre" + "\n" +
+                                    "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "O.." + "\n" +
                                     ".M." + "\n" +
@@ -110,9 +110,9 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {1, 0} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2} };
 
-            string matchMessage = "\n\nforet magique : vide" + "\n" +
+            string matchMessage = "\n\nforet magique : empty" + "\n" +
                                     "v : crevasse" + "\n" +
-                                    "M : monstre" + "\n" +
+                                    "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "..." + "\n" +
                                     "V.M" + "\n" +
@@ -151,9 +151,9 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {1, 0} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {0, 1} };
 
-            string matchMessage = "\n\nforet magique : vide" + "\n" +
+            string matchMessage = "\n\nforet magique : empty" + "\n" +
                                     "v : crevasse" + "\n" +
-                                    "M : monstre" + "\n" +
+                                    "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     ".M." + "\n" +
                                     "V.." + "\n" +

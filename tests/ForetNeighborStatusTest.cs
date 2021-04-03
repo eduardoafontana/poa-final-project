@@ -44,7 +44,7 @@ namespace Wumpus.Tests
             {
                 for (int c = 0; c < foret.Grid.GetLength(1); c++)
                 {
-                    if(foret.Grid[l,c].Type != CellType.Monstre)
+                    if(foret.Grid[l,c].Type != CellType.Monster)
                         continue;
 
                     if(c + 1 <= limitRight)
@@ -82,16 +82,16 @@ namespace Wumpus.Tests
                         continue;
 
                     if(c + 1 <= limitRight)
-                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l, c + 1].SpeedVent);
+                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l, c + 1].SpeedWind);
 
                     if(c - 1 >= limitLeft)
-                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l, c - 1].SpeedVent);
+                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l, c - 1].SpeedWind);
 
                     if(l - 1 >= limitTop)
-                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l - 1, c].SpeedVent);
+                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l - 1, c].SpeedWind);
 
                     if(l + 1 <= limitDown)
-                        Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[l + 1, c].SpeedVent);
+                        Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[l + 1, c].SpeedWind);
                 }
             }
         }
@@ -105,18 +105,18 @@ namespace Wumpus.Tests
             configuration.CavesPosition = new List<int[]>() { new int[] {0, 2} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {2, 0} };
 
-            PropertyInfo property = typeof(Cell).GetProperty("SpeedVent");
+            PropertyInfo property = typeof(Cell).GetProperty("SpeedWind");
 
-            Enum value = CellSpeedVent.Fort;
+            Enum value = CellSpeedWind.Fort;
 
             Forest foret = new Forest(1);
             foret.InitForestForTests(configuration);
             
-            Assert.AreEqual(CellSpeedVent.Low,  foret.Grid[0,0].SpeedVent);
+            Assert.AreEqual(CellSpeedWind.Low,  foret.Grid[0,0].SpeedWind);
 
             property.SetValue(foret.Grid[0,0], value);
 
-            Assert.AreEqual(CellSpeedVent.Fort, foret.Grid[0,0].SpeedVent);
+            Assert.AreEqual(CellSpeedWind.Fort, foret.Grid[0,0].SpeedWind);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(1);
             foret.InitForest();
 
-            Assert.AreEqual(CellType.Vide, foret.Grid[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);
+            Assert.AreEqual(CellType.Empty, foret.Grid[foret.PlayerSpawnL, foret.PlayerSpawnC].Type);
         }
     }
 }

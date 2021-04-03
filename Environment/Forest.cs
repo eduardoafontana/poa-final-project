@@ -30,7 +30,7 @@ namespace Wumpus.Environment
             int caveProbability = (int)Math.Truncate(0.15 * this.Size * this.Size);
 
             PlaceElement(CellType.Crevasse, caveProbability);
-            PlaceElement(CellType.Monstre, monsterProbability);
+            PlaceElement(CellType.Monster, monsterProbability);
             PlaceElement(CellType.Portal, 1);
 
             InitNeighborStatusCell();
@@ -44,7 +44,7 @@ namespace Wumpus.Environment
         {
             foreach (var position in configuration.MonstersPosition)
             {
-                this.Grid[position[0], position[1]].Type = CellType.Monstre;
+                this.Grid[position[0], position[1]].Type = CellType.Monster;
             }
 
             foreach (var position in configuration.CavesPosition)
@@ -66,7 +66,7 @@ namespace Wumpus.Environment
             int l = 0;
             int c = 0;
 
-            while(Grid[l, c].Type != CellType.Vide)
+            while(Grid[l, c].Type != CellType.Empty)
             {
                 l = random.Next(0, Size);
                 c = random.Next(0, Size);
@@ -94,7 +94,7 @@ namespace Wumpus.Environment
                 int l = random.Next(0, Grid.GetLength(0));
                 int c = random.Next(0, Grid.GetLength(1));
 
-                if (Grid[l, c].Type != CellType.Vide)
+                if (Grid[l, c].Type != CellType.Empty)
                     continue;
 
                 Grid[l, c].Type = typeElement;
@@ -108,7 +108,7 @@ namespace Wumpus.Environment
             {
                 for (int c = 0; c < Grid.GetLength(1); c++)
                 {
-                    Grid[l, c] = new Cell(CellType.Vide);
+                    Grid[l, c] = new Cell(CellType.Empty);
                 }
             }
         }
@@ -119,8 +119,8 @@ namespace Wumpus.Environment
             if(!IsCellValid(l, c))
                 return;
 
-            if(Grid[l, c].Type == CellType.Monstre)
-                Grid[l, c].Type = CellType.Vide;
+            if(Grid[l, c].Type == CellType.Monster)
+                Grid[l, c].Type = CellType.Empty;
 
             if(IsCellValid(l + 1, c))
                 UpdateNeighborStatusCell(l + 1, c);
@@ -142,11 +142,11 @@ namespace Wumpus.Environment
                 case CellType.Portal:
                     Grid[l, c].Luminosity = CellLuminosity.Fort;
                     break;
-                case CellType.Monstre:
+                case CellType.Monster:
                     SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("Odour"), CellOdour.Mauvaise);
                     break;
                 case CellType.Crevasse:
-                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedVent"), CellSpeedVent.Fort);
+                    SetCellStatusByEnumType(new int[] {l, c}, typeof(Cell).GetProperty("SpeedWind"), CellSpeedWind.Fort);
                     break;
             }
         }
@@ -184,7 +184,7 @@ namespace Wumpus.Environment
 
         public override string ToString()
         {
-            string r = "\n\nforet magique : vide\nv : crevasse\nM : monstre\nO : portal\n\n";
+            string r = "\n\nforet magique : empty\nv : crevasse\nM : monster\nO : portal\n\n";
             for(int l = 0; l < Grid.GetLength(0); l++)
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)
@@ -201,9 +201,9 @@ namespace Wumpus.Environment
                 {
                     string luminosity = Grid[l,c].Luminosity == CellLuminosity.Fort ? Grid[l,c].Luminosity.GetDescription() : "";
                     string odour = Grid[l,c].Odour == CellOdour.Mauvaise ?  Grid[l,c].Odour.GetDescription() : "";
-                    string vent = Grid[l,c].SpeedVent == CellSpeedVent.Fort ? Grid[l,c].SpeedVent.GetDescription() : "";
+                    string wind = Grid[l,c].SpeedWind == CellSpeedWind.Fort ? Grid[l,c].SpeedWind.GetDescription() : "";
                     
-                    r += " " + luminosity + odour + vent + " |";
+                    r += " " + luminosity + odour + wind + " |";
                 }
                 r += "\n";
             }

@@ -100,7 +100,7 @@ namespace Wumpus
         {
             CellType cellType = magicForest.Grid[playerPosition[0], playerPosition[1]].Type;
 
-            if(cellType == CellType.Monstre || cellType == CellType.Crevasse)
+            if(cellType == CellType.Monster || cellType == CellType.Crevasse)
             {
                 return false;
             }
@@ -108,7 +108,7 @@ namespace Wumpus
             return true;
         }
 
-        //bouge le joueur vers l'une des 4 directions, si la proba d'un monstre sur la case d'arrivee est non nul, le joueur jete une pierre
+        //bouge le joueur vers l'une des 4 directions, si la proba d'un monster sur la case d'arrivee est non nul, le joueur jete une pierre
         public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')

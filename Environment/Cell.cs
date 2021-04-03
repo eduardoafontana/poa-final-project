@@ -14,7 +14,7 @@ namespace Wumpus.Environment
         Neutral
     }
 
-    public enum CellSpeedVent
+    public enum CellSpeedWind
     {
         [Description("vf")]
         Low,
@@ -33,7 +33,7 @@ namespace Wumpus.Environment
     public class Cell
     {
         public CellOdour Odour { get; set; }
-        public CellSpeedVent SpeedVent { get; set; }
+        public CellSpeedWind SpeedWind { get; set; }
         public CellLuminosity Luminosity { get; set; }
         public CellType Type { get; set; }
 
@@ -42,7 +42,7 @@ namespace Wumpus.Environment
             this.Type = type;
 
             this.Odour = CellOdour.Neutral;
-            this.SpeedVent = CellSpeedVent.Low;
+            this.SpeedWind = CellSpeedWind.Low;
             this.Luminosity = CellLuminosity.Low;
         }
 
@@ -50,11 +50,11 @@ namespace Wumpus.Environment
         {
             CellMemory cellMemory = new CellMemory();
 
-            cellMemory.ProbabilityMonster = this.Type == CellType.Monstre ? 100 : 0;
+            cellMemory.ProbabilityMonster = this.Type == CellType.Monster ? 100 : 0;
             cellMemory.ProbabilityCave = this.Type == CellType.Crevasse ? 100 : 0;
 
             cellMemory.ExistOdour = this.Odour == CellOdour.Mauvaise ? 1 : 0;
-            cellMemory.ExistVent = this.SpeedVent == CellSpeedVent.Fort ? 1 : 0;
+            cellMemory.ExistWind = this.SpeedWind == CellSpeedWind.Fort ? 1 : 0;
             cellMemory.ExistLuminosity = this.Luminosity == CellLuminosity.Fort ? 1 : 0;
 
             return cellMemory;

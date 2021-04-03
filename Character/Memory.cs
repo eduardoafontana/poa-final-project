@@ -11,7 +11,7 @@ namespace Wumpus.Character
         public float ProbabilityPortal = -1;
         public float AmountOfPassage = 0;
         public float ExistOdour = -1;
-        public float ExistVent = -1;
+        public float ExistWind = -1;
         public float ExistLuminosity = -1;
 
         public int DistanceRelative = 0;
@@ -46,9 +46,9 @@ namespace Wumpus.Character
             this.ExistOdour = odor;
         }
 
-        internal void CheckExistVent(float speedVent)
+        internal void CheckExistWind(float speedWind)
         {
-            this.ExistVent = speedVent;
+            this.ExistWind = speedWind;
         }
 
         internal void CheckExistLuminosity(float luminosity)
@@ -90,9 +90,9 @@ namespace Wumpus.Character
             }
         }
 
-        internal void AnalyzeVentNeighbor(float neighborExistVent)
+        internal void AnalyzeWindNeighbor(float neighborExistWind)
         {
-            switch (neighborExistVent)
+            switch (neighborExistWind)
             {
                 case 0: 
                     this.existCaveNeighbor = false;

@@ -10,8 +10,8 @@ namespace Wumpus.Tests
         {
             Assert.AreEqual("O",  CellType.Portal.GetDescription());
             Assert.AreEqual("V",  CellType.Crevasse.GetDescription());
-            Assert.AreEqual("M",  CellType.Monstre.GetDescription());
-            Assert.AreEqual(".",  CellType.Vide.GetDescription());
+            Assert.AreEqual("M",  CellType.Monster.GetDescription());
+            Assert.AreEqual(".",  CellType.Empty.GetDescription());
         }
 
         [Test]
@@ -21,7 +21,7 @@ namespace Wumpus.Tests
             Assert.AreEqual(CellType.Portal, cell.Type);
             Assert.AreEqual(CellLuminosity.Low, cell.Luminosity);
             Assert.AreEqual(CellOdour.Neutral, cell.Odour);
-            Assert.AreEqual(CellSpeedVent.Low, cell.SpeedVent);
+            Assert.AreEqual(CellSpeedWind.Low, cell.SpeedWind);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(1, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -37,7 +37,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(3, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -54,7 +54,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(5, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -71,7 +71,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(7, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -88,7 +88,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(9, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -105,7 +105,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(12, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -122,7 +122,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(16, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -139,7 +139,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(20, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -156,7 +156,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(24, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -173,7 +173,7 @@ namespace Wumpus.Tests
             Forest foret = new Forest(niveau);
             foret.InitForest();
             
-            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monstre).ToList();
+            List<Cell> monstersFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Monster).ToList();
             Assert.AreEqual(28, monstersFounded.Count());
 
             List<Cell> cavesFounded = foret.Grid.Cast<Cell>().Where(i => i.Type == CellType.Crevasse).ToList();
@@ -198,7 +198,7 @@ namespace Wumpus.Tests
             Assert.AreEqual(foret.PlayerSpawnL, 0);
             Assert.AreEqual(foret.PlayerSpawnC, 0);
             Assert.AreEqual(CellType.Portal, foret.Grid[2,2].Type);
-            Assert.AreEqual(CellType.Monstre, foret.Grid[2,0].Type);
+            Assert.AreEqual(CellType.Monster, foret.Grid[2,0].Type);
             Assert.AreEqual(CellType.Crevasse, foret.Grid[0,2].Type);
         }
 

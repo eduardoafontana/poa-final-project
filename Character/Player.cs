@@ -40,16 +40,16 @@ namespace Wumpus.Character
             memoryPlayerPosition.CalculateLocalProbabilityCave(cellMemory.ProbabilityCave);
             
             memoryPlayerPosition.CheckExistOdor(cellMemory.ExistOdour);
-            memoryPlayerPosition.CheckExistVent(cellMemory.ExistVent);
+            memoryPlayerPosition.CheckExistWind(cellMemory.ExistWind);
             memoryPlayerPosition.CheckExistLuminosity(cellMemory.ExistLuminosity);
         }
 
 
         //met a jour les connaissances du joueur de la foret
         //la memoire du joueur attribu a chaque case de la foret une liste de 7 valeurs : 
-        //  3 pour la probabilité d'avoir soit un monstre, soit une crevasse, soit le portal 
+        //  3 pour la probabilité d'avoir soit un monster, soit une crevasse, soit le portal 
         //  1 valeur pour le nombre de passage du joueur sur la case
-        //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, vent)
+        //  3 pour connaitre l'etat des capteurs sur la case (lumiere, ordeur, wind)
         private void ObserveAndMemorizeAllForest()
         {
             forestMemory.Cast<Memory>().ToList().ForEach(itemMemory => itemMemory.CalculateProbabilityPortal());
@@ -64,7 +64,7 @@ namespace Wumpus.Character
                 .ToList()
                 .ForEach(neighbor => {
                     itemMemory.AnalyzeOdorNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistOdour);
-                    itemMemory.AnalyzeVentNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistVent);
+                    itemMemory.AnalyzeWindNeighbor(forestMemory[neighbor.GetLine(itemMemory.Line), neighbor.GetColumn(itemMemory.Column)].ExistWind);
                 });
                 
                 itemMemory.CalculateProbabilityMonster();

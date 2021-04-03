@@ -10,11 +10,11 @@ namespace Wumpus.Environment
         [Description("O")]
         Portal,
         [Description("M")]
-        Monstre,
+        Monster,
         [Description("V")]
         Crevasse,
         [Description(".")]
-        Vide
+        Empty
     }
 
     public static class CellTypeExtensions
