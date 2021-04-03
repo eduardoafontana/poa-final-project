@@ -12,4 +12,4 @@ script:
  - dotnet restore
  - dotnet build
 after_script:
-  - ./cc-test-reporter after-build --exit-code lcov
+  - ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $TRAVIS_TEST_RESULT
