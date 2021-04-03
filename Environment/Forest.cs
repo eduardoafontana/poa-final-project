@@ -184,7 +184,7 @@ namespace Wumpus.Environment
 
         public override string ToString()
         {
-            string r = "\n\nforet magique : empty\nv : crevasse\nM : monster\nO : portal\n\n";
+            string r = "\n\nMagic forest:\n. : empty\nV : crevasse\nM : monster\nO : portal\n\n";
             for(int l = 0; l < Grid.GetLength(0); l++)
             {
                 for(int c = 0; c < Grid.GetLength(1); c++)

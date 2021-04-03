@@ -17,8 +17,8 @@ namespace Wumpus
                 Match match = new Match(level, new ForestFactory(), new PlayerFactory());
                 globalScore += match.PlayMatch();
 
-                Console.WriteLine("le score actuel à la fin du niveau " + level + " est de " + globalScore);
-                Console.Write("continuer ? (Y/N) : ");
+                Console.WriteLine("the current score at the end of the level " + level + " is " + globalScore);
+                Console.Write("Continue? (Y/N) : ");
                 
                 string r = Console.ReadLine();
 

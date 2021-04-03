@@ -21,8 +21,9 @@ namespace Wumpus.Tests
             configuration.CrevassesPosition = new List<int[]>() { new int[] {2, 1} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 1} };
 
-            string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : crevasse" + "\n" +
+            string matchMessage = "\n\nMagic forest:" + "\n" +
+                                    ". : empty" + "\n" +
+                                    "V : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "..." + "\n" +
@@ -32,18 +33,18 @@ namespace Wumpus.Tests
                                     " om | vt | ltom |" + "\n" +
                                     " vt | om | vt |" + "\n" +
                                     System.Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob appeared in cell [0,0]" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob throws a stone to S" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob goes to E" + System.Environment.NewLine +
+                                    "Bob throws a stone to E" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob goes to E" + System.Environment.NewLine +
+                                    "Bob throws a stone to E" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob takes the portal and goes to the next level." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -63,8 +64,9 @@ namespace Wumpus.Tests
             configuration.CrevassesPosition = new List<int[]>() { new int[] {2, 1} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 1} };
 
-            string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : crevasse" + "\n" +
+            string matchMessage = "\n\nMagic forest:" + "\n" +
+                                    ". : empty" + "\n" +
+                                    "V : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "O.." + "\n" +
@@ -74,20 +76,20 @@ namespace Wumpus.Tests
                                     " om | vt | om |" + "\n" +
                                     " vt | om | vt |" + "\n" +
                                     System.Environment.NewLine +
-                                    "Bob est apparu en case [2,2]" + System.Environment.NewLine +
-                                    "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob est mort" + System.Environment.NewLine +
-                                    "Bob est apparu en case [2,2]" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le W" + System.Environment.NewLine +
-                                    "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le N" + System.Environment.NewLine +
-                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob appeared in cell [2,2]" + System.Environment.NewLine +
+                                    "Bob goes to W" + System.Environment.NewLine +
+                                    "Bob is dead" + System.Environment.NewLine +
+                                    "Bob appeared in cell [2,2]" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob goes to W" + System.Environment.NewLine +
+                                    "Bob throws a stone to W" + System.Environment.NewLine +
+                                    "Bob goes to W" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob throws a stone to S" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob throws a stone to N" + System.Environment.NewLine +
+                                    "Bob takes the portal and goes to the next level." + System.Environment.NewLine;
 
 
             int level = 1;
@@ -108,8 +110,9 @@ namespace Wumpus.Tests
             configuration.CrevassesPosition = new List<int[]>() { new int[] {1, 0} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {1, 2} };
 
-            string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : crevasse" + "\n" +
+            string matchMessage = "\n\nMagic forest:" + "\n" +
+                                    ". : empty" + "\n" +
+                                    "V : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     "..." + "\n" +
@@ -119,17 +122,17 @@ namespace Wumpus.Tests
                                     "  | omvt |  |" + "\n" +
                                     " ltvt |  | om |" + "\n" +
                                     System.Environment.NewLine +
-                                    "Bob est apparu en case [0,1]" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob va vers N" + System.Environment.NewLine +
-                                    "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le W" + System.Environment.NewLine +
-                                    "Bob va vers W" + System.Environment.NewLine +
-                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob appeared in cell [0,1]" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob goes to N" + System.Environment.NewLine +
+                                    "Bob goes to E" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob throws a stone to S" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob goes to W" + System.Environment.NewLine +
+                                    "Bob throws a stone to W" + System.Environment.NewLine +
+                                    "Bob goes to W" + System.Environment.NewLine +
+                                    "Bob takes the portal and goes to the next level." + System.Environment.NewLine;
 
             int level = 1;
 
@@ -149,8 +152,9 @@ namespace Wumpus.Tests
             configuration.CrevassesPosition = new List<int[]>() { new int[] {1, 0} };
             configuration.MonstersPosition = new List<int[]>() { new int[] {0, 1} };
 
-            string matchMessage = "\n\nforet magique : empty" + "\n" +
-                                    "v : crevasse" + "\n" +
+            string matchMessage = "\n\nMagic forest:" + "\n" +
+                                    ". : empty" + "\n" +
+                                    "V : crevasse" + "\n" +
                                     "M : monster" + "\n" +
                                     "O : portal" + "\n\n" +
                                     ".M." + "\n" +
@@ -160,18 +164,18 @@ namespace Wumpus.Tests
                                     "  | omvt |  |" + "\n" +
                                     " vt |  | lt |" + "\n" +
                                     System.Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
-                                    "Bob est mort" + System.Environment.NewLine +
-                                    "Bob est apparu en case [0,0]" + System.Environment.NewLine +
-                                    "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le E" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob va vers S" + System.Environment.NewLine +
-                                    "Bob lance une pierre vers le S" + System.Environment.NewLine +
-                                    "Bob va vers E" + System.Environment.NewLine +
-                                    "Bob prend le portal et passe au niveau suivant." + System.Environment.NewLine;
+                                    "Bob appeared in cell [0,0]" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob throws a stone to S" + System.Environment.NewLine +
+                                    "Bob is dead" + System.Environment.NewLine +
+                                    "Bob appeared in cell [0,0]" + System.Environment.NewLine +
+                                    "Bob goes to E" + System.Environment.NewLine +
+                                    "Bob throws a stone to E" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob goes to S" + System.Environment.NewLine +
+                                    "Bob throws a stone to S" + System.Environment.NewLine +
+                                    "Bob goes to E" + System.Environment.NewLine +
+                                    "Bob takes the portal and goes to the next level." + System.Environment.NewLine;
 
             int level = 1;
 

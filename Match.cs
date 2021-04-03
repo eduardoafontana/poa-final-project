@@ -47,7 +47,7 @@ namespace Wumpus
                 playerPosition = player.UpdatePlayerPosition(magicForest.PlayerSpawnL, magicForest.PlayerSpawnC);
                 bool playerIsAlive = true;
 
-                RegisterOutPut("Bob est apparu en case [" + playerPosition[0] + "," + playerPosition[1] + "]");
+                RegisterOutPut("Bob appeared in cell [" + playerPosition[0] + "," + playerPosition[1] + "]");
 
                 ProcessMatch(out ongoingMatch, out playerIsAlive);
 
@@ -64,7 +64,7 @@ namespace Wumpus
         {
             if (playerIsAlive == false)
             {
-                RegisterOutPut("Bob est mort");
+                RegisterOutPut("Bob is dead");
 
                 UpdatePlayerForestMemory();
                 score -= this.CalculateScoreFromLevel();
@@ -114,9 +114,9 @@ namespace Wumpus
         public bool MoveTowards(ExplorerNode d)
         {
             if(d.Direction == 'P')
-                RegisterOutPut("Bob prend le portal et passe au niveau suivant.");
+                RegisterOutPut("Bob takes the portal and goes to the next level.");
             else
-                RegisterOutPut("Bob va vers " + d.Direction);
+                RegisterOutPut("Bob goes to " + d.Direction);
 
             score -= 1;
 
@@ -149,7 +149,7 @@ namespace Wumpus
         {
             score -= 10;
 
-            RegisterOutPut("Bob lance une pierre vers le " + d.Direction);
+            RegisterOutPut("Bob throws a stone to " + d.Direction);
 
             magicForest.HitMonsterWithStone(d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1]));
         }
