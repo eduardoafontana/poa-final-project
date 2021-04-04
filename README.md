@@ -9,4 +9,4 @@
 ## Local tests
 For run local tests with coverage do:
 
-dotnet test Wumpus.csproj /p:CollectCoverage=true /p:IncludeTestAssembly=true /p:CoverletOutputFormat=cobertura /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\"
+dotnet test Wumpus.csproj /p:CollectCoverage=true /p:IncludeTestAssembly=true /p:CoverletOutputFormat=cobertura /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\" /p:CoverletOutput='./cobertura.xml'
