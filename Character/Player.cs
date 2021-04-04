@@ -12,7 +12,6 @@ namespace Wumpus.Character
     /// </summary>
     public class Player : PlayerInterface
     {
-        private string name;
         private Memory[,] forestMemory;
         private Memory memoryPlayerPosition;
         private int[] playerPosition;
