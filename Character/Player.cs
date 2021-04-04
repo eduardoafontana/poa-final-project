@@ -17,6 +17,9 @@ namespace Wumpus.Character
         private Memory memoryPlayerPosition;
         private int[] playerPosition;
 
+        /// <summary>
+        /// Player builder, initializes the player's memory from the size of the forest.
+        /// </summary>
         public Player(int forestDimension)
         {
             forestMemory = new Memory[forestDimension, forestDimension];
@@ -30,6 +33,10 @@ namespace Wumpus.Character
             }
         }
 
+        /// <summary>
+        /// This method is the player's move.
+        /// The move consists of looking at the forest, updating the internal memory and reflecting on the memory to decide which position it should move to.
+        /// </summary>
         public ExplorerNode Play()
         {
             ObserveAndMemorizeAllForest();
@@ -78,6 +85,9 @@ namespace Wumpus.Character
             });
         }
 
+        /// <summary>
+        /// Check if the cell to be moved has a monster to throw a stone.
+        /// </summary>
         public bool NeedThrowStone(ExplorerNode d)
         {
             return forestMemory[d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1])].ProbabilityMonster > 0;

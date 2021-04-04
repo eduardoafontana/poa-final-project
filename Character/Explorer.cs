@@ -25,6 +25,9 @@ namespace Wumpus.Character
             return listNodes;
         }
 
+        /// <summary>
+        /// This method is a custom constructor that allows you to obtain an instance of Explorer through factoring pattern.
+        /// </summary>
         public static Explorer GetInstance()
         {
             Explorer memoryManager = new Explorer();
@@ -33,6 +36,9 @@ namespace Wumpus.Character
             return memoryManager;
         }
 
+        /// <summary>
+        /// This method allows to obtain a list not processed of valid neighboring cells considering the crevasse probability filter below 100%.
+        /// </summary>
         public static IEnumerable<ExplorerNode> GetNeighborsFiltered(Memory[,] forestMemory, int[] l0c0)
         {
             int l0 = l0c0[0];

@@ -19,6 +19,11 @@ namespace Wumpus
 
         public String messages = String.Empty;
 
+        /// <summary>
+        /// Constructor method that initializes the match.
+        /// Create the forest and the player at each level. Each level is an independent match.
+        /// Receives as a dependency injection a forest factory interface and a player factory interface.
+        /// </summary>
         public Match(int level, ForestAbstractFactory forestFactory, PlayerAbstractFactory playerFactory)
         {
             score = 0;
@@ -30,6 +35,12 @@ namespace Wumpus
             player = playerFactory.CreateNewPlayer(forestSize);
         }
 
+        /// <summary>
+        /// Constructor method that initializes the match for tests methods.
+        /// Receive a predetermined forest configuration object.
+        /// Create the forest and the player at each level. Each level is an independent match.
+        /// Receives as a dependency injection a forest factory interface and a player factory interface.
+        /// </summary>
         public Match(int level, ForestConfiguration forestConfiguration, ForestAbstractFactory forestFactory, PlayerAbstractFactory playerFactory)
         {
             score = 0;
@@ -41,6 +52,9 @@ namespace Wumpus
             player = playerFactory.CreateNewPlayer(forestSize);
         }
 
+        /// <summary>
+        /// Method that runs the match itself.
+        /// </summary>
         public int PlayMatch()
         {
             RegisterOutPut(magicForest.ToString());
@@ -65,6 +79,9 @@ namespace Wumpus
             return score;
         }
 
+        /// <summary>
+        /// Processes player action at each new position within the match.
+        /// </summary>
         private void ProcessPlayer(bool playerIsAlive)
         {
             if (playerIsAlive == false)
@@ -76,6 +93,9 @@ namespace Wumpus
             }
         }
 
+        /// <summary>
+        /// Method that checks the player's status to allow the match to continue or end.
+        /// </summary>
         private void ProcessMatch(out bool ongoingMatch, out bool playerIsAlive)
         {
             do
@@ -96,11 +116,17 @@ namespace Wumpus
             player.ObserveAndMemorizeCurrentPosition(cellMemory);
         }
 
+        /// <summary>
+        /// Method that calculates the player's score when the match ends for that level.
+        /// </summary>
         private int CalculateScoreFromLevel()
         {
             return (level + GameConfiguration.ForestMinimumDimension) * (level + GameConfiguration.ForestMinimumDimension) * GameConfiguration.ScoreConstantMultiplier;
         }
 
+        /// <summary>
+        /// Method that queries the forest to determine whether the player's position makes him alive or dead.
+        /// </summary>
         public bool GetPlayerStatus()
         {
             CellType cellType = magicForest.Grid[playerPosition[0], playerPosition[1]].Type;
@@ -144,12 +170,18 @@ namespace Wumpus
             }
         }
 
+        /// <summary>
+        /// Write screen output. Text messages from the forest, the player and the situation of the match.
+        /// </summary>
         private void RegisterOutPut(string message)
         {
             Console.Write(message + System.Environment.NewLine);
             messages += message + System.Environment.NewLine;
         }
 
+        /// <summary>
+        /// Method that tells a certain cell in the forest that they must kill the monster because the player throws a stone.
+        /// </summary>
         public void ThrowStone(ExplorerNode d)
         {
             score -= 10;

@@ -18,6 +18,9 @@ namespace Wumpus.Environment
         private int[] playerSpawn;
         private Random random = new Random();
 
+        /// <summary>
+        /// Forest builder, initializes base variables of the forest structure.
+        /// </summary>
         public Forest(int size)
         {
             this.Size = size + GameConfiguration.ForestMinimumDimension;
@@ -27,6 +30,11 @@ namespace Wumpus.Environment
             InitializeGrid();
         }
 
+        /// <summary>
+        /// This method initializes the forest in an execution from the main.
+        /// Populates forest base variables from a random setting.
+        /// Populate means determining in which position of the forest the elements such as monster, portal, crevasse and player will be positioned initially.
+        /// </summary>
         public int InitForest()
         {
             int monsterProbability = (int)Math.Truncate(0.2 * this.Size * this.Size);
@@ -44,6 +52,11 @@ namespace Wumpus.Environment
             return this.Size;
         }
 
+        /// <summary>
+        /// This method initializes the forest in an execution from the tests.
+        /// Populates forest base variables from a predeterminated configuration that is injected.
+        /// Populate means determining in which position of the forest the elements such as monster, portal, crevasse and player will be positioned initially.
+        /// </summary>
         public int InitForestForTests(ForestConfiguration configuration)
         {
             foreach (var position in configuration.MonstersPosition)
@@ -65,6 +78,9 @@ namespace Wumpus.Environment
             return this.Size;
         }
 
+        /// <summary>
+        /// This method determines where the player will appear in the forest.
+        /// </summary>
         private int[] SelectVoidCellForPlayerInit()
         {
             int l = 0;
@@ -79,6 +95,9 @@ namespace Wumpus.Environment
             return new int[2] {l, c};
         }
 
+        /// <summary>
+        /// Initialize the status of all cells in the forest from neighboring cells.
+        /// </summary>
         private void InitNeighborStatusCell()
         {
             for (int l = 0; l < Grid.GetLength(0); l++)
@@ -90,6 +109,9 @@ namespace Wumpus.Environment
             }
         }
 
+        /// <summary>
+        /// Randomly initializes the monster, portal or crevasse element from an empty cell.
+        /// </summary>
         private void PlaceElement(CellType typeElement, int quantityOfElement)
         {
             int i = 0;
@@ -106,6 +128,9 @@ namespace Wumpus.Environment
             }
         }
 
+        /// <summary>
+        /// Initializes the forest base grid.
+        /// </summary>
         private void InitializeGrid()
         {
             for (int l = 0; l < Grid.GetLength(0); l++)
@@ -141,6 +166,9 @@ namespace Wumpus.Environment
                 UpdateNeighborStatusCell(l, c + 1);
         }
 
+        /// <summary>
+        /// Update the status of a cell in the forest from a neighboring cell.
+        /// </summary>
         private void UpdateNeighborStatusCell(int l, int c) 
         {
             switch (Grid[l, c].Type)
@@ -157,6 +185,10 @@ namespace Wumpus.Environment
             }
         }
 
+        /// <summary>
+        /// Complementary method for the action of updating cell status. Checks whether the neighboring cell is valid before accessing it.
+        /// A cell is valid when its position belongs to the forest grid.
+        /// </summary>
         private void SetCellStatusByEnumType(int [] positions, PropertyInfo enumProperty, Enum enumValue)
         {
             int l = positions[0];
@@ -177,6 +209,10 @@ namespace Wumpus.Environment
             return;
         }
 
+        /// <summary>
+        /// Tests whether the cell is valid.
+        /// A cell is valid when its position belongs to the forest grid.
+        /// </summary>
         private bool IsCellValid(int l, int c)
         {
             if((c >= this.Size) || (c < 0))
@@ -188,6 +224,9 @@ namespace Wumpus.Environment
             return true;
         }
 
+        /// <summary>
+        /// Method that transforms the state of the forest into text messages to be presented on screen.
+        /// </summary>
         public override string ToString()
         {
             string r = "\n\nMagic forest:\n. : empty\nV : crevasse\nM : monster\nO : portal\n\n";

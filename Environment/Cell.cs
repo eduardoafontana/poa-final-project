@@ -47,6 +47,9 @@ namespace Wumpus.Environment
             this.Luminosity = CellLuminosity.Low;
         }
 
+        /// <summary>
+        /// This method processes and returns a state of the memory cell based on its own state.
+        /// </summary>
         internal CellMemory GetPlayerForestState()
         {
             CellMemory cellMemory = new CellMemory();

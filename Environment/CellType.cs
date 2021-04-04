@@ -21,6 +21,9 @@ namespace Wumpus.Environment
         Empty
     }
 
+    /// <summary>
+    /// Extension method to obtain the description attribute of the enumerator. Uses reflection.
+    /// </summary>
     public static class CellTypeExtensions
     {
         public static string GetDescription(this Enum value)
