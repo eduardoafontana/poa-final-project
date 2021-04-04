@@ -14,10 +14,10 @@ namespace Wumpus.Character
 
         private void InitNodes()
         {
-            listNodes.Add(new ExplorerNode(-1, 0, 'N'));
-            listNodes.Add(new ExplorerNode(1, 0, 'S'));
-            listNodes.Add(new ExplorerNode(0, -1, 'W'));
-            listNodes.Add(new ExplorerNode(0, 1, 'E'));
+            listNodes.Add(new ExplorerNode(-1, 0, NodeDirection.North));
+            listNodes.Add(new ExplorerNode(1, 0, NodeDirection.South));
+            listNodes.Add(new ExplorerNode(0, -1, NodeDirection.West));
+            listNodes.Add(new ExplorerNode(0, 1, NodeDirection.East));
         }
 
         public List<ExplorerNode> OnNeighbors()

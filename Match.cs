@@ -144,18 +144,18 @@ namespace Wumpus
         /// </summary>
         public bool MoveTowards(ExplorerNode d)
         {
-            if(d.Direction == 'P')
+            if(d.Direction == NodeDirection.Portal)
                 RegisterOutPut("Bob takes the portal and goes to the next level.");
             else
-                RegisterOutPut("Bob goes to " + d.Direction);
+                RegisterOutPut("Bob goes to " + d.Direction.GetDescription());
 
             score -= 1;
 
-            if(d.Direction == 'X')
+            if(d.Direction == NodeDirection.NotFound)
             {
                 return false;
             }
-            else if(d.Direction == 'P')
+            else if(d.Direction == NodeDirection.Portal)
             {
                 return true;
             }
@@ -186,7 +186,7 @@ namespace Wumpus
         {
             score -= 10;
 
-            RegisterOutPut("Bob throws a stone to " + d.Direction);
+            RegisterOutPut("Bob throws a stone to " + d.Direction.GetDescription());
 
             magicForest.HitMonsterWithStone(d.GetLine(playerPosition[0]), d.GetColumn(playerPosition[1]));
         }

@@ -13,23 +13,23 @@ namespace Wumpus.Character
     {
         private int line;
         private int column;
-        public char Direction { get; private set; }
+        public NodeDirection Direction { get; private set; }
         public int Distance { get; private set; }
 
-        public ExplorerNode(int line, int column, char direction)
+        public ExplorerNode(int line, int column, NodeDirection direction)
         {
             this.line = line;
             this.column = column;
             this.Direction = direction;
         }
 
-        public ExplorerNode(char direction, int distance)
+        public ExplorerNode(NodeDirection direction, int distance)
         {
             this.Direction = direction;
             this.Distance = distance;
         }
 
-        public ExplorerNode(int line, int column, char direction, int distance)
+        public ExplorerNode(int line, int column, NodeDirection direction, int distance)
         {
             this.line = line;
             this.column = column;

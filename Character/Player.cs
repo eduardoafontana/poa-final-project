@@ -119,7 +119,7 @@ namespace Wumpus.Character
 
             //if it is our case, take the portal.
             if(cellToGo == memoryPlayerPosition)
-                return new ExplorerNode('P', 0);
+                return new ExplorerNode(NodeDirection.Portal, 0);
 
             //Otherwise go to the cell.
             return GetDirectionToGoTo(cellToGo.Line, cellToGo.Column);
@@ -174,10 +174,10 @@ namespace Wumpus.Character
             ).ToList();
 
             if(listMemories.Count() == 0)
-                return new ExplorerNode('X', 0);
+                return new ExplorerNode(NodeDirection.NotFound, 0);
 
             if(listMemories.Min().Distance == Int32.MaxValue)
-                return new ExplorerNode('X', 0);
+                return new ExplorerNode(NodeDirection.NotFound, 0);
             else
                 return listMemories.Min();
         }
