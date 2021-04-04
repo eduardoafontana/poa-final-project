@@ -13,5 +13,5 @@ script:
   - dotnet build
   - dotnet test Wumpus.csproj /p:CollectCoverage=true /p:IncludeTestAssembly=true /p:CoverletOutputFormat=cobertura /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\" /p:CoverletOutput='./cobertura.xml'
 after_script:
-  - ./cc-test-reporter format-coverage -t cobertura --prefix "/home/travis/build/eduardoafontana/poa-final-project"
+  - ./cc-test-reporter format-coverage -t cobertura --prefix "/home/travis/build/eduardoafontana/poa-final-project" --debug
   - ./cc-test-reporter after-build -t cobertura --exit-code $TRAVIS_TEST_RESULT --debug
